@@ -8,7 +8,7 @@
 
 ### [Introduction](module1/intro.md)
 
-### [Template functions](module1/template_function.md)
+### [Template functions](module1/template_functions.md)
 
 ### [Template classes](module1/template_classes.md)
 
