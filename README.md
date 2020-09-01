@@ -6,10 +6,10 @@
 
 ## [Moduł 1](module1/)
 
-### [Introduction](module1/intro.md)
+### [Wstęp do szablonów](module1/intro.md)
 
-### [Template functions](module1/template_functions.md)
+### [Szablony funkcji](module1/template_functions.md)
 
-### [Template classes](module1/template_classes.md)
+### [Szablony klas](module1/template_classes.md)
 
-### [Template specialization](module1/specialization.md)
+### [Specjalizacje szablonów](module1/specialization.md)
