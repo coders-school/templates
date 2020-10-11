@@ -27,5 +27,5 @@ And from C++20 we will have
 
 * <!-- .element: class="fragment fade-in" --> template lambdas
 
-We will cover only template functions and classes here. Template variables and lambdas are so far barely used.
+We will cover only template functions and classes here.
 <!-- .element: class="fragment fade-in" -->
