@@ -1,99 +1,131 @@
 <!doctype html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>C++ Templates</title>
+        <title>C++ Templates</title>
 
-		<meta name="description" content="C++11, C++14 and C++17 presentation">
-		<meta name="author" content="Lukasz Ziobron">
+        <meta name="description" content="C++11, C++14 and C++17 presentation">
+        <meta name="author" content="Lukasz Ziobron">
 
-		<link rel="stylesheet" href="../../css/reset.css">
-		<link rel="stylesheet" href="../../css/reveal.css">
-		<link rel="stylesheet" href="../../css/theme/coders.css" id="theme">
+        <link rel="stylesheet" href="../../css/reset.css">
+        <link rel="stylesheet" href="../../css/reveal.css">
+        <link rel="stylesheet" href="../../css/theme/coders.css" id="theme">
 
-		<!-- Theme used for syntax highlighting of code -->
-		<link rel="stylesheet" href="../../lib/css/monokai.css">
+        <!-- Theme used for syntax highlighting of code -->
+        <link rel="stylesheet" href="../../lib/css/monokai.css">
 
-		<!-- Printing and PDF exports -->
-		<script>
-			var link = document.createElement('link');
-			link.rel = 'stylesheet';
-			link.type = 'text/css';
-			link.href = window.location.search.match(/print-pdf/gi) ? '../../css/print/pdf.css' : '../../css/print/paper.css';
-			document.getElementsByTagName('head')[0].appendChild(link);
-		</script>
-	</head>
-	<body>
+        <!-- Printing and PDF exports -->
+        <script>
+            var link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = window.location.search.match(/print-pdf/gi) ? '../../css/print/pdf.css' : '../../css/print/paper.css';
+            document.getElementsByTagName('head')[0].appendChild(link);
+        </script>
+    </head>
+    <body>
 
-		<div class="reveal">
-			<div class="slides">
-				<section>
-					<section data-background="#111111">
+        <div class="reveal">
+            <div class="slides">
+                <section>
+                    <section data-background="#111111">
 
-						<h1>C++ Templates</h1>
-						<a href="https://coders.school">
-							<img width="500" data-src="../coders_school_logo.png" alt="Coders School" class="plain">
-						</a>
-						<h3>Łukasz Ziobroń</h3>
+                        <h1>Templates</h1>
+                        <a href="https://coders.school">
+                            <img width="500" data-src="../coders_school_logo.png" alt="Coders School" class="plain">
+                        </a>
+                        <h2>Łukasz Ziobroń</h2>
 
-					</section>
-					<section data-markdown>
-						<textarea data-template>
+                    </section>
+                    <section data-markdown>
+                        <textarea data-template>
 
-						## Agenda
+                        ## Agenda
 
-						1. <!-- .element: class="fragment fade-in" --> Introduction
-						2. <!-- .element: class="fragment fade-in" --> Template functions
-						3. <!-- .element: class="fragment fade-in" --> Template classes
-						4. <!-- .element: class="fragment fade-in" --> Specialization
+                        1. <!-- .element: class="fragment fade-in" --> Introduction
+                        1. <!-- .element: class="fragment fade-in" --> Template functions
+                        1. <!-- .element: class="fragment fade-in" --> Template classes
+                        1. <!-- .element: class="fragment fade-in" --> Specialization
+                        1. <!-- .element: class="fragment fade-in" --> Variadic templates
 
-						</textarea>
-					</section>
-				</section>
-				<section data-markdown="intro.md" data-separator-vertical="^___"
-					data-separator-notes="^Note:">
-				</section>
-				<section data-markdown="template_functions.md" data-separator-vertical="^___"
-					data-separator-notes="^Note:">
-				</section>
-				<section data-markdown="template_classes.md" data-separator-vertical="^___"
-					data-separator-notes="^Note:">
-				</section>
-				<section data-markdown="specialization.md" data-separator-vertical="^___"
-					data-separator-notes="^Note:">
-				</section>
-				<section data-background="#111111">
+                        </textarea>
+                    </section>
+                    <section data-markdown>
+                        <textarea data-template>
+
+                        ## Zadania
+
+                        Repo GH `coders-school/templates`
+
+                        [https://github.com/coders-school/templates/tree/master/module1](https://github.com/coders-school/templates/tree/master/module1)
+
+                        Zadania wykonywane podczas zajęć online nie wymagają ściągania repo. Pliki będą tworzone od zera.
+
+                        </textarea>
+                    </section>
+                    <section data-markdown>
+                        <textarea data-template>
+
+                        ## Co wiecie o szablonach?
+
+                        ## Co do tej pory utworzyliście z wykorzystaniem szablonów?
+
+                        </textarea>
+                    </section>
+                </section>
+                <section data-markdown="intro.md" data-separator-vertical="^___"
+                    data-separator-notes="^Note:">
+                </section>
+                <section data-markdown="template_functions.md" data-separator-vertical="^___"
+                    data-separator-notes="^Note:">
+                </section>
+                <section data-markdown="template_classes.md" data-separator-vertical="^___"
+                    data-separator-notes="^Note:">
+                </section>
+                <section data-markdown="specialization.md" data-separator-vertical="^___"
+                    data-separator-notes="^Note:">
+                </section>
+                <section data-markdown="variadic_templates.md" data-separator-vertical="^___"
+                    data-separator-notes="^Note:">
+                </section>
+                <section data-markdown="concepts.md" data-separator-vertical="^___"
+                    data-separator-notes="^Note:">
+                </section>
+                <section data-markdown="homework.md" data-separator-vertical="^___"
+                    data-separator-notes="^Note:">
+                </section>
+                <section data-background="#111111">
 
                     <h1>Coders School</h1>
                     <img width="400" data-src="../logo.png" alt="Coders School" class="plain">
 
                 </section>
-			</div>
+            </div>
 
-		</div>
+        </div>
 
-		<script src="../../js/reveal.js"></script>
+        <script src="../../js/reveal.js"></script>
 
-		<script>
-			// More info about config & dependencies:
-			// - https://github.com/hakimel/reveal.js#configuration
-			// - https://github.com/hakimel/reveal.js#dependencies
-			Reveal.initialize({
-					width: 1200,
-					height: 750,
-					slideNumber: true,
-					hash: true,
-					pdfSeparateFragments: false,
-					dependencies: [
-							{ src: '../../plugin/externalcode/externalcode.js', condition: function() { return !!document.querySelector( '[data-code]' ); } },
-							{ src: '../../plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
-							{ src: '../../plugin/markdown/marked.js' },
-							{ src: '../../plugin/markdown/markdown.js' },
-							{ src: '../../plugin/notes/notes.js', async: true }
-					]
-			});
-	</script>
-	</body>
+        <script>
+            // More info about config & dependencies:
+            // - https://github.com/hakimel/reveal.js#configuration
+            // - https://github.com/hakimel/reveal.js#dependencies
+            Reveal.initialize({
+                    width: 1200,
+                    height: 750,
+                    slideNumber: true,
+                    hash: true,
+                    pdfSeparateFragments: false,
+                    dependencies: [
+                            { src: '../../plugin/externalcode/externalcode.js', condition: function() { return !!document.querySelector( '[data-code]' ); } },
+                            { src: '../../plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                            { src: '../../plugin/markdown/marked.js' },
+                            { src: '../../plugin/markdown/markdown.js' },
+                            { src: '../../plugin/notes/notes.js', async: true }
+                    ]
+            });
+    </script>
+    </body>
 </html>

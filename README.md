@@ -12,4 +12,6 @@
 
 ### [Szablony klas](module1/template_classes.md)
 
-### [Specjalizacje szablonów](module1/specialization.md)
+### [Specjalizacje](module1/specialization.md)
+
+### [Szablony wariadyczne](module1/variadic_templates.md)

@@ -6,7 +6,14 @@ ___
 
 ## Rationale
 
-Templates are used to avoid code duplication.
+**Templates are used to avoid code duplication.**
+<!-- .element: class="fragment fade-in" -->
+
+Later it was discovered that C++ templates are a Turing-complete language. It means that the templates itself are a programming language. It is often called **C++ template metaprogramming**.
+<!-- .element: class="fragment fade-in" -->
+
+All templates are evaluated during compilation and only during that phase.
+<!-- .element: class="fragment fade-in" -->
 
 ___
 

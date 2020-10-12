@@ -84,6 +84,18 @@ int main() {
 
 ___
 
+## Unpacking parameter types
+
+```text
+Foo...                => Foo1, Foo2, Foo3, etc
+vector<Foo>...        => vector<Foo1>, vector<Foo2>, vector<Foo3>, etc
+tuple<Foo...>(bar...) => tuple<Foo1, Foo2, Foo3, etc>(bar1, bar2, bar3, etc)
+&bar...               => &bar1, &bar2, &bar3, etc
+&&bar...              => &&bar1, &&bar2, &&bar3, etc
+```
+
+___
+
 ## Head tail recursion
 
 It is also possible to use recursion to unpack every single argument. It requires the variadic template Head/Tail and non-template function to be defined.
@@ -118,36 +130,7 @@ struct Sum<> {
     const static int RESULT = 0;
 }
 
-Sum<1, 2, 3, 4, 5>::RESULT; // = 15
-```
-
-___
-
-## Handling inheritance from variadic classes
-
-```cpp
-template<class... Types>
-struct Base
-{};
-
-template<class... Types>
-struct Derived : Base<Types...>
-{};
-```
-
-___
-
-## `sizeof...` operator
-
-`sizeof...` returns the number of parameters in a parameter pack.
-
-```cpp
-template<class... Types>
-struct NumOfArguments {
-    const static unsigned value = sizeof...(Types);
-};
-
-auto num = NumOfArguments<A, B, C>::value;  // 3
+constexpr auto value = Sum<1, 2, 3, 4, 5>::RESULT; // = 15
 ```
 
 ___
@@ -159,9 +142,10 @@ Fold expressions allow to write compact code with variadic templates without usi
 ```cpp
 template<typename... Args> auto sum(Args... args) {
     return (args + ...);
-    // return (... + args);
-    // return (0 + ... + args);
-    // return (args + ... + 0);
+    // return (... + args);     // the same
+    // return (0 + ... + args); // the same
+    // return (args + ... + 0); // the same
+    // return args + ...;       // error - missing parentheses
 }
 
 template<typename... Args> bool f(Args... args) {
@@ -205,3 +189,68 @@ auto areEven(Numbers... nums) {
 Try to add a space between elements in `print()`.
 
 ___
+
+<!-- TODO: Add logo, Animations and PDF -->
+
+## Fold expressions
+
+Default values when parameter pack is empty
+
+| Operator |  Value   |
+| :------: | :------: |
+|   `*`    |   `1`    |
+|   `+`    | `int()`  |
+|   `&`    |   `-1`   |
+|   `\|`    | `int()`  |
+|   `&&`   |  `true`  |
+|   `\|\|`   | `false`  |
+|   `,`    | `void()` |
+
+___
+
+## Handling inheritance from variadic classes
+
+```cpp
+template<class... Types>
+struct Base
+{};
+
+template<class... Types>
+struct Derived : Base<Types...>
+{};
+```
+
+___
+
+## `sizeof...` operator
+
+`sizeof...` returns the number of parameters in a parameter pack.
+
+```cpp
+template<class... Types>
+struct NumOfArguments {
+    const static unsigned value = sizeof...(Types);
+};
+
+constexpr auto num = NumOfArguments<A, B, C>::value;  // 3
+```
+
+___
+
+## Perfect forwarding
+
+It is recommended to use `&&` and `std::forward` with variadic arguments to handle r-values and l-values correctly. It is so called **perfect forwarding**.
+
+```cpp
+#include <utility>
+
+template<typename Type>
+void single_perfect_forwarding(Type&& t) {
+    callable(std::forward<Type>(t));
+}
+
+template<typename... Types>
+void variadic_perfect_forwarding(Types&&... args) {
+    callable(std::forward<Types>(args)...);
+}
+```
