@@ -14,6 +14,6 @@ Variadic templates can be used to create template functions or classes which acc
 
 There are 2 new keywords: `concept` and `requires`.
 
-**There will one major advantage of concepts. Error messages from templates will not take a few pages to read. They will be very readable and meaningful one-liners 🙂.**
+**There is one major advantage of concepts. Error messages from templates do not take a few pages to read. They are very readable and meaningful one-liners 🙂.**
 
 Check an example on [cppreference.com](https://en.cppreference.com/w/cpp/language/constraints)
