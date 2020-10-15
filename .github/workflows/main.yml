@@ -1,0 +1,22 @@
+name: CMake and sanitizers
+
+on: [push, pull_request]
+
+jobs:
+  ctestsanitizers:
+    runs-on: ubuntu-20.04
+
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Create build folder
+      working-directory: module1/homework/make_unique
+      run: mkdir build
+    - name: Compile
+      working-directory: module1/homework/make_unique/build
+      run: |
+        cmake ..
+        make
+    - name: Run tests and sanitizer
+      working-directory: module1/homework/make_unique/build
+      run: ctest -V
