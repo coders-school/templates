@@ -1,4 +1,4 @@
-name: shared_ptr Homework
+name: make_unique Homework
 
 on: [push, pull_request]
 
