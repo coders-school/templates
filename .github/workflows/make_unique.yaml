@@ -8,15 +8,15 @@ jobs:
     steps:
     - name: Check out code
       uses: actions/checkout@master
-    - name: mkdir homework/make_unique/build
-      run: mkdir homework/make_unique/build
+    - name: mkdir module1/homework/make_unique/build
+      run: mkdir module1/homework/make_unique/build
     - name: Compile
-      working-directory: homework/make_unique/build
+      working-directory: module1/homework/make_unique/build
       run: |
         cmake ..
         make
     - name: Run tests
-      working-directory: homework/make_unique/build
+      working-directory: module1/homework/make_unique/build
       run: ctest -V
 
   valgrind:
@@ -26,13 +26,13 @@ jobs:
       run: sudo apt-get update && sudo apt-get install valgrind
     - name: Check out code
       uses: actions/checkout@master
-    - name: mkdir homework/make_unique/build
-      run: mkdir homework/make_unique/build
+    - name: mkdir module1/homework/make_unique/build
+      run: mkdir module1/homework/make_unique/build
     - name: Compile
-      working-directory: homework/make_unique/build
+      working-directory: module1/homework/make_unique/build
       run: |
         cmake ..
         make
     - name: Run tests with valgrind
-      working-directory: homework/make_unique/build
+      working-directory: module1/homework/make_unique/build
       run: valgrind --leak-check=full --show-leak-kinds=all ./make_unique-ut
