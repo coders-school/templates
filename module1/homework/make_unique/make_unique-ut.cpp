@@ -30,16 +30,22 @@ private:
 };
 
 TEST(make_uniqueIntTest, testMakeUniqueForIntValue) {
-    std::unique_ptr<int> uPtr = cs::make_unique<int>(testIntValue);
+    auto uPtr = cs::make_unique<int>(testIntValue);
     ASSERT_EQ(*uPtr, testIntValue);
 }
 
 TEST(make_uniqueArrayTest, testMakeUniqueForArrayType) {
-    std::unique_ptr<int[]> uPtr = cs::make_unique<int[]>(arraySize);
+    auto uArray = cs::make_unique<int[]>(arraySize);
+    for (size_t i =0; i < arraySize; i++) {
+        uArray[i] = i;
+    }
+    for (size_t i =0; i < arraySize; i++) {
+        ASSERT_EQ(uArray[i], i);
+    }
 }
 
 TEST(make_uniqueEmptyTest, testIntEmptyConstruct) {
-    std::unique_ptr<int> uniqZero = cs::make_unique<int>();
+    auto uniqZero = cs::make_unique<int>();
     ASSERT_EQ(*uniqZero, 0);
 }
 
