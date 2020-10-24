@@ -1,0 +1,38 @@
+name: C++ with CMake CI
+
+on: [push, pull_request]
+
+jobs:
+  MakeUnique:
+    runs-on: ubuntu-20.04
+    steps:
+    - name: Check out code
+      uses: actions/checkout@master
+    - name: mkdir /module1/homework/make_unique/build/ 
+      run: mkdir /module1/homework/make_unique/build/
+    - name: Compile
+      working-directory: build
+      run: |
+        cmake ..
+        make
+    - name: Run test 
+      working-directory: build
+      run: ctest -V
+  Valgrind:
+    runs-on: ubuntu-20.04
+    steps:
+    - name: Check out code
+      uses: actions/checkout@master
+    - name: mkdir /module1/homework/make_unique/build/ 
+      run: mkdir /module1/homework/make_unique/build/
+    - name: ValgrindTest
+      working-directory: build
+      run: |
+        sudo apt install valgrind
+        cmake ..
+        make
+    - name: Run valgrind 
+      working-directory: build
+      run: |
+        valgrind ./make_unique-ut
+        valgrind ./make_unique
