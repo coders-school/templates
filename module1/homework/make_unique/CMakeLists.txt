@@ -37,7 +37,7 @@ endif()
 
 # Now simply link against gtest or gtest_main as needed. Eg
 
-project(make_unqie)
+project(make_unique)
 
 include_directories(include)
 include_directories(tests)
