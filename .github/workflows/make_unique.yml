@@ -11,12 +11,12 @@ jobs:
     - name: mkdir ./module1/homework/make_unique/build/ 
       run: mkdir ./module1/homework/make_unique/build/
     - name: Compile
-      working-directory: build
+      working-directory: ./module1/homework/make_unique/build/
       run: |
         cmake ..
         make
     - name: Run test 
-      working-directory: build
+      working-directory: ./module1/homework/make_unique/build/
       run: ctest -V
   Valgrind:
     runs-on: ubuntu-20.04
