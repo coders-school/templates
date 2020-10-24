@@ -8,8 +8,8 @@ jobs:
     steps:
     - name: Check out code
       uses: actions/checkout@master
-    - name: mkdir /module1/homework/make_unique/build/ 
-      run: mkdir /module1/homework/make_unique/build/
+    - name: mkdir ./module1/homework/make_unique/build/ 
+      run: mkdir ./module1/homework/make_unique/build/
     - name: Compile
       working-directory: build
       run: |
@@ -23,8 +23,8 @@ jobs:
     steps:
     - name: Check out code
       uses: actions/checkout@master
-    - name: mkdir /module1/homework/make_unique/build/ 
-      run: mkdir /module1/homework/make_unique/build/
+    - name: mkdir ./module1/homework/make_unique/build/ 
+      run: mkdir ./module1/homework/make_unique/build/
     - name: ValgrindTest
       working-directory: build
       run: |
