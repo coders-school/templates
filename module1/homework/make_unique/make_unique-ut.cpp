@@ -25,26 +25,39 @@ private:
     bool boolValue_{boolValue};
 };
 
-TEST(test, firstTest) {
-    ASSERT_EQ(1, 1);
-}
-
 TEST(make_unique, shouldMakeUniqueToInt) {
     std::unique_ptr<int> uniqZero{new int{}};
-    auto testUniquePtr = make_unique<int>();
+    auto testUniquePtr = cs::make_unique<int>();
     ASSERT_EQ(*uniqZero, *testUniquePtr);
 }
 
 TEST(make_unique, shouldMakeUniqueToInt2020) {
     std::unique_ptr<int> uniqEleven{new int{testValue}};
-    auto testUniquePtr = make_unique<int>(testValue);
+    auto testUniquePtr = cs::make_unique<int>(testValue);
 
     ASSERT_EQ(*testUniquePtr, testValue);
     ASSERT_EQ(*uniqEleven, *testUniquePtr);
 }
 
-TEST(make_unique, shouldMakeUniqueToMyTestType) {
-    std::unique_ptr<MyTestType> uniqMyTestType{new MyTestType{2, 2.5, 0}};
-    auto testUniquePtr = make_unique<MyTestType>(2, 2.5, 0);
+TEST(make_unique, shouldMakeUniqueToEmpytyMyTestTypeObject) {
+    std::unique_ptr<MyTestType> uniqMyTestType{new MyTestType{}};
+    auto testUniquePtr = cs::make_unique<MyTestType>();
     ASSERT_EQ(*uniqMyTestType, *testUniquePtr);
+}
+
+TEST(make_unique, shouldMakeUniqueToMyTestTypeObject) {
+    std::unique_ptr<MyTestType> uniqMyTestType{new MyTestType{2, 2.5, 0}};
+    auto testUniquePtr = cs::make_unique<MyTestType>(2, 2.5, 0);
+    ASSERT_EQ(*uniqMyTestType, *testUniquePtr);
+}
+
+TEST(make_unique, shouldMakeUniqueToIntArray) {
+    constexpr size_t arraySize = 4;
+    auto testArrayUniquePtr = cs::make_unique<int[]>(arraySize);
+    for (size_t counter = 0; counter < arraySize; counter++) {
+        testArrayUniquePtr[counter] = testValue + counter;
+    }
+    for (size_t counter = 0; counter < arraySize; counter++) {
+        ASSERT_EQ(testArrayUniquePtr[counter], testValue + counter);
+    }
 }
