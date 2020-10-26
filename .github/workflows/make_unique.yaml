@@ -1,0 +1,20 @@
+name: make_unique Homework
+
+on: [push, pull_request]
+
+jobs:
+  make_unique:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@master
+      - name: mkdir homework/make_unique/build
+        run: mkdir homework/make_unique/build
+      - name: Compile
+        working-directory: homework/make_unique/build
+        run: |
+          cmake ..
+          make
+      - name: Run tests
+        working-directory: homework/make_unique/build
+        run: ctest -V
