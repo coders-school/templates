@@ -12,21 +12,17 @@ template<class Type> struct default_delete<Type[]>;
 
 struct make_uniqueTest {
 public:
-    make_uniqueTest();
-    make_uniqueTest(int intValue, double doubleValue, bool boolValue)
+    make_uniqueTest() = default;
+    make_uniqueTest(int& intValue, double&& doubleValue, bool boolValue)
     : intValue_(intValue), doubleValue_(doubleValue), boolValue_(boolValue)
     {}
+    make_uniqueTest(int&& intValue, double& doubleValue, bool boolValue)
+        : intValue_(intValue), doubleValue_(doubleValue), boolValue_(boolValue)
+    {}
 
-    bool operator==(const make_uniqueTest& other) const {
-        return intValue_ == other.intValue_
-            && doubleValue_ == other.doubleValue_
-            && boolValue_ == other.boolValue_;
-    }
-
-private:
-    int intValue_;
-    double doubleValue_;
-    bool boolValue_;
+    int intValue_ {testIntValue};
+    double doubleValue_ {testDoubleValue};
+    bool boolValue_ {testBoolValue};
 };
 
 TEST(make_uniqueIntTest, testMakeUniqueForIntValue) {
@@ -49,19 +45,16 @@ TEST(make_uniqueEmptyTest, testIntEmptyConstruct) {
     ASSERT_EQ(*uniqZero, 0);
 }
 
-TEST(make_uniqueLvalueTest, testLvalueConstruct) {
-    int lvalue{2020};
-    auto uniqTwenty = cs::make_unique<int>(lvalue);
-    ASSERT_EQ(*uniqTwenty, lvalue);
-}
+TEST(make_uniqueCustomObjectTest, shouldUseFirstConstructor) {
+    int lvalueInt{2020};
+    auto muTest = cs::make_unique<make_uniqueTest>(lvalueInt, 3.14, testBoolValue);
+    ASSERT_EQ(muTest->intValue_, lvalueInt);
+    ASSERT_EQ(muTest->doubleValue_, testDoubleValue);
+    ASSERT_EQ(muTest->boolValue_, testBoolValue);
 
-TEST(make_uniqueCustomObjectTest, testLvalueDoubleBoolConstruct) {
-    make_uniqueTest muTest{testIntValue, testDoubleValue, testBoolValue};
-    auto uniqeObject = cs::make_unique<make_uniqueTest>(testIntValue, testDoubleValue, testBoolValue);
-    ASSERT_EQ(*uniqeObject, muTest);
-
-    int lvalue{2020};
-    make_uniqueTest muTest2{lvalue, testDoubleValue, testBoolValue};
-    auto uniqeObject2 = cs::make_unique<make_uniqueTest>(lvalue, testDoubleValue, testBoolValue);
-    ASSERT_EQ(*uniqeObject2, muTest2);
+    double lvalueDouble{3.14};
+    auto muTest2 = cs::make_unique<make_uniqueTest>(10, lvalueDouble, testBoolValue);
+    ASSERT_EQ(muTest2->intValue_, testIntValue);
+    ASSERT_EQ(muTest2->doubleValue_, lvalueDouble);
+    ASSERT_EQ(muTest2->boolValue_, testBoolValue);
 }
