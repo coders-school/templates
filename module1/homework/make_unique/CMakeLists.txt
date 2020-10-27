@@ -42,8 +42,8 @@ enable_testing()
 
 add_executable(${PROJECT_NAME} main.cpp)
 add_executable(${PROJECT_NAME}-ut makeUnique-ut.cpp)
-target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Werror -Wconversion -pedantic -Wextra -g)
-target_compile_options(${PROJECT_NAME}-ut PRIVATE -Wall -Werror -Wconversion -pedantic -Wextra -g)
+target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Werror -Wconversion -pedantic -Wextra)
+target_compile_options(${PROJECT_NAME}-ut PRIVATE -Wall -Werror -Wconversion -pedantic -Wextra)
 target_link_libraries(${PROJECT_NAME}-ut PUBLIC gtest_main)
 
 add_test(NAME ${PROJECT_NAME}-test COMMAND ${PROJECT_NAME}-ut)
