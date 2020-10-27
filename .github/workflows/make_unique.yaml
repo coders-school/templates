@@ -18,6 +18,7 @@ jobs:
       - name: Run tests
         working-directory: module1/homework/make_unique/build
         run: ctest -V
+
 valgrind:
   runs-on: ubuntu-latest
   steps:
