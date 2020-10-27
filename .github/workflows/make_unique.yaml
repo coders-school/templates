@@ -28,7 +28,7 @@ valgrind:
     - name: mkdir module1/homework/make_unique/build
       run: mkdir module1/homework/make_unique/build
     - name: Compile
-        working-directory: module1/homework/make_unique/build
+      working-directory: module1/homework/make_unique/build
       run: |
         cmake ..
         make
