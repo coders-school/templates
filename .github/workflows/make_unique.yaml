@@ -18,3 +18,20 @@ jobs:
       - name: Run tests
         working-directory: module1/homework/make_unique/build
         run: ctest -V
+valgrind:
+  runs-on: ubuntu-latest
+  steps:
+    - name: Install valgrind
+      run: sudo apt-get update && sudo apt-get install valgrind
+    - name: Check out code
+      uses: actions/checkout@master
+    - name: mkdir module1/homework/make_unique/build
+      run: mkdir module1/homework/make_unique/build
+    - name: Compile
+        working-directory: module1/homework/make_unique/build
+      run: |
+        cmake ..
+        make
+    - name: Run tests with valgrind
+      working-directory: module1/homework/make_unique/build
+      run: valgrind --leak-check=full --show-leak-kinds=all ./make_unique-ut
