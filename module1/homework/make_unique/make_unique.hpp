@@ -8,7 +8,7 @@ namespace  cs {
     }
 
     template<typename T>
-    std::unique_ptr <T> make_unique(size_t size) {
-        return std::unique_ptr<T>{new std::remove_extent_t<T>[size] {}};
+    std::unique_ptr<T[]> make_unique(size_t size) {
+        return std::unique_ptr<T[]>{new std::remove_extent_t<T>[size] {}};
     }
 }
