@@ -7,6 +7,9 @@ constexpr int firstParam = 5;
 constexpr double secondParam = 2.34;
 constexpr char thirdParam = 'c';
 
+constexpr int lValueParam = 1;
+constexpr int rValueParam = 2;
+
 class TestClass {
 public:
     TestClass() = default;
@@ -26,6 +29,30 @@ private:
     int intNum_ = firstParam;
     double doubleNum_ = secondParam;
     char charSign_ = thirdParam;
+};
+
+class TestClassRLValue {
+public:
+    TestClassRLValue()
+        : num_{lValueParam} {};
+
+    TestClassRLValue(const TestClassRLValue&)
+        : TestClassRLValue() {}
+
+    TestClassRLValue(TestClassRLValue&&)
+        : num_{rValueParam} {}
+
+    TestClassRLValue& operator=(const TestClassRLValue&) {
+        num_ = lValueParam;
+        return *this;
+    }
+
+    TestClassRLValue& operator=(TestClassRLValue&&) {
+        num_ = rValueParam;
+        return *this;
+    }
+
+    int num_;
 };
 
 TEST(MakeUniqueIntTest, shouldCreateUniquePtrToInt) {
@@ -63,4 +90,18 @@ TEST(MakeUniqueArrayTest, shouldCreateArrayUniquePtr) {
     for (size_t i = 0; i < arraySize; ++i) {
         ASSERT_EQ(arr[i], value);
     }
+}
+
+TEST(MakeUniqueLValue, shouldCreateUniquePtrUsingLvalue) {
+    TestClassRLValue tc;
+    auto ptr = cs::make_unique<TestClassRLValue>(tc);
+
+    ASSERT_EQ(ptr->num_, lValueParam);
+}
+
+TEST(MakeUniqueRValue, shouldCreateUniquePtrViaMove) {
+    TestClassRLValue tc;
+    auto ptr = cs::make_unique<TestClassRLValue>(std::move(tc));
+
+    ASSERT_EQ(ptr->num_, rValueParam);
 }
