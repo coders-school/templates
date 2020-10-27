@@ -19,7 +19,7 @@ struct TestType {
     TestType(int&&, double&, bool) : i_(iValueR), d_(dValueL), b_(bValue) { }
 
     int i_ = testI;
-    int d_ = testD;
+    double d_ = testD;
     bool b_ = testB;
 
 };
