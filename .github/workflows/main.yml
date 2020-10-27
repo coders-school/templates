@@ -10,15 +10,15 @@ jobs:
     - uses: actions/checkout@master
 
     - name: Create build folder
-      working-directory: homework/make_unique
+      working-directory: module1/homework/make_unique
       run: mkdir build
     - name: Compile
-      working-directory: homework/make_unique/build
+      working-directory: module1/homework/make_unique/build
       run: |
         cmake ..
         make
     - name: Run tests
-      working-directory: homework/make_unique/build
+      working-directory: module1/homework/make_unique/build
       run: ctest -V
   valgrind:
     runs-on: ubuntu-20.04
@@ -30,14 +30,14 @@ jobs:
       run: |
         sudo apt-get update && sudo apt-get install valgrind
     - name: Create build folder
-      working-directory: homework/make_unique
+      working-directory: module1/homework/make_unique
       run: mkdir build
     - name: Compile
-      working-directory: homework/make_unique/build
+      working-directory: module1/homework/make_unique/build
       run: |
         cmake ..
         make
     - name: Run valgrind
-      working-directory: homework/make_unique/build
+      working-directory: module1/homework/make_unique/build
       run: |
         valgrind --leak-check=full ./makeUnique-ut
