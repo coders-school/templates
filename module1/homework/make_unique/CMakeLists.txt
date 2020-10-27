@@ -44,4 +44,4 @@ target_compile_options(${PROJECT_NAME}-ut PRIVATE ${FLAGS})
 target_link_libraries(${PROJECT_NAME}-ut PUBLIC gtest_main)
 target_link_options(${PROJECT_NAME}-ut PRIVATE ${SANITS})
 
-add_test(NAME shared_ptr COMMAND ${PROJECT_NAME}-ut)
+add_test(NAME make_unique COMMAND ${PROJECT_NAME}-ut)
