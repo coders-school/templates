@@ -46,15 +46,15 @@ TEST(make_uniqueEmptyTest, testIntEmptyConstruct) {
 }
 
 TEST(make_uniqueCustomObjectTest, shouldUseFirstConstructor) {
-    int lvalueInt{2020};
-    auto muTest = cs::make_unique<make_uniqueTest>(lvalueInt, 3.14, testBoolValue);
-    ASSERT_EQ(muTest->intValue_, lvalueInt);
+    int intValue{testIntValue};
+    double doubleValue{testDoubleValue};
+    auto muTest = cs::make_unique<make_uniqueTest>(std::move(intValue), doubleValue, testBoolValue);
+    ASSERT_EQ(muTest->intValue_, testIntValue);
     ASSERT_EQ(muTest->doubleValue_, testDoubleValue);
     ASSERT_EQ(muTest->boolValue_, testBoolValue);
 
-    double lvalueDouble{3.14};
-    auto muTest2 = cs::make_unique<make_uniqueTest>(10, lvalueDouble, testBoolValue);
+    auto muTest2 = cs::make_unique<make_uniqueTest>(intValue, std::move(doubleValue), testBoolValue);
     ASSERT_EQ(muTest2->intValue_, testIntValue);
-    ASSERT_EQ(muTest2->doubleValue_, lvalueDouble);
+    ASSERT_EQ(muTest2->doubleValue_, testDoubleValue);
     ASSERT_EQ(muTest2->boolValue_, testBoolValue);
 }
