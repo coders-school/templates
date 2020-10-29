@@ -10,8 +10,8 @@ constexpr int initialValuesForSecondPrameterOfTestClass = 6;
 constexpr int initialValue = 1;
 constexpr int secondValue = 2;
 
-constexpr int leftValueConstructor = 69;
-constexpr int rightValueConstructor = 96;
+constexpr int leftValue = 69;
+constexpr int rightValue = 96;
 
 class TestClass {
 public:
@@ -25,18 +25,17 @@ public:
     int secondValue_{defaultValuesOfTestClass};
 };
 
-struct SideValueTestClass {
-    SideValueTestClass(int& val)
-        : classValue_{val} {
-        sideTestValue_ = leftValueConstructor;
-    }
+class LRValueTestClass {
+public:
+    LRValueTestClass()
+        : sideTestValue_{leftValue} {}
 
-    SideValueTestClass(int&& val)
-        : classValue_{val} {
-        sideTestValue_ = rightValueConstructor;
-    }
+    LRValueTestClass(const LRValueTestClass&)
+        : LRValueTestClass() {}
 
-    int classValue_;
+    LRValueTestClass(LRValueTestClass&&)
+        : sideTestValue_{rightValue} {}
+
     int sideTestValue_;
 };
 
@@ -74,9 +73,14 @@ TEST(MakeUniqueTest, ShouldCreateUniquePointerForArrayType) {
     ASSERT_EQ(arrayPtr[1], secondValue);
 }
 
-// TEST(MakeUniqueTest, ShouldCreatePointerUsingLValue) {
-//     constexpr int leftValueConstructorTest = 5;
-//     auto testClass = cs::make_unique<SideValueTestClass>(leftValueConstructorTest);
+TEST(MakeUniqueTest, ShouldCreatePointerUsingLeftValue) {
+    auto sideTestClass = cs::make_unique<LRValueTestClass>();
+    ASSERT_EQ(sideTestClass->sideTestValue_, leftValue);
+}
 
-//     ASSERT_EQ(testClass->sideTestValue_, leftValueConstructor);
-// }
+
+TEST(MakeUniqueTest, ShouldCreatePointerUsingRightValue) {
+    LRValueTestClass classToMove;
+    auto sideTestClass = cs::make_unique<LRValueTestClass>(std::move(classToMove));
+    ASSERT_EQ(sideTestClass->sideTestValue_, rightValue);
+}
