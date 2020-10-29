@@ -3,20 +3,38 @@
 
 #include "makeUnique.hpp"
 
-constexpr int intValueTest = 1;
-constexpr double doubleValueTest = 2.2;
-constexpr bool boolValueTest = true;
+constexpr int intValueTest{1};
+constexpr double doubleValueTest{2.2};
+constexpr bool boolValueTest{true};
+constexpr int rValueUsed{10};
+constexpr int lValueUsed{20};
 
 struct MyType {
     MyType() = default;
-    MyType(int& intValue, double&& doubleValue, bool boolValue)
-        : intValue_(intValue), doubleValue_(doubleValue), boolValue_(boolValue) {}
-    MyType(int&& intValue, double& doubleValue, bool boolValue)
+    MyType(int intValue, double doubleValue, bool boolValue)
         : intValue_(intValue), doubleValue_(doubleValue), boolValue_(boolValue) {}
 
     int intValue_ = intValueTest;
     double doubleValue_ = doubleValueTest;
     bool boolValue_ = boolValueTest;
+};
+
+struct TestStruct {
+    TestStruct(int value) : testValue_(value){};
+    TestStruct(TestStruct&) : testValue_(lValueUsed){};
+    TestStruct(TestStruct&&) : testValue_(rValueUsed){};
+
+    TestStruct& operator=(TestStruct&) {
+        testValue_ = lValueUsed;
+        return *this;
+    }
+
+    TestStruct& operator=(TestStruct&&) {
+        testValue_ = rValueUsed;
+        return *this;
+    }
+
+    int testValue_;
 };
 
 TEST(makeUnique, shouldCreateUniquePointerToInt) {
@@ -25,27 +43,18 @@ TEST(makeUnique, shouldCreateUniquePointerToInt) {
     ASSERT_EQ(*ptr, intValueTest);
 }
 
-TEST(makeUnique, shouldCreateEmptyUniquePointer) {
+TEST(makeUnique, shouldCreateUniquePointerToNotDefinedInt) {
     std::unique_ptr<int> ptr = custom::make_unique<int>();
 
     ASSERT_EQ(*ptr, 0);
 }
 
-TEST(makeUnique, shouldUseFirstConstructor) {
-    int valueInt{10};
-    auto ptr = custom::make_unique<MyType>(valueInt, 2.2, true);
+TEST(makeUnique, shouldCreateUniquePointerToStruct) {
+    int intValue{10};
+    auto ptr = custom::make_unique<MyType>(intValue, doubleValueTest, boolValueTest);
 
-    ASSERT_EQ(ptr->intValue_, valueInt);
+    ASSERT_EQ(ptr->intValue_, intValue);
     ASSERT_EQ(ptr->doubleValue_, doubleValueTest);
-    ASSERT_EQ(ptr->boolValue_, boolValueTest);
-}
-
-TEST(makeUnique, shouldUseSecondConstructor) {
-    double valueDouble{10.0};
-    auto ptr = custom::make_unique<MyType>(1, valueDouble, true);
-
-    ASSERT_EQ(ptr->intValue_, intValueTest);
-    ASSERT_EQ(ptr->doubleValue_, valueDouble);
     ASSERT_EQ(ptr->boolValue_, boolValueTest);
 }
 
@@ -60,4 +69,18 @@ TEST(makeUnique, shouldCreateArrayUniquePointer) {
     for (size_t i = 0; i < size; i++) {
         ASSERT_EQ(testArray[i], doubleValueTest);
     }
+}
+
+TEST(makeUnique, shouldCreateUniquePointerUsingLvalue) {
+    TestStruct testStruct(intValueTest);
+    auto ptr = custom::make_unique<TestStruct>(testStruct);
+
+    ASSERT_EQ(ptr->testValue_, lValueUsed);
+}
+
+TEST(makeUnique, shouldCreateUniquePointerUsingMove) {
+    TestStruct testStruct(intValueTest);
+    auto ptr = custom::make_unique<TestStruct>(std::move(testStruct));
+
+    ASSERT_EQ(ptr->testValue_, rValueUsed);
 }
