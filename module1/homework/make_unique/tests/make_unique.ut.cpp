@@ -45,23 +45,23 @@ TEST(MakeUniqueTest, ShouldCreateUniquePointerFromInt) {
 }
 
 TEST(MakeUniqueTest, ShouldCreateUniquePointerFromCustomClassWithDefaultValue) {
-    auto testClass = cs::make_unique<TestClass>();
-    ASSERT_EQ(testClass->firstValue_, defaultValuesOfTestClass);
-    ASSERT_EQ(testClass->secondValue_, defaultValuesOfTestClass);
+    auto testClassPtr = cs::make_unique<TestClass>();
+    ASSERT_EQ(testClassPtr->firstValue_, defaultValuesOfTestClass);
+    ASSERT_EQ(testClassPtr->secondValue_, defaultValuesOfTestClass);
 }
 
 TEST(MakeUniqueTest, ShouldCreateUniquePointerFromCustomClassWithInitialValue) {
-    auto testClass = cs::make_unique<TestClass>(initialValuesOfTestClass);
-    ASSERT_EQ(testClass->firstValue_, initialValuesOfTestClass);
-    ASSERT_EQ(testClass->secondValue_, defaultValuesOfTestClass);
+    auto testClassPtr = cs::make_unique<TestClass>(initialValuesOfTestClass);
+    ASSERT_EQ(testClassPtr->firstValue_, initialValuesOfTestClass);
+    ASSERT_EQ(testClassPtr->secondValue_, defaultValuesOfTestClass);
 }
 
 TEST(MakeUniqueTest, ShouldCreatedUniquePointerFromCustomClassWithTwoParameters) {
-    auto testClass = cs::make_unique<TestClass>(initialValuesOfTestClass,
-                                                initialValuesForSecondPrameterOfTestClass);
+    auto testClassPtr = cs::make_unique<TestClass>(initialValuesOfTestClass,
+                                                   initialValuesForSecondPrameterOfTestClass);
 
-    ASSERT_EQ(testClass->firstValue_, initialValuesOfTestClass);
-    ASSERT_EQ(testClass->secondValue_, initialValuesForSecondPrameterOfTestClass);
+    ASSERT_EQ(testClassPtr->firstValue_, initialValuesOfTestClass);
+    ASSERT_EQ(testClassPtr->secondValue_, initialValuesForSecondPrameterOfTestClass);
 }
 
 TEST(MakeUniqueTest, ShouldCreateUniquePointerForArrayType) {
@@ -74,13 +74,12 @@ TEST(MakeUniqueTest, ShouldCreateUniquePointerForArrayType) {
 }
 
 TEST(MakeUniqueTest, ShouldCreatePointerUsingLeftValue) {
-    auto sideTestClass = cs::make_unique<LRValueTestClass>();
-    ASSERT_EQ(sideTestClass->sideTestValue_, leftValue);
+    auto sideTestClassPtr = cs::make_unique<LRValueTestClass>();
+    ASSERT_EQ(sideTestClassPtr->sideTestValue_, leftValue);
 }
-
 
 TEST(MakeUniqueTest, ShouldCreatePointerUsingRightValue) {
     LRValueTestClass classToMove;
-    auto sideTestClass = cs::make_unique<LRValueTestClass>(std::move(classToMove));
-    ASSERT_EQ(sideTestClass->sideTestValue_, rightValue);
+    auto sideTestClassPtr = cs::make_unique<LRValueTestClass>(std::move(classToMove));
+    ASSERT_EQ(sideTestClassPtr->sideTestValue_, rightValue);
 }
