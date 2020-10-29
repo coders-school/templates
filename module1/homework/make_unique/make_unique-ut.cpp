@@ -5,6 +5,7 @@
 constexpr int testIntValue = 10;
 constexpr double testDoubleValue = 3.14;
 constexpr bool testBoolValue = true;
+constexpr char testCharValue = 'x';
 constexpr size_t arraySize = 5;
 
 template<class Type> struct default_delete;
@@ -16,13 +17,14 @@ public:
     make_uniqueTest(int& intValue, double&& doubleValue, bool boolValue)
     : intValue_(intValue), doubleValue_(doubleValue), boolValue_(boolValue)
     {}
-    make_uniqueTest(int&& intValue, double& doubleValue, bool boolValue)
+    make_uniqueTest(int&& intValue, double& doubleValue, bool boolValue, char charValue)
         : intValue_(intValue), doubleValue_(doubleValue), boolValue_(boolValue)
     {}
 
     int intValue_ {testIntValue};
     double doubleValue_ {testDoubleValue};
     bool boolValue_ {testBoolValue};
+    char charValue_ {testCharValue};
 };
 
 TEST(make_uniqueIntTest, testMakeUniqueForIntValue) {
@@ -48,13 +50,15 @@ TEST(make_uniqueEmptyTest, testIntEmptyConstruct) {
 TEST(make_uniqueCustomObjectTest, shouldUseFirstConstructor) {
     int intValue{testIntValue};
     double doubleValue{testDoubleValue};
-    auto muTest = cs::make_unique<make_uniqueTest>(std::move(intValue), doubleValue, testBoolValue);
+    auto muTest = cs::make_unique<make_uniqueTest>(intValue, std::move(doubleValue), testBoolValue);
     ASSERT_EQ(muTest->intValue_, testIntValue);
     ASSERT_EQ(muTest->doubleValue_, testDoubleValue);
     ASSERT_EQ(muTest->boolValue_, testBoolValue);
 
-    auto muTest2 = cs::make_unique<make_uniqueTest>(intValue, std::move(doubleValue), testBoolValue);
+    auto muTest2 = cs::make_unique<make_uniqueTest>
+        (std::move(intValue), doubleValue, testBoolValue, testCharValue);
     ASSERT_EQ(muTest2->intValue_, testIntValue);
     ASSERT_EQ(muTest2->doubleValue_, testDoubleValue);
     ASSERT_EQ(muTest2->boolValue_, testBoolValue);
+    ASSERT_EQ(muTest2->charValue_, testCharValue);
 }
