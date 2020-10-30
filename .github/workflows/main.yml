@@ -1,0 +1,38 @@
+name: Make Unique
+
+on: [push, pull_request]
+
+jobs:
+  ut:
+    runs-on: ubuntu-20.04
+    steps:
+    - name: Check out code
+      uses: actions/checkout@master
+    - name: mkdir homework/make_unique/build
+      run: mkdir homework/make_unique/build
+    - name: Compile
+      working-directory: homework/make_unique/build
+      run: |
+        cmake ..
+        make
+    - name: Run tests
+      working-directory: homework/make_unique/build
+      run: ctest -V
+
+  ut_valgrind:
+    runs-on: ubuntu-20.04
+    steps:
+    - name: Check out code
+      uses: actions/checkout@master
+    - name: Install valgrind
+      run: sudo apt-get install valgrind
+    - name: mkdir homework/make_unique/build
+      run: mkdir homework/make_unique/build
+    - name: Compile
+      working-directory: homework/make_unique/build
+      run: |
+        cmake ..
+        make
+    - name: Run UTs with valgrind
+      working-directory: homework/make_unique/build
+      run: valgrind --leak-check=full ./MakeUnique-ut
