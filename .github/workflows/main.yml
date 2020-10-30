@@ -1,0 +1,43 @@
+name: Make Unique CMake CI
+
+on: [push, pull_request]
+
+jobs:
+  ctest:
+    runs-on: ubuntu-20.04
+
+    steps:
+    - uses: actions/checkout@master
+
+    - name: Create build folder
+      working-directory: module1/homework/make_unique
+      run: mkdir build
+    - name: Compile
+      working-directory: module1/homework/make_unique/build
+      run: |
+        cmake ..
+        make
+    - name: Run tests
+      working-directory: module1/homework/make_unique/build
+      run: ctest -V
+  valgrind:
+    runs-on: ubuntu-20.04
+
+    steps:
+    - uses: actions/checkout@master
+
+    - name: Download and install valgrind
+      run: |
+        sudo apt-get update && sudo apt-get install valgrind
+    - name: Create build folder
+      working-directory: module1/homework/make_unique
+      run: mkdir build
+    - name: Compile
+      working-directory: module1/homework/make_unique/build
+      run: |
+        cmake ..
+        make
+    - name: Run valgrind
+      working-directory: module1/homework/make_unique/build
+      run: |
+        valgrind --leak-check=full ./make_unique-ut
