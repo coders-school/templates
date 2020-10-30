@@ -2,8 +2,10 @@
 #include <memory>
 #include "make_unique.hpp"
 
-constexpr int testIntValue = 10;
-constexpr double testDoubleValue = 3.14;
+constexpr int testIntValueL = 10;
+constexpr int testIntValueR = 5;
+constexpr double testDoubleValueL = 3.14;
+constexpr double testDoubleValueR = 6.28;
 constexpr bool testBoolValue = true;
 constexpr size_t arraySize = 5;
 
@@ -20,14 +22,14 @@ public:
         : intValue_(intValue), doubleValue_(doubleValue), boolValue_(boolValue)
     {}
 
-    int intValue_ {testIntValue};
-    double doubleValue_ {testDoubleValue};
+    int intValue_ {testIntValueR};
+    double doubleValue_ {testDoubleValueR};
     bool boolValue_ {testBoolValue};
 };
 
 TEST(make_uniqueIntTest, testMakeUniqueForIntValue) {
-    auto uPtr = cs::make_unique<int>(testIntValue);
-    ASSERT_EQ(*uPtr, testIntValue);
+    auto uPtr = cs::make_unique<int>(testIntValueR);
+    ASSERT_EQ(*uPtr, testIntValueR);
 }
 
 TEST(make_uniqueArrayTest, testMakeUniqueForArrayType) {
@@ -46,15 +48,17 @@ TEST(make_uniqueEmptyTest, testIntEmptyConstruct) {
 }
 
 TEST(make_uniqueCustomObjectTest, shouldUseFirstConstructor) {
-    int intValue{testIntValue};
-    double doubleValue{testDoubleValue};
+    int intValue{testIntValueL};
+    double doubleValue{testDoubleValueR};
     auto muTest = cs::make_unique<make_uniqueTest>(std::move(intValue), doubleValue, testBoolValue);
-    ASSERT_EQ(muTest->intValue_, testIntValue);
-    ASSERT_EQ(muTest->doubleValue_, testDoubleValue);
+    ASSERT_EQ(muTest->intValue_, testIntValueL);
+    ASSERT_EQ(muTest->doubleValue_, testDoubleValueR);
     ASSERT_EQ(muTest->boolValue_, testBoolValue);
 
-    auto muTest2 = cs::make_unique<make_uniqueTest>(intValue, std::move(doubleValue), testBoolValue);
-    ASSERT_EQ(muTest2->intValue_, testIntValue);
-    ASSERT_EQ(muTest2->doubleValue_, testDoubleValue);
+    int intValue2{testIntValueR};
+    double doubleValue2{testDoubleValueL};
+    auto muTest2 = cs::make_unique<make_uniqueTest>(intValue2, std::move(doubleValue2), testBoolValue);
+    ASSERT_EQ(muTest2->intValue_, testIntValueR);
+    ASSERT_EQ(muTest2->doubleValue_, testDoubleValueL);
     ASSERT_EQ(muTest2->boolValue_, testBoolValue);
 }
