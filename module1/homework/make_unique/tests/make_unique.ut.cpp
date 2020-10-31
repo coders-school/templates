@@ -73,13 +73,16 @@ TEST(MakeUniqueTest, ShouldCreateUniquePointerForArrayType) {
     ASSERT_EQ(arrayPtr[1], secondValue);
 }
 
-TEST(MakeUniqueTest, ShouldCreatePointerUsingLeftValue) {
-    auto sideTestClassPtr = cs::make_unique<LRValueTestClass>();
+TEST(MakeUniqueTest, ShouldCreatePointerUsingCopyConstructor) {
+    LRValueTestClass classToCopy;
+    auto sideTestClassPtr = cs::make_unique<LRValueTestClass>(classToCopy);
     ASSERT_EQ(sideTestClassPtr->sideTestValue_, leftValue);
+    ASSERT_EQ(sideTestClassPtr->sideTestValue_, classToCopy.sideTestValue_);
 }
 
-TEST(MakeUniqueTest, ShouldCreatePointerUsingRightValue) {
+TEST(MakeUniqueTest, ShouldCreatePointerUsingMoveConstructor) {
     LRValueTestClass classToMove;
     auto sideTestClassPtr = cs::make_unique<LRValueTestClass>(std::move(classToMove));
     ASSERT_EQ(sideTestClassPtr->sideTestValue_, rightValue);
+    ASSERT_TRUE(sideTestClassPtr->sideTestValue_ != classToMove.sideTestValue_);
 }
