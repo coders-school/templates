@@ -15,11 +15,11 @@ template<class Type> struct default_delete<Type[]>;
 struct make_uniqueTest {
 public:
     make_uniqueTest() = default;
-    make_uniqueTest(int& intValue, double&& doubleValue, bool boolValue)
-    : intValue_(intValue), doubleValue_(doubleValue), boolValue_(boolValue)
+    make_uniqueTest(int&, double&&, bool)
+    : intValue_(testIntValueL), doubleValue_(testDoubleValueR), boolValue_(testBoolValue)
     {}
-    make_uniqueTest(int&& intValue, double& doubleValue, bool boolValue)
-        : intValue_(intValue), doubleValue_(doubleValue), boolValue_(boolValue)
+    make_uniqueTest(int&& intValue, double& doubleValue, bool)
+        : intValue_(testIntValueR), doubleValue_(testDoubleValueL), boolValue_(testBoolValue)
     {}
 
     int intValue_ {testIntValueR};
@@ -51,14 +51,12 @@ TEST(make_uniqueCustomObjectTest, shouldUseFirstConstructor) {
     int intValue{testIntValueL};
     double doubleValue{testDoubleValueR};
     auto muTest = cs::make_unique<make_uniqueTest>(std::move(intValue), doubleValue, testBoolValue);
-    ASSERT_EQ(muTest->intValue_, testIntValueL);
-    ASSERT_EQ(muTest->doubleValue_, testDoubleValueR);
+    ASSERT_EQ(muTest->intValue_, testIntValueR);
+    ASSERT_EQ(muTest->doubleValue_, testDoubleValueL);
     ASSERT_EQ(muTest->boolValue_, testBoolValue);
 
-    int intValue2{testIntValueR};
-    double doubleValue2{testDoubleValueL};
-    auto muTest2 = cs::make_unique<make_uniqueTest>(intValue2, std::move(doubleValue2), testBoolValue);
-    ASSERT_EQ(muTest2->intValue_, testIntValueR);
-    ASSERT_EQ(muTest2->doubleValue_, testDoubleValueL);
+    auto muTest2 = cs::make_unique<make_uniqueTest>(intValue, std::move(doubleValue), testBoolValue);
+    ASSERT_EQ(muTest2->intValue_, testIntValueL);
+    ASSERT_EQ(muTest2->doubleValue_, testDoubleValueR);
     ASSERT_EQ(muTest2->boolValue_, testBoolValue);
 }
