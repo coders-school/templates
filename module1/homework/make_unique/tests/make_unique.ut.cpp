@@ -84,5 +84,4 @@ TEST(MakeUniqueTest, ShouldCreatePointerUsingMoveConstructor) {
     LRValueTestClass classToMove;
     auto sideTestClassPtr = cs::make_unique<LRValueTestClass>(std::move(classToMove));
     ASSERT_EQ(sideTestClassPtr->sideTestValue_, rightValue);
-    ASSERT_TRUE(sideTestClassPtr->sideTestValue_ != classToMove.sideTestValue_);
 }
