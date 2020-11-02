@@ -1,0 +1,40 @@
+name: CMake CI
+
+on: [push, pull_request]
+
+jobs:
+  make_unique_compile_and_run:
+    runs-on: ubuntu-20.04
+
+    steps:
+    - uses: actions/checkout@master
+
+    - name: Create build folder
+      working-directory: module1homework/make_unique
+      run: mkdir build
+    - name: Compile
+      working-directory: module1/homework/make_unique/build
+      run: |
+        cmake ..
+        make
+    - name: Run tests
+      working-directory: module1/homework/make_unique/build
+      run: ctest -V
+
+  shared_ptr_valgrind_run:
+    runs-on: ubuntu-20.04
+    steps:
+    - name: Check out code
+      uses: actions/checkout@master
+    - name: Install valgrind
+      run: sudo apt-get install valgrind
+    - name: Create build dir
+      run: mkdir module1/homework/make_unique/build
+    - name: Compile
+      working-directory: module1/homework/make_unique/build
+      run: |
+        cmake ..
+        make
+    - name: Run valgrind
+      working-directory: module1/homework/make_unique/build
+      run: valgrind ./makeUnique-ut
