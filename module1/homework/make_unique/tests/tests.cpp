@@ -10,14 +10,18 @@ struct MyType {
 
 class makeUniqueTests : public ::testing::Test
 {
-    std::streambuf* coutBuffer{};
-
    protected:
     int defaultValue{5};
     double anotherValue{10.5};
+    std::array<int, 5> defaultArray{1, 2, 3, 4, 5};
+};
 
+class makeUniqueTestsWithStdOut : public makeUniqueTests
+{
+    std::streambuf* coutBuffer{};
+
+   protected:
     std::stringstream testStream{};
-
     void SetUp() override
     {
         coutBuffer = std::cout.rdbuf();
@@ -46,13 +50,18 @@ TEST_F(makeUniqueTests, shouldCreateWithGivenValue)
     EXPECT_DOUBLE_EQ(*uniqueOne, anotherValue);
 }
 
-TEST_F(makeUniqueTests, shouldCreateCustomObject)
+TEST_F(makeUniqueTests, shouldCreateWithArrays) {
+    auto uniqueArray = cs::make_unique<decltype(defaultArray)>(defaultArray);
+    EXPECT_EQ(*uniqueArray, defaultArray);
+}
+
+TEST_F(makeUniqueTestsWithStdOut, shouldCreateObjectWithPerfectForwarding)
 {
     auto expectedLRCOutput{"lvalue, rvalue, copy\n"};
     auto uniqueLRC = cs::make_unique<MyType>(defaultValue, 5.0, true);
     auto actualLRCOutput{testStream.str()};
     EXPECT_EQ(expectedLRCOutput, actualLRCOutput);
-    
+
     testStream.str(std::string());
 
     auto expectedRLCOutput{"rvalue, lvalue, copy\n"};
