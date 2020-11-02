@@ -27,7 +27,7 @@ class makeUniqueTests : public ::testing::Test
     void TearDown() override
     {
         std::cout.rdbuf(coutBuffer);
-        testStream.ignore(std::numeric_limits<std::streamsize>::max());
+        testStream.str(std::string());
     }
 };
 
