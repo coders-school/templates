@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.1)
 
+set(${CXX_STANDARD_REQUIRED} ON)
+
 # Download and unpack googletest at configure time
 configure_file(CMakeLists.txt.in googletest-download/CMakeLists.txt)
 execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
@@ -40,6 +42,7 @@ add_executable(${PROJECT_NAME}-ut tests/tests.cpp)
 
 target_link_libraries(${PROJECT_NAME}-ut gtest_main)
 target_include_directories(${PROJECT_NAME}-ut PRIVATE ${CMAKE_SOURCE_DIR})
+set_target_properties(${PROJECT_NAME} ${PROJECT_NAME}-ut PROPERTIES CXX_STANDARD 17)
 
 enable_testing()
 add_test(NAME ${PROJECT_NAME}-ut COMMAND ${PROJECT_NAME}-ut)

@@ -55,6 +55,13 @@ TEST_F(makeUniqueTests, shouldCreateWithArrays) {
     EXPECT_EQ(*uniqueArray, defaultArray);
 }
 
+TEST_F(makeUniqueTests, uniqueArrayCanBeCreated) {
+    std::unique_ptr<int[]> uniqueArray = cs::make_unique<int[]>(5);
+    uniqueArray[0] = 0;
+    EXPECT_EQ(uniqueArray[0], 0);
+}
+
+
 TEST_F(makeUniqueTestsWithStdOut, shouldCreateObjectWithPerfectForwarding)
 {
     auto expectedLRCOutput{"lvalue, rvalue, copy\n"};
@@ -69,3 +76,5 @@ TEST_F(makeUniqueTestsWithStdOut, shouldCreateObjectWithPerfectForwarding)
     auto actualRLCOutput{testStream.str()};
     EXPECT_EQ(expectedRLCOutput, actualRLCOutput);
 }
+
+
