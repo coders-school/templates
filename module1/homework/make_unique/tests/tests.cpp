@@ -4,8 +4,10 @@
 #include <sstream>
 
 struct MyType {
-    MyType(int&, double&&, bool) { std::cout << "lvalue, rvalue, copy\n"; }
-    MyType(int&&, double&, bool) { std::cout << "rvalue, lvalue, copy\n"; }
+    const bool constructorLRC{false};
+    const bool constructorRLC{false};
+    MyType(int&, double&&, bool) : constructorLRC(true)  {}
+    MyType(int&&, double&, bool) : constructorRLC(true) {}
 };
 
 class makeUniqueTests : public ::testing::Test
@@ -14,25 +16,6 @@ class makeUniqueTests : public ::testing::Test
     int defaultValue{5};
     double anotherValue{10.5};
     std::array<int, 5> defaultArray{1, 2, 3, 4, 5};
-};
-
-class makeUniqueTestsWithStdOut : public makeUniqueTests
-{
-    std::streambuf* coutBuffer{};
-
-   protected:
-    std::stringstream testStream{};
-    void SetUp() override
-    {
-        coutBuffer = std::cout.rdbuf();
-        std::cout.rdbuf(testStream.rdbuf());
-    }
-
-    void TearDown() override
-    {
-        std::cout.rdbuf(coutBuffer);
-        testStream.str(std::string());
-    }
 };
 
 TEST_F(makeUniqueTests, noParametersShouldBeDefaultObject)
@@ -62,19 +45,25 @@ TEST_F(makeUniqueTests, uniqueArrayCanBeCreated) {
 }
 
 
-TEST_F(makeUniqueTestsWithStdOut, shouldCreateObjectWithPerfectForwarding)
+TEST_F(makeUniqueTests, shouldCreateObjectUsingLRC)
 {
-    auto expectedLRCOutput{"lvalue, rvalue, copy\n"};
+    auto expectedLRC{true};
+    auto expectedRLC{false};
     auto uniqueLRC = cs::make_unique<MyType>(defaultValue, 5.0, true);
-    auto actualLRCOutput{testStream.str()};
-    EXPECT_EQ(expectedLRCOutput, actualLRCOutput);
+    auto actualLRC{uniqueLRC->constructorLRC};
+    auto actualRLC{uniqueLRC->constructorRLC};
+    EXPECT_EQ(expectedLRC, actualLRC);
+    EXPECT_EQ(expectedRLC, actualRLC);
+}
 
-    testStream.str(std::string());
-
-    auto expectedRLCOutput{"rvalue, lvalue, copy\n"};
+TEST_F(makeUniqueTests, shouldCreateObjectUsingRLC) {
+    auto expectedRLC{true};
+    auto expectedLRC{false};
     auto uniqueRLC = cs::make_unique<MyType>(3, anotherValue, false);
-    auto actualRLCOutput{testStream.str()};
-    EXPECT_EQ(expectedRLCOutput, actualRLCOutput);
+    auto actualRLC{uniqueRLC->constructorRLC};
+    auto actualLRC{uniqueRLC->constructorLRC};
+    EXPECT_EQ(expectedRLC, actualRLC);
+    EXPECT_EQ(expectedLRC, actualLRC);
 }
 
 
