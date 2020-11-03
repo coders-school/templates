@@ -50,15 +50,15 @@ TEST(makeUnique, shouldCreatePointerToIntWithDefaultValue) {
 
 TEST(makeUnique, shouldCreatePointerToTuple) {
     auto ptr = myMakeUnique::make_unique<std::tuple<int, double>>(
-        std::make_tuple(TestConsts::intValue, TestConsts::doubleValue));
+        TestConsts::intValue, TestConsts::doubleValue);
 
     ASSERT_EQ(*ptr, std::make_tuple(TestConsts::intValue, TestConsts::doubleValue));
 }
 
 TEST(makeUnique, shouldCreatePointerToOwnStructure) {
-    auto ptr = myMakeUnique::make_unique<TestData>(TestData(TestConsts::intValue,
-                                                            TestConsts::doubleValue,
-                                                            TestConsts::boolValue));
+    auto ptr = myMakeUnique::make_unique<TestData>(TestConsts::intValue,
+                                                   TestConsts::doubleValue,
+                                                   TestConsts::boolValue);
 
     ASSERT_EQ(ptr->first_, TestConsts::intValue);
     ASSERT_EQ(ptr->second_, TestConsts::doubleValue);
