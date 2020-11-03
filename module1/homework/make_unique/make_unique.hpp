@@ -11,9 +11,8 @@ namespace cs
         return std::unique_ptr<ObjectType>(new ObjectType{std::forward<ArgTypes>(args)...});
     }
 
-    template<typename ArrayType>
-    std::enable_if_t<std::is_array_v<ArrayType>, std::unique_ptr<ArrayType>>
-    make_unique(size_t size) {
+    template<typename ArrayType, std::enable_if_t<std::is_array_v<ArrayType>, int> = 0>
+    std::unique_ptr<ArrayType> make_unique(size_t size) {
         return std::unique_ptr<std::remove_extent_t<ArrayType>[]>(new std::remove_extent_t<ArrayType>[size]);
     }
 }
