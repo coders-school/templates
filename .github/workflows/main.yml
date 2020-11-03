@@ -1,0 +1,28 @@
+name: C++ with CMake with tests & valgrind
+
+on: [push, pull_request]
+
+jobs:
+  MakeUniqueTests:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v2
+      with:
+        ref: make_unique
+    - name: mkdir build
+      working-directory: module1/homework/make_unique/
+      run: mkdir build
+    - name: Compile
+      working-directory: module1/homework/make_unique/build
+      run: |
+        cmake ..
+        make
+    - name: Run tests
+      working-directory: module1/homework/make_unique/build
+      run: ctest -V
+    - name: Run valgrind
+      working-directory: module1/homework/make_unique/build
+      run: | 
+        sudo apt install valgrind
+        valgrind ./make_unique-ut
