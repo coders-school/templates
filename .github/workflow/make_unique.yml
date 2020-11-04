@@ -1,0 +1,41 @@
+
+name: make_unique
+
+on: [push, pull_request]
+
+jobs:
+  make_unique:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out code
+      uses: actions/checkout@master
+    - name: mkdir build
+      working-directory: module1/homework/make_unique
+      run: mkdir build
+    - name: Compile
+      working-directory: module1/homework/make_unique/build
+      run: |
+        cmake ..
+        make
+    - name: Run tests
+      working-directory: module1/homework/make_unique/build
+      run: ./make_unique-ut
+
+  ut_valgrind:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out code
+      uses: actions/checkout@master
+    - name: Install valgrind
+      run: sudo apt-get install valgrind
+    - name: mkdir build
+      working-directory: module1/homework/make_unique
+      run: mkdir build
+    - name: Compile
+      working-directory: module1/homework/make_unique/build
+      run: |
+        cmake ..
+        make
+    - name: Run valgrind
+      working-directory: module1/homework/make_unique/build
+      run: valgrind --leak-check=full --show-leak-kinds=all ./make_unique-ut
