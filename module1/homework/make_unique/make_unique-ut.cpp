@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include <memory>
+
 #include "make_unique.hpp"
 
 constexpr int testValue{2020};
