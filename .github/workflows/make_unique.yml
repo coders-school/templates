@@ -4,7 +4,7 @@ on:
   push:
   pull_request:
     branches:
-      - make_unique
+      - master
 
 jobs:
   ctest:
@@ -17,12 +17,12 @@ jobs:
       working-directory: module1/homework/make_unique
       run: mkdir build
     - name: Compile
-      working-directory: module1/homework/make_unique
+      working-directory: module1/homework/make_unique/build
       run: |
         cmake ..
         make
     - name: Run tests
-      working-directory: module1/homework/make_unique
+      working-directory: module1/homework/make_unique/build
       run: ./make_unique-ut
 
   valgrind:
@@ -37,10 +37,10 @@ jobs:
       working-directory: module1/homework/make_unique
       run: mkdir build
     - name: Compile
-      working-directory: module1/homework/make_unique
+      working-directory: module1/homework/make_unique/build
       run: |
         cmake ..
         make
     - name: Run Valgrind
-      working-directory: module1/homework/make_unique
+      working-directory: module1/homework/make_unique/build
       run: valgrind --leak-check=full ./make_unique-ut
