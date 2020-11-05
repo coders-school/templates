@@ -11,8 +11,12 @@ constexpr bool boolValue{true};
 class MyTestType {
 public:
     MyTestType() = default;
-    MyTestType(int firstValue, double secondValue, bool thirdValue)
-        : intValue_(firstValue), doubleValue_(secondValue), boolValue_(thirdValue) {}
+
+    MyTestType(int& intLVal, double&& doubleRVal, bool boolVal)
+        : intValue_(intLVal), doubleValue_(doubleRVal), boolValue_(boolVal) {}
+
+    MyTestType(int&& intRVal, double& doubleLVal, bool boolVal)
+        : intValue_(intRVal), doubleValue_(doubleLVal), boolValue_(boolVal) {}
 
     bool operator==(const MyTestType& other) const {
         return intValue_ == other.intValue_ &&
@@ -20,7 +24,6 @@ public:
                boolValue_ == other.boolValue_;
     }
 
-private:
     int intValue_{intValue};
     double doubleValue_{doubleValue};
     bool boolValue_{boolValue};
@@ -44,12 +47,27 @@ TEST(make_unique, shouldMakeUniqueToEmpytyMyTestTypeObject) {
     std::unique_ptr<MyTestType> uniqMyTestType{new MyTestType{}};
     auto testUniquePtr = cs::make_unique<MyTestType>();
     ASSERT_EQ(*uniqMyTestType, *testUniquePtr);
+    ASSERT_EQ(testUniquePtr->intValue_, intValue);
+    ASSERT_EQ(testUniquePtr->doubleValue_, doubleValue);
+    ASSERT_EQ(testUniquePtr->boolValue_, boolValue);
 }
 
-TEST(make_unique, shouldMakeUniqueToMyTestTypeObject) {
-    std::unique_ptr<MyTestType> uniqMyTestType{new MyTestType{2, 2.5, 0}};
-    auto testUniquePtr = cs::make_unique<MyTestType>(2, 2.5, 0);
-    ASSERT_EQ(*uniqMyTestType, *testUniquePtr);
+TEST(make_unique, shouldMakeUniqueToMyTestTypeObjectWithIntLValue) {
+    int intLValue{1};
+
+    auto testUniquePtr = cs::make_unique<MyTestType>(intLValue, 1.5, true);
+    ASSERT_EQ(testUniquePtr->intValue_, intLValue);
+    ASSERT_EQ(testUniquePtr->doubleValue_, doubleValue);
+    ASSERT_EQ(testUniquePtr->boolValue_, boolValue);
+}
+
+TEST(make_unique, shouldMakeUniqueToMyTestTypeObjectWithDoubleLValue) {
+    double doubleLValue{1.5};
+
+    auto testUniquePtr = cs::make_unique<MyTestType>(1, doubleLValue, true);
+    ASSERT_EQ(testUniquePtr->intValue_, intValue);
+    ASSERT_EQ(testUniquePtr->doubleValue_, doubleLValue);
+    ASSERT_EQ(testUniquePtr->boolValue_, boolValue);
 }
 
 TEST(make_unique, shouldMakeUniqueToIntArray) {
