@@ -4,19 +4,21 @@
 #include "make_unique.hpp"
 
 constexpr int testValue{2020};
-constexpr int intValue{1};
-constexpr double doubleValue{1.5};
+constexpr int intLValue{1};
+constexpr int intRValue{2};
+constexpr double doubleLValue{1.5};
+constexpr double doubleRValue{2.5};
 constexpr bool boolValue{true};
 
 class MyTestType {
 public:
     MyTestType() = default;
 
-    MyTestType(int& intLVal, double&& doubleRVal, bool boolVal)
-        : intValue_(intLVal), doubleValue_(doubleRVal), boolValue_(boolVal) {}
+    MyTestType(int&, double&&, bool)
+        : intValue_(intLValue), doubleValue_(doubleRValue), boolValue_(boolValue) {}
 
-    MyTestType(int&& intRVal, double& doubleLVal, bool boolVal)
-        : intValue_(intRVal), doubleValue_(doubleLVal), boolValue_(boolVal) {}
+    MyTestType(int&&, double&, bool)
+        : intValue_(intRValue), doubleValue_(doubleLValue), boolValue_(boolValue) {}
 
     bool operator==(const MyTestType& other) const {
         return intValue_ == other.intValue_ &&
@@ -24,8 +26,8 @@ public:
                boolValue_ == other.boolValue_;
     }
 
-    int intValue_{intValue};
-    double doubleValue_{doubleValue};
+    int intValue_{intLValue};
+    double doubleValue_{doubleLValue};
     bool boolValue_{boolValue};
 };
 
@@ -47,25 +49,25 @@ TEST(make_unique, shouldMakeUniqueToEmpytyMyTestTypeObject) {
     std::unique_ptr<MyTestType> uniqMyTestType{new MyTestType{}};
     auto testUniquePtr = cs::make_unique<MyTestType>();
     ASSERT_EQ(*uniqMyTestType, *testUniquePtr);
-    ASSERT_EQ(testUniquePtr->intValue_, intValue);
-    ASSERT_EQ(testUniquePtr->doubleValue_, doubleValue);
+    ASSERT_EQ(testUniquePtr->intValue_, intLValue);
+    ASSERT_EQ(testUniquePtr->doubleValue_, doubleLValue);
     ASSERT_EQ(testUniquePtr->boolValue_, boolValue);
 }
 
 TEST(make_unique, shouldMakeUniqueToMyTestTypeObjectWithIntLValue) {
     int intLValue{1};
 
-    auto testUniquePtr = cs::make_unique<MyTestType>(intLValue, 1.5, true);
+    auto testUniquePtr = cs::make_unique<MyTestType>(intLValue, 2.5, true);
     ASSERT_EQ(testUniquePtr->intValue_, intLValue);
-    ASSERT_EQ(testUniquePtr->doubleValue_, doubleValue);
+    ASSERT_EQ(testUniquePtr->doubleValue_, doubleRValue);
     ASSERT_EQ(testUniquePtr->boolValue_, boolValue);
 }
 
 TEST(make_unique, shouldMakeUniqueToMyTestTypeObjectWithDoubleLValue) {
     double doubleLValue{1.5};
 
-    auto testUniquePtr = cs::make_unique<MyTestType>(1, doubleLValue, true);
-    ASSERT_EQ(testUniquePtr->intValue_, intValue);
+    auto testUniquePtr = cs::make_unique<MyTestType>(2, doubleLValue, true);
+    ASSERT_EQ(testUniquePtr->intValue_, intRValue);
     ASSERT_EQ(testUniquePtr->doubleValue_, doubleLValue);
     ASSERT_EQ(testUniquePtr->boolValue_, boolValue);
 }
