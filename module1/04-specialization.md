@@ -7,7 +7,7 @@ ___
 
 ## Specialization examples
 
-We have a class `is_int` with boolean field value, which is by default initialized with `false`. However, if we provide an `int` as a parameter type, we want to have a `true` value there. This is how to achieve it:
+We have a class `is_int` with a boolean field value, which is by default initialized with `false`. However, if we provide an `int` as a parameter type, we want to have a `true` value there. This is how to achieve it:
 
 ```c++
 #include <iostream>
@@ -40,10 +40,10 @@ ___
 The concept of specialization is heavily used in [`<type_traits>` library](https://en.cppreference.com/w/cpp/header/type_traits). Please take a look there.
 <!-- .element: class="fragment fade-in" -->
 
-Generally, we can have different behavior of the code, depending on the type that we provided.
+Generally, we can have different behaviour of the code, depending on the type that we provided.
 <!-- .element: class="fragment fade-in" -->
 
-Of course we could write normal structures or functions above, but this solution with templates is more generic. It means that for every type that we provide to `is_int` by default value `false` will be returned.
+Of course, we could write normal structures or functions above, but this solution with templates is more generic. It means that for every type that we provide to `is_int` by default value `false` will be returned.
 <!-- .element: class="fragment fade-in" -->
 
 ___
@@ -72,14 +72,14 @@ int main() {
 }
 ```
 
-Interactive version of this code is [here](https://ideone.com/fork/GaTh0B)
+The interactive version of this code is [here](https://ideone.com/fork/GaTh0B)
 
 ___
 
 ## Exercise
 
-Write a template class `IsSmallPrime` which holds boolean value `true` or `false`, depending on the integer value passed into template parameter.
+Write a template class `IsSmallPrime` which holds boolean value `true` or `false`, depending on the integer value passed into the template parameter.
 
-You should use specialization for values 2, 3, 5 and 7. In case of 0, 1, 4, 6, 8 and 9 it should hold `false` value.
+You should use specialization for values 2, 3, 5 and 7. In the case of 0, 1, 4, 6, 8 and 9 it should hold a `false` value.
 
-Hint: Beside of typename or class parameter, templates can also have int parameters: eg. `template <typename T1, class T2, int N> class C {}`.
+Hint: Besides typename or class parameter, templates can also have int parameters: eg. `template <typename T1, class T2, int N> class C {}`.

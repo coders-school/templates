@@ -6,7 +6,7 @@ ___
 
 ## Examples
 
-Template classes are as well used to avoid code duplication, as to create so-called meta-programs within them. Here is an example of a simple template class and it's usage:
+Template classes are as well used to avoid code duplication, as to create so-called meta-programs within them. Here is an example of a simple template class and its usage:
 
 ```c++
 #include <iostream>
@@ -52,6 +52,6 @@ std::cout << map[1];  // prints 'e'
 map.at(2); // throw std::out_of_range
 ```
 
-First vector should hold keys, the other one values. Elements at the same position in both vectors should create a pair like 1 and 'c' above. Try to implement as much of `std::map` interface as possible, at least the mentioned above `insert`, `operator[]`, `at`
+The first vector should hold keys, the other one values. Elements at the same position in both vectors should create a pair like 1 and 'c' above. Try to implement as much of `std::map` interface as possible, at least the mentioned above `insert`, `operator[]`, `at`
 
 Use [cppreference](http://en.cppreference.com/w/cpp/container/map).

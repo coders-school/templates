@@ -52,12 +52,12 @@ Type add(Type first, Type second) {
 ```
 <!-- .element: class="fragment fade-in" -->
 
-Instead of `Type` you can have any name you wish. Typically you will see just `T` as a typename, but it is better to have a longer name than only one character, especially, when there is more than only one template type. Now, you can use this function like this:
+Instead of `Type`, you can have any name you wish. Typically you will see just `T` as a typename, but it is better to have a longer name than only one character, especially, when there is more than only one template type. Now, you can use this function like this:
 <!-- .element: class="fragment fade-in" -->
 
 ```c++
-auto resultI = add<int>(4, 5); // resultI type is int
-auto resultD = add<double>(4.0, 5.0); // resultD type is double
+auto resultI = add<int>(4, 5);  // resultI type is int
+auto resultD = add<double>(4.0, 5.0);  // resultD type is double
 auto resultC = add<std::complex<int>>({1, 2}, {2, 3});  // resultC type is std::complex<int>
 ```
 <!-- .element: class="fragment fade-in" -->
@@ -102,7 +102,7 @@ Write a function which creates `std::complex` number from two provided numbers. 
 ```c++
 std::complex<int> a = makeComplex(4, 5);        // both ints
 std::complex<double> b = makeComplex(3.0, 2.0); // both doubles
-std::complex<int> c = makeComplex(1, 5.0);      // int, double -> takes int
+std::complex<int> c = makeComplex(1, 5.0); // int, double -> takes int
 ```
 
 ___
@@ -117,7 +117,7 @@ auto resultC = add(4, 5.0);  // error: int + double
 ```
 <!-- .element: class="fragment fade-in" -->
 
-We will have a compilation error. Compiler will not deduce parameter, because our template function takes only one type, and both parameters have to be of the same type. We can fix this by adding a new version of template of add function.
+We will have a compilation error. The compiler will not deduce parameter, because our template function takes only one type, and both parameters have to be of the same type. We can fix this by adding a new version of the template of add function.
 <!-- .element: class="fragment fade-in" -->
 
 ```c++
@@ -136,12 +136,12 @@ auto resultC = add(4, 5.0);  // resultC type is int
 ```
 <!-- .element: class="fragment fade-in" -->
 
-The output type is the same as first argument type, because it was defined in template function above as `TypeA`.
+The output type is the same as the first argument type because it was defined in the template function above as `TypeA`.
 <!-- .element: class="fragment fade-in" -->
 
 ___
 
-Generally you can freely use template types inside functions, for example you can create new variables of provided types:
+Generally, you can freely use template types inside functions, for example, you can create new variables of provided types:
 
 ```c++
 #include <typeinfo>
@@ -154,7 +154,7 @@ void doNothing() {
 ```
 <!-- .element: class="fragment fade-in" -->
 
-You can use `typeid().name()` to print variable type. You need to include `typeinfo` header for this. You can also notice, that instead of `typename` keyword, you can also use `class` keyword. They are interchangeable.
+You can use `typeid().name()` to print variable type. You need to include the `typeinfo` header for this. You can also notice, that instead of the `typename` keyword, you can also use the `class` keyword. They are interchangeable.
 <!-- .element: class="fragment fade-in" -->
 
 ___
@@ -184,7 +184,7 @@ prog.cpp:15:12: note:   couldn't deduce template parameter ‘T’
 
 ___
 
-The compiler cannot deduce parameters, because the functions does not take any parameters. You need to provide the type explicitly:
+The compiler cannot deduce parameters, because the functions do not take any parameters. You need to provide the type explicitly:
 
 <div style="display: flex; align-items:center;">
 
