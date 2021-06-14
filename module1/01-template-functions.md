@@ -52,7 +52,7 @@ Type add(Type first, Type second) {
 ```
 <!-- .element: class="fragment fade-in" -->
 
-Instead of `Type`, you can have any name you wish. Typically you will see just `T` as a typename, but it is better to have a longer name than only one character, especially, when there is more than only one template type. Now, you can use this function like this:
+Instead of `Type`, you can have any name you wish. Typically you will see just `T` as a typename, but it is better to have a longer name than only one character, especially, when there is more than only one template parameter. Now, you can use this function like this:
 <!-- .element: class="fragment fade-in" -->
 
 ```c++
@@ -69,7 +69,7 @@ ___
 
 ## Function template type deduction
 
-In C++ there is an implemented function template types deduction. It means that you can skip part with angle braces `<>` and write previous example like this:
+There is a function template types deduction in C++. It means that you can skip part with angle braces `<>` and write previous example like this:
 
 ```c++
 auto resultI = add(4, 5);  // resultI type is int
@@ -77,7 +77,8 @@ auto resultD = add(4.0, 5.0);  // resultD type is double
 auto resultC = add({1, 2}, {2, 3});  // error, does not compile
 ```
 
-`resultC` will not compile, because in this case compiler will not know what is the type of `{1, 2}` or `{2, 3}`. Unfortunately in this case we have to type it explicitly:
+`resultC` will not compile, because in this case compiler will not know what is the type of `{1, 2}` or `{2, 3}`. `std::initializer_list` can never be a result of parametr type deduction in templates.
+In this case we have to type it explicitly:
 <!-- .element: class="fragment fade-in" -->
 
 ```c++
@@ -97,7 +98,7 @@ ___
 
 ## Exercise
 
-Write a function which creates `std::complex` number from two provided numbers. If the types of numbers are different, it should create `std::complex` of the first parameter. Usage:
+Write a function that creates `std::complex` number from two provided numbers. If the types of numbers are different, it should create `std::complex` of the first parameter. Usage:
 
 ```c++
 std::complex<int> a = makeComplex(4, 5);        // both ints
@@ -147,7 +148,7 @@ Generally, you can freely use template types inside functions, for example, you 
 #include <typeinfo>
 
 template <class T>
-void doNothing() {
+void showType() {
     T value;
     std::cout << "Type: " << typeid(value).name() << std::endl;
 }
@@ -160,26 +161,26 @@ You can use `typeid().name()` to print variable type. You need to include the `t
 ___
 <!-- .slide: style="font-size: .9em" -->
 
-In previous case if you want to use `doNothing` function without providing explicit templates, the code will not compile:
+In previous case if you want to use `showType()` function without providing explicit templates, the code will not compile:
 
 ```c++
 int main() {
-    doNothing();
+    showType();
     return 0;
 }
 ```
 
 ```bash
 prog.cpp: In function ‘int main()’:
-prog.cpp:15:12: error: no matching function for call to ‘doNothing()’
-  doNothing();
-            ^
-prog.cpp:7:6: note: candidate: template<class T> void doNothing()
- void doNothing()
+prog.cpp:15:12: error: no matching function for call to showType()’
+  showType();
+           ^
+prog.cpp:7:6: note: candidate: template<class T> void showType()
+ void showType()
       ^~~~~~~~~
 prog.cpp:7:6: note:   template argument deduction/substitution failed:
 prog.cpp:15:12: note:   couldn't deduce template parameter ‘T’
-  doNothing();
+  showType();
 ```
 
 ___

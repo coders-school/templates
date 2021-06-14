@@ -40,9 +40,10 @@ std::list<char> l{'c', 'd', 'b'};
 
 ___
 
-## Exercise 2
+## Exercise - `VectorMap`
 
-Write a template class which create an over-engineered `std::map`. It should hold 2 `std::vectors` inside with the same size, each with different types. Usage should look like this:
+Write a template class that represents an over-engineered `std::map`. It should hold 2 `std::vectors` inside with the same size, each with different types. The first vector should hold keys, the other one values. Elements at the same position in both vectors should create a pair like 1 and 'c' above.
+Usage should look like this:
 
 ```c++
 VectorMap<int, char> map;
@@ -52,6 +53,7 @@ std::cout << map[1];  // prints 'e'
 map.at(2); // throw std::out_of_range
 ```
 
-The first vector should hold keys, the other one values. Elements at the same position in both vectors should create a pair like 1 and 'c' above. Try to implement as much of `std::map` interface as possible, at least the mentioned above `insert`, `operator[]`, `at`
+Try to implement as much of `std::map` interface as possible, at least the mentioned above `insert()`, `operator[]`, `at()`.
+Do not bother about duplicated keys for now.
 
 Use [cppreference](http://en.cppreference.com/w/cpp/container/map).
