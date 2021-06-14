@@ -6,11 +6,34 @@ public:
     K(int k) {}
 };
 
+// primary template
+template <typename T1, typename T2, typename T3>
+class A {};
+
+// partial specialization with T1 = int
+template <typename T2, typename T3>
+class A<int, T2, T3> {};
+
+// partial specialization with T1 = int and T2 = double
+template <typename T3>
+class A<int, double, T3> {};
+
+// partial specialization with T1 = int and T3 = char
+template <typename T2>
+class A<int, T2, char> {};
+
+// full specialization with T1 = T2 = double and T3 = int
+template <>
+class A<double, double, int> {};
+
 // template<typename To, typename From>
 // To convert(From f) {}
 
 int main()
 {
+    A<int, int, int> a;
+    A<double, double, int> b;
+    A<int, int, char> c;
     // auto a = convert(3.14);
     // auto b = convert<int>(3.14);
     // auto c = convert<int, double>(3.14);
