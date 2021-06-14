@@ -6,9 +6,17 @@ public:
     K(int k) {}
 };
 
+template<typename To, typename From>
+To convert(From f) {}
 
 int main()
 {
+    // auto a = convert(3.14);
+    auto b = convert<int>(3.14);
+    auto c = convert<int, double>(3.14);
+    int(*ptr)(float) = convert;
+    int(*ptr2)(float) = convert<int, float>;
+
     VectorMap<int, char> ic;
     ic.insert(4, 'a');
     std::cout << ic[4] << '\n';

@@ -1,6 +1,10 @@
 <!-- .slide: data-background="#111111" -->
 
-# Template Functions
+# Template functions
+
+<a href="https://coders.school">
+    <img width="500" src="../img/coders_school_logo.png" alt="Coders School" class="plain">
+</a>
 
 ___
 <!-- .slide: style="font-size: 0.9em" -->
@@ -231,4 +235,30 @@ int main() {
 <!-- .element: class="fragment fade-in" -->
 
 You can also play with the code [here](https://ideone.com/fork/oZZybw)
+<!-- .element: class="fragment fade-in" -->
+
+___
+
+## STL example
+
+```cpp
+template<class InputIt, class UnaryPredicate>
+InputIt find_if(InputIt first, InputIt last, UnaryPredicate p)
+{
+    for(; first != last; ++first) {
+        if(p(*first)) {
+            return first;
+        }
+    }
+    return last;
+}
+```
+
+```cpp
+std::vector<std::pair<int, int>> v{{-3, 1}, {2, 3}, {4, -5}};
+auto it = std::find_if(begin(v), end(v), [](auto& e){ return e.first == 2; });
+if(it != std::end(v)) {
+    /* ... */
+}
+```
 <!-- .element: class="fragment fade-in" -->
