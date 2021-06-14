@@ -1,7 +1,7 @@
 ## Something about you
 
-* Which STL containers are you familiar with?
-* Which of them is your favourite?
+* Have you ever wrote a template function or class?
+* What do you expect from today's session?
 
 ___
 <!-- .slide: data-background="../img/lukin.jpg" -->
@@ -11,7 +11,7 @@ ___
 
 ### Not only a programming XP
 
-* Frontend dev & DevOps @ Coders School
+* Front-end dev, DevOps & Owner @ Coders School
 * C++ and Python developer @ Nokia & Credit Suisse
 * Team leader & Trainer @ Nokia
 * Scrum Master @ Nokia & Credit Suisse
@@ -24,10 +24,10 @@ ___
 
 ### Experience as a trainer
 
-* C++ trainings @ Coders School
+* <a href="https://coders.school/kurs-online">C++ online course</a> @ Coders School
+* Company trainings @ Coders School
 * Practical Aspects Of Software Engineering @ PWr & UWr
 * Nokia Academy @ Nokia
-* Internal corporate trainings
 
 </div>
 
@@ -38,6 +38,7 @@ ___
 * code::dive conference
 * code::dive community
 * Academic Championships in Team Programming
+* <a href="http://youtube.com/c/CodersSchool">Coders School YouTube channel</a>
 
 </div>
 

@@ -142,9 +142,11 @@ The output type is the same as the first argument type because it was defined in
 
 ___
 
-Generally, you can freely use template types inside functions, for example, you can create new variables of provided types:
+## `typeid`
 
-```c++
+Generally, you can freely use template types inside functions. For example, you can create new variables of provided types:
+
+```cpp
 #include <typeinfo>
 
 template <class T>
@@ -155,11 +157,21 @@ void showType() {
 ```
 <!-- .element: class="fragment fade-in" -->
 
-You can use `typeid().name()` to print variable type. You need to include the `typeinfo` header for this. You can also notice, that instead of the `typename` keyword, you can also use the `class` keyword. They are interchangeable.
+You can use `typeid().name()` to print variable type. You need to include the `typeinfo` header for this. The output is implementation-defined.
+<!-- .element: class="fragment fade-in" -->
+
+You can also notice, that instead of the `typename` keyword, you can also use the `class` keyword. They are interchangeable.
+<!-- .element: class="fragment fade-in" -->
+
+```cpp
+template <typename T> == template <class T> != template <struct T>
+```
 <!-- .element: class="fragment fade-in" -->
 
 ___
 <!-- .slide: style="font-size: .9em" -->
+
+## No matching function
 
 In previous case if you want to use `showType()` function without providing explicit templates, the code will not compile:
 
@@ -184,6 +196,8 @@ prog.cpp:15:12: note:   couldn't deduce template parameter ‘T’
 ```
 
 ___
+
+## Template function parameter type deduction
 
 The compiler cannot deduce parameters, because the functions do not take any parameters. You need to provide the type explicitly:
 
