@@ -6,53 +6,40 @@
     <img width="500" src="../img/coders_school_logo.png" alt="Coders School" class="plain">
 </a>
 
+___
+
+## `vector` - template class
+
+Implement your own `vector<T>` class. It should have the same behaviour as `std::vector<T>`
+
+Remember about internal member types.
+
+Remember about `bool` specialization.
+
+You don't need to remember about all constructors.
+
+More advanced version can also have a template parameter `Allocator`.
+
+You don't need to implement everything. Just start and try as much as you can.
 
 ___
 
-## Task Description
+## `remove` - template function
 
-`interval_map<K,V>` is a data structure that efficiently associates intervals of keys of type K with values of type V.
-
-`interval_map<K, V> `is implemented on top of `std::map`.
-
-Each key-value-pair (`k`,`v`) in the `interval_map` means that the value `v` is associated with the interval from `k` (including) to the next key (excluding).
+Implement your own `remove()` function. It should mimic the behaviour of `std::remove()` algorithm.
 
 ___
 
-### Example
+### Code Review
 
-```cpp
-std::map m = {{0,'A'}, {3,'B'}, {5,'A'}};
-```
+Send me a link to the repository with your implementation for my code review.
 
-represents the mapping
-
-```text
-0 -> 'A'
-1 -> 'A'
-2 -> 'A'
-3 -> 'B'
-4 -> 'B'
-5 -> 'A'
-6 -> 'A'
-7 -> 'A'
-... all the way to numeric_limits<int>::max()
-```
-
-The representation in the map must be canonical, that is, consecutive map entries must not have the same value: `..., (0,'A'), (3,'A'), ...` is not allowed.
-
-Initially, the whole range of K is associated with a given initial value, passed to the constructor of the `interval_map<K,V>` data structure.
-
-___
-
-### [Download the code](https://replit.com/@ziobron/interval-map#main.cpp)
-
-Your task is to implement the assign member function of this data structure.
+#### [lukasz@coders.school](mailto:lukasz@coders.school)
 
 ___
 
 ## Post-test
 
-[STL containers post-test](https://forms.gle/hSXkmHxrRrPBvsbT7)
+[Templates - basics post-test](https://forms.gle/hSXkmHxrRrPBvsbT7)
 
 The link will be sent in the next week with all materials.
