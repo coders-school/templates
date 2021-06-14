@@ -4,7 +4,7 @@
 #include <vector>
 #include <type_traits>
 
-template <typename KeyType, typename ValueType, int Size = 0>   // size - ?
+template <typename KeyType, typename ValueType>   // size - ?
 class VectorMap {
     static_assert(std::is_default_constructible<ValueType>::value,
                   "ValueType must have the default constructor");     // type_traits #1
@@ -19,12 +19,6 @@ public:
     using value_type = std::pair<const KeyType, ValueType>;
 
     static constexpr bool is_int_key = std::is_same_v<KeyType, int>;  // type_traits #2
-
-    VectorMap() {   // int param
-        keys_.reserve(Size);
-        values_.reserve(Size);
-        std::cout << keys_.capacity() << '\n';
-    }
 
     void insert(KeyType&& key, ValueType&& value) {
         // what about duplication?

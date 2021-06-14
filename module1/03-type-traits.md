@@ -11,8 +11,10 @@ ___
 ## Constraints
 
 `<type_traits>` library is used to examine type properties. It is usually used in templates to gain some knowledge about provided types.
+<!-- .element: class="fragment fade-in" -->
 
 We can for example constrain our templates to work only with some specific types. The common practice is using it together with `static_assert`.
+<!-- .element: class="fragment fade-in" -->
 
 ```cpp
 #include <type_traits>
@@ -26,6 +28,7 @@ public:
     Choice(E arg) { /* ... */ }
 };
 ```
+<!-- .element: class="fragment fade-in" -->
 
 ___
 
@@ -54,7 +57,7 @@ ___
 
 ## Exercise - `static_assert`
 
-Add a constraint to our VectorMap.
+Add a constraint to our `VectorMap`.
 
 Do not allow to create an object when `ValueType` does not have a default constructor.
 
@@ -64,6 +67,6 @@ Check if it works properly.
 
 ## Exercise - `isIntKey()`
 
-Write a function `isIntKey()`. It should return `true` when the KeyType is `int` and `false` otherwise.
+Write a function `isIntKey()` in `VectorMap`. It should return `true` when the KeyType is `int` and `false` otherwise.
 
 Check the [`<type_traits>`](https://en.cppreference.com/w/cpp/types#Type_traits) library for some inspiration 🙂
