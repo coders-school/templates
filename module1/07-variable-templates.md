@@ -1,6 +1,6 @@
 <!-- .slide: data-background="#111111" -->
 
-# Variable templates
+# Variable templates (C++17)
 
 <a href="https://coders.school">
     <img width="500" src="../img/coders_school_logo.png" alt="Coders School" class="plain">
@@ -8,13 +8,32 @@
 
 ___
 
+## Why?
+
+Eg. different precision
+<!-- .element: class="fragment fade-in" -->
+
+```cpp
+template<class T>
+constexpr T pi = T(3.1415926535897932385L);
+
+template<class T>
+T circular_area(T r) { return pi<T> * r * r; }
+```
+<!-- .element: class="fragment fade-in" -->
+
+But it is really rarely used.
+<!-- .element: class="fragment fade-in" -->
+
+___
 <!-- .slide: style="font-size: .8em" -->
 
-## Specialization example #3
+## Specialization example #2 - field values
 
-We have a class `is_int` with a static const boolean field `value`. It is initialized with `false` by default. However, if we provide an `int` as a parameter type, we want to have a `true` value there. This is how to achieve it:
+Remember this code?
+<!-- .element: class="fragment fade-in" -->
 
-```c++
+```c++ []
 #include <iostream>
 
 template<typename T>   // primary template
@@ -28,7 +47,7 @@ struct is_int<int> {
 };
 
 template<typename T>
-constexpr bool is_int_v = is_int<T>;
+constexpr bool is_int_v = is_int<T>::value;
 
 int main() {
     std::cout << is_int_v<char> << '\n';  // prints 0 (false)
@@ -36,12 +55,19 @@ int main() {
     return 0;
 }
 ```
-<!-- .element: style="font-size: .65em" -->
+<!-- .element: class="fragment fade-in" -->
 
-You can play with the code [here](https://ideone.com/fork/LEIx7e)
+We mainly use template variables as a helpers to class template field values.
+<!-- .element: class="fragment fade-in" -->
+
+___
+
+Check out [`type_traits` on cppreference.com](https://en.cppreference.com/w/cpp/header/type_traits)
+
+Every trait has a corresponding helper variable template.
 
 ___
 
 ## Exercise
 
-Write a variable template `is_int_key_v`. It should return a value of `is_int_key` field in a given type.
+Write a variable template `is_int_key_v`. It should return a value of `is_int_key` field in a given template type.
