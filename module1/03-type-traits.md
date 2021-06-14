@@ -1,5 +1,14 @@
+<!-- .slide: data-background="#111111" -->
 
-### Exercise - `static_assert`
+# `<type_traits>`
+
+<a href="https://coders.school">
+    <img width="500" src="../img/coders_school_logo.png" alt="Coders School" class="plain">
+</a>
+
+___
+
+## Exercise - `static_assert`
 
 Add a constraint to out VectorMap.
 
@@ -9,6 +18,6 @@ Use `static_assert` and proper trait from `<type_traits>` library.
 
 ___
 
-### Exercise - `isIntKey()`
+## Exercise - `isIntKey()`
 
 Write a function `isIntKey()`. It should return `true` when the KeyType is `int` and `false` otherwise.

@@ -1,8 +1,6 @@
 <!-- .slide: data-background="#111111" -->
 
-# Templates - basics
-
-## Recap
+# Recap
 
 <a href="https://coders.school">
     <img width="500" src="../img/coders_school_logo.png" alt="Coders School" class="plain">
@@ -12,7 +10,7 @@ ___
 
 ## How did you enjoy this training session?
 
-## What have you learned today?o
+## What have you learned today?
 
 ___
 
