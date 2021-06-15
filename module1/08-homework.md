@@ -18,7 +18,7 @@ Remember about `bool` specialization.
 
 You don't need to remember about all constructors.
 
-More advanced version can also have a template parameter `Allocator`.
+A more advanced version can also have a template parameter `Allocator`.
 
 You don't need to implement everything. Just start and try as much as you can.
 

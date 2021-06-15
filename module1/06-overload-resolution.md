@@ -45,7 +45,7 @@ Name lookup:
 * <!-- .element: class="fragment fade-in" --> ADL (Argument Dependent Lookup)
 * <!-- .element: class="fragment fade-in" --> Template Argument Deduction -> implicit specializations are generated
 
-If name lookup produce more than one candidate function, the overload resolution is performed to select the function that will actually be called.
+If name lookup produces more than one candidate function, the overload resolution is performed to select the function that will be called.
 <!-- .element: class="fragment fade-in" -->
 
 ___

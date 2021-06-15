@@ -85,7 +85,7 @@ ___
 
 Write a template class `VectorMap` that represents an over-engineered `std::map`.
 
-It should hold 2 `std::vectors` inside with the same size, each with different types. The first vector should hold keys, the other one values.
+Inside, it should hold 2 `std::vectors` of the same size, each with different types. The first vector should hold keys, the other one values.
 
 Elements at the same position in both vectors should create a pair like `1` and `'c'` below.
 
@@ -100,6 +100,6 @@ map.at(2);              // throw std::out_of_range
 Implement the mentioned above `insert()`, `operator[]`, `at()` methods.
 
 Do not bother about duplicated keys for now.
-You can also try to implement additional methods from `std::map` interface 🙂
+You can also try to implement additional methods from the `std::map` interface 🙂
 
 Use [cppreference](http://en.cppreference.com/w/cpp/container/map).

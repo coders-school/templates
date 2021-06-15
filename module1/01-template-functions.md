@@ -81,7 +81,7 @@ auto resultD = add(4.0, 5.0);  // resultD type is double
 auto resultC = add({1, 2}, {2, 3});  // error, does not compile
 ```
 
-`resultC` will not compile, because in this case compiler will not know what is the type of `{1, 2}` or `{2, 3}`. `std::initializer_list` can never be a result of parametr type deduction in templates.
+`resultC` will not compile, because in this case compiler will not know what is the type of `{1, 2}` or `{2, 3}`. `std::initializer_list` can never be a result of parameter type deduction in templates.
 In this case we have to type it explicitly:
 <!-- .element: class="fragment fade-in" -->
 

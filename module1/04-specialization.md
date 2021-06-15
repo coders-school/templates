@@ -53,7 +53,7 @@ ___
 
 ## Class specialization
 
-Class can have not only different behavior (different methods implementations) but also different layouts. You can have completely different fields and/or their values.
+A class can have not only different behaviour (different methods implementations) but also different layouts. You can have completely different fields and/or their values.
 <!-- .element: class="fragment fade-in" -->
 
 ___
@@ -119,7 +119,7 @@ ___
 
 ## Specialization example #3 - &lt;type_traits&gt;
 
-To achieve the last behavior, we can use `std::false_type` and `std::true_type`. Below code is equivalent with the one from the previous example.
+To achieve the last behavior, we can use `std::false_type` and `std::true_type`. The below code is equivalent to the one from the previous example.
 
 ```c++
 #include <iostream>
@@ -148,6 +148,6 @@ ___
 
 In `VectorMap` write a class constant `is_int_key` that holds a boolean value. It should be `true` when the key is `int` and `false` otherwise.
 
-Generally it should do the same job as `isIntKey()` method, but we want to have it available even without having an object.
+Generally, it should do the same job as the `isIntKey()` method, but we want to have it available even without having an object.
 
-Take a look in `<type_traits>` library for that. It should be useful :)
+Take a look in the `<type_traits>` library for that. It should be useful 🙂
