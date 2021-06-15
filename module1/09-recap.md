@@ -17,14 +17,17 @@ ___
 ### Points to remember
 
 * <!-- .element: class="fragment fade-in" --> A template is not a class or a function. A template is a "pattern" that the compiler uses to generate a family of classes or functions.
-* <!-- .element: class="fragment fade-in" --> In order for the compiler to generate the code, it must see both the template definition (not just declaration) and the specific types/whatever used to "fill in" the template. For example, if you’re trying to use a <code>Foo&lt;int&gt;</code>, the compiler must see both the Foo template and the fact that you’re trying to make a specific <code>Foo&lt;int&gt;</code>.
+* <!-- .element: class="fragment fade-in" --> In order for the compiler to generate the code, it must see both the template definition (not just declaration) and the specific types/whatever used to "fill in" the template.
+* <!-- .element: class="fragment fade-in" --> Templates itself are only instantiated upon usage. If some function/method was not used, it is not generated, even for class templates
 * <!-- .element: class="fragment fade-in" --> Full specializations are allowed for both class and function templates
 * <!-- .element: class="fragment fade-in" --> Partial specializations are only allowed for class templates
-* <!-- .element: class="fragment fade-in" --> In specializations you always need to provide the same number of types as in the primary template
+* <!-- .element: class="fragment fade-in" --> When looking for possible overloads within templates, only perfect matches are considered. No conversions are tried.
 * <!-- .element: class="fragment fade-in" --> <code>template &lt;typename T&gt;</code> == <code>template &lt;class T&gt;</code>
-* <!-- .element: class="fragment fade-in" --> type_traits has a lot of useful stuff. Use it with <code>static_assert</code> or SFINAE technique.
-* <!-- .element: class="fragment fade-in" --> When looking for possible overloads withing templates, only perfect matches are considered. No conversions are tried.
-* <!-- .element: class="fragment fade-in" --> Templates itself are only instantiated upon usage. If some function/method was not used, it is not generated, even for class templates
+* <!-- .element: class="fragment fade-in" --> <code>type_traits</code> has a lot of useful stuff. Use it with <code>static_assert</code> or SFINAE technique.
+
+___
+
+## Pre-test answers
 
 ___
 

@@ -57,7 +57,7 @@ Yes and no.
 
 * <!-- .element: class="fragment fade-in" --> Function templates participate in name resolution for overloaded functions, but the rules are different.
 * <!-- .element: class="fragment fade-in" --> For a template to be considered in overload resolution, the type has to match exactly.
-* <!-- .element: class="fragment fade-in" --> If the types do not match exactly, the conversions are not considered and the template is simply dropped from the set of viable functions.
+* <!-- .element: class="fragment fade-in" --> If the types <span class="fragment highlight-green">do not match exactly, the conversions are not considered</span> and the template is simply dropped from the set of viable functions.
 * <!-- .element: class="fragment fade-in" --> That’s what is known as “SFINAE” — Substitution Failure Is Not An Error.
 
 ___
@@ -105,12 +105,20 @@ f(new int{1});
 ```
 <!-- .element: class="fragment fade-in" -->
 
-Calls #3, even though specialization of #1 would be a perfect match
+Calls #3, even though #2 (specialization of #1) would be a perfect match
 <!-- .element: class="fragment fade-in" -->
 
 * <!-- .element: class="fragment fade-in" --> Only non-template and primary template overloads participate in overload resolution
 * <!-- .element: class="fragment fade-in" --> The specializations are not overloads and are not considered
 * <!-- .element: class="fragment fade-in" --> Only after the overload resolution selects the best-matching primary function template, its specializations are examined to see if one is a better match
+
+___
+
+## General rule
+<!-- .element: class="fragment fade-in" -->
+
+If possible, create function overloads, not specializations.
+<!-- .element: class="fragment fade-in" -->
 
 ___
 
