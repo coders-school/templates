@@ -40,6 +40,4 @@ ___
 
 ## Post-test
 
-[Templates - basics post-test](https://forms.gle/hSXkmHxrRrPBvsbT7)
-
-The link will be sent in the next week with all materials.
+The link will be sent after the training with all materials.
