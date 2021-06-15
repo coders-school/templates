@@ -2,7 +2,7 @@
 
 ## `make_unique` (40 XP)
 
-Implement `make_unique` function. It should be able to take any numer of parameters and it should return a unique_ptr with a given type. The object of a given type should be created with all parameters passed to it.
+Implement `make_unique` function. It should be able to take any number of parameters and it should return a unique_ptr with a given type. The object of a given type should be created with all parameters passed to it.
 The main challenge is to properly unit tests for l-values and r-values. Do not forget about CI.
 
 ```cpp

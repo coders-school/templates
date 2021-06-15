@@ -6,6 +6,12 @@ public:
     K(int k) {}
 };
 
+template<class T> void f(T);    // #1: overload for all types
+template<>        void f(int*) {
+    std::cout << "#3\n";
+} // #2: specialization of #1 for pointers to int
+template<class T> void f(T*);   // #3: overload for all pointer types
+
 // primary template
 template <typename T1, typename T2, typename T3>
 class A {};
@@ -31,6 +37,8 @@ class A<double, double, int> {};
 
 int main()
 {
+    f(new int{1});   // calls #3, even though specialization of #1 would be a perfect match
+
     A<int, int, int> a;
     A<double, double, int> b;
     A<int, int, char> c;

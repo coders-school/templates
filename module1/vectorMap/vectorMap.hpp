@@ -1,8 +1,9 @@
 #pragma once
 
 #include <algorithm>
-#include <vector>
+#include <iostream>
 #include <type_traits>
+#include <vector>
 
 template <typename KeyType, typename ValueType>   // size - ?
 class VectorMap {
