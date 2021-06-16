@@ -211,7 +211,7 @@ The compiler cannot deduce parameters, because the functions do not take any par
 
 ```c++
 int main() {
-    doNothing<int>();
+    showType<int>();
     return 0;
 }
 ```
@@ -224,7 +224,7 @@ or
 
 ```c++
 int main() {
-    doNothing<std::vector<char>>();
+    showType<std::vector<char>>();
     return 0;
 }
 ```
