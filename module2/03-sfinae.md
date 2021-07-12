@@ -178,11 +178,11 @@ ___
 
 ## Task
 
-```text
-git clone -b solutions https://github.com/coders-school/modern-cpp.git
-```
+Take a look into `module2/shapes` directory.
 
-Write a function `insert()` in `main.cpp` that allows inserting only subclasses of Shape to the collection. Parameter other than `shared_ptr` to `Circle`, `Square` or `Rectangle` should not compile. Use SFINAE. Use proper type_traits.
+Write a function `insert()` in `main.cpp` that allows inserting only subclasses of Shape to the collection. Parameters other than `Circle`, `Square` or `Rectangle` should not compile. Use SFINAE. Use proper type_traits.
+
+The function should create a `shared_ptr` of the Shape passed as the first parameter and put it in the collection, which should be provided as the second parameter.
 
 <p class="fragment">Hints:</p>
 <ul>
