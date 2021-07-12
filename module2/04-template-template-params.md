@@ -26,12 +26,25 @@ It causes a compilation error:
 `error: type/value mismatch at argument 2 in template parameter list for ‘template<class T, class Policy> class Handle’`
 <!-- .element: class="fragment fade-in" style="font-size: 1.35rem" -->
 
-To allow that, we need to use so-called `template template` arguments.
+We tried to pass a template class instead of a specific class (like instantiated template class). This should work:
+<!-- .element: class="fragment fade-in" -->
+
+```cpp
+Handle<FILE, MyDeleter<FILE>> h;
+```
+<!-- .element: class="fragment fade-in" -->
+
+___
+
+## Template of template
+
+To allow using a template class, we need to use so-called `template template` arguments.
 <!-- .element: class="fragment fade-in" -->
 
 ```cpp
 template<typename T> class MyDeleter {};
 template<typename T, template<typename> typename Policy> class Handle { /* ... */ };
+// template<typename T, typename Policy> class Handle { /* ... */ };  // previously
 Handle<FILE, MyDeleter> h;
 ```
 <!-- .element: class="fragment fade-in" style="font-size: 1.35rem" -->
