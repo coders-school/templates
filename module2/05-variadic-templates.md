@@ -249,7 +249,7 @@ ___
 
 ## Task
 
-Write `make_array` function, that can create `std::array<T, N>` from all values passed to it.
+Write a `make_array()` function, that can create `std::array<T, N>` from all values passed to it.
 
 ```cpp
 std::array<int, 3> a = make_array(1, 2, 3);
@@ -271,19 +271,23 @@ ___
 ## Solution
 
 ```cpp
+#include <array>
+#include <iostream>
+#include <type_traits>
+
 template<typename... Ts>
 constexpr auto make_array(Ts&&... ts) -> std::array<std::common_type_t<Ts...>, sizeof...(Ts)> {
     return { std::forward<Ts>(ts)... };
 }
 
-void foo() {
+int main() {
     auto b = make_array(1, 2, 3);
     std::cout << b.size() << '\n';
     for(auto i : b)
         std::cout << i << ' ';
 }
 ```
-<!-- .element: class="fragment fade-in" -->
+<!-- .element: class="fragment fade-in" style="font-size: 1.18rem" -->
 
 ___
 
