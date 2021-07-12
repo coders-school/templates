@@ -22,7 +22,7 @@ void insertC(T&& item, Collection& collection) {
 
 
 
-    const Square s{400.0};
-    insertC(s, shapes);
-    insertC(Rectangle{4.0, 50.0}, shapes);
-    insertC(4, shapes);     // compilation doesn't fail. Function is empty for int.
+// const Square s{400.0};
+// insertC(s, shapes);
+// insertC(Rectangle{4.0, 50.0}, shapes);
+// insertC(4, shapes);     // compilation doesn't fail. Function is empty for int.
