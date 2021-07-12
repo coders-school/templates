@@ -42,6 +42,7 @@ ___
 > This rule applies during overload resolution of function templates: When substituting the explicitly specified or deduced type for the template parameter fails, the specialization is discarded from the overload set instead of causing a compile error.
 >
 > -- <a href="https://en.cppreference.com/w/cpp/language/sfinae">cppreference.com</a>
+<!-- .element: class="fragment fade-in" -->
 
 <p class="fragment"><strong>Rationale</strong>: have a universal interface without letting the caller to decide which implementation should be called. The selection of an optimal implementation is done by a compiler and is coded by library creators.</p>
 
@@ -180,9 +181,9 @@ ___
 
 Take a look into `module2/shapes` directory.
 
-Write a function `insert()` in `main.cpp` that allows inserting only subclasses of Shape to the collection. Parameters other than `Circle`, `Square` or `Rectangle` should not compile. Use SFINAE. Use proper type_traits.
+Write an `insert()` function in `main.cpp`. It should allow inserting only subclasses of Shape to the collection. Parameters other than `Circle`, `Square` or `Rectangle` should not compile. Use SFINAE. Use proper type_traits.
 
-The function should create a `shared_ptr` of the Shape passed as the first parameter and put it in the collection, which should be provided as the second parameter.
+The function should create a `shared_ptr` from the object passed as the first parameter and put it in the collection, which should be provided as the second parameter.
 
 <p class="fragment">Hints:</p>
 <ul>
@@ -193,8 +194,55 @@ The function should create a `shared_ptr` of the Shape passed as the first param
 
 ___
 
+## Solution
+
+```cpp
+template <typename T>
+using removeCvRef = std::remove_cv_t<std::remove_reference_t<T>>;
+template <typename T>
+using isBaseOfShape = std::enable_if_t<std::is_base_of_v<Shape, removeCvRef<T>>>;
+
+template <
+    class T,
+    typename = isBaseOfShape<T>
+>
+void insert(T&& item, Collection& collection) {
+    collection.emplace_back(make_shared<removeCvRef<T>>(item));
+}
+```
+<!-- .element: class="fragment fade-in" style="font-size: 1.4rem" -->
+
+___
+
+## `if constexpr`
+
+```cpp
+template <typename T>
+using removeCvRef = std::remove_cv_t<std::remove_reference_t<T>>;
+
+template <class T>
+void insertC(T&& item, Collection& collection) {
+    if constexpr (std::is_base_of_v<Shape, removeCvRef<T>>) {
+        collection.emplace_back(make_shared<removeCvRef<T>>(item));
+    } else {
+        std::cout << "Sorry\n";
+    }
+}
+```
+<!-- .element: class="fragment fade-in" -->
+
+* <!-- .element: class="fragment fade-in" --> can replace SFINAE mechanism
+* <!-- .element: class="fragment fade-in" --> available from C++17
+* <!-- .element: class="fragment fade-in" --> the result is not a substitution error, but usually empty code
+
+___
+
 ## Conclusions
 
 * <!-- .element: class="fragment fade-in" --> SFINAE is a very powerful and difficult technique
 * <!-- .element: class="fragment fade-in" --> Proper usage may not be too ugly 🥴
-* <!-- .element: class="fragment fade-in" --> Where applicable, tag dispatch, static_assert, and concepts, are usually preferred over the direct use of SFINAE
+* <!-- .element: class="fragment fade-in" --> Where applicable, use below techniques instead of SFINAE:
+  * [tag dispatch](https://arne-mertz.de/2016/10/tag-dispatch/)
+  * `static_assert` (C++11)
+  * `if constexpr` (C++17)
+  * concepts (C++20)
