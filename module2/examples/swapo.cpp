@@ -15,9 +15,9 @@ void swapo(T& a, T& b)
 }
 
 int main() {
-	A a{};
-	A b{};
-	
-	swapo(a, b);
-	return 0;
+    A a{};
+    A b{};
+
+    swapo(a, b);
+    return 0;
 }
