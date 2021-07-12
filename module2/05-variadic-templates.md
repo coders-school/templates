@@ -54,7 +54,7 @@ ___
 
 ## Syntax
 
-Templates with variable number of arguments use new syntax of parameter pack, that represents many (or zero) parameters of a template.
+Templates with a variable number of arguments use the new syntax of parameter pack, which represents many (or zero) parameters of a template.
 
 ```cpp
 template<class ... Types>
@@ -87,7 +87,7 @@ ___
 Unpacking group parameters uses new syntax of elipsis operator - `...`
 <!-- .element: class="fragment fade-in" -->
 
-In case of function arguments it unpacks them in the order given in template function call.
+In the case of function arguments, it unpacks them in the order given in the template function call.
 <!-- .element: class="fragment fade-in" -->
 
 ___
@@ -197,7 +197,7 @@ ___
 
 ## Head tail recursion in classes
 
-It is possible to unpack all types at once (e.g. in case of base class that is variadic template class) or using partial and full specializations.
+It is possible to unpack all types at once (e.g. in the case of a base class that is a variadic template class) or using partial and full specializations.
 
 ```cpp
 template<int... Number>
@@ -289,7 +289,7 @@ ___
 
 ## Perfect forwarding
 
-It is recommended to use `&&` and `std::forward` with variadic arguments to handle r-values and l-values correctly. It is so called **perfect forwarding**.
+It is recommended to use `&&` and `std::forward` with variadic arguments to handle r-values and l-values correctly. It is so-called **perfect forwarding**.
 
 ```cpp
 #include <utility>

@@ -24,7 +24,7 @@ It causes compilation error:
 `error: type/value mismatch at argument 2 in template parameter list for ‘template<class T, class Policy> class handle’`
 <!-- .element: class="fragment fade-in" style="font-size: 1.35rem" -->
 
-To allow that, we need to use so called `template template` arguments.
+To allow that, we need to use so-called `template template` arguments.
 
 ```cpp
 template<typename T> class my_deleter {};
@@ -89,4 +89,4 @@ ___
 
 4. Add a print function for printing the content of the internal `vector<T>` field
 
-5. Add a support of `std::array<T, N>`. The constructor should allow to copy the content of it to the internal vector.
+5. Add support of `std::array<T, N>`. The constructor should allow copying the content to the internal vector.

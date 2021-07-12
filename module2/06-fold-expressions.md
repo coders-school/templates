@@ -10,7 +10,7 @@ ___
 
 ## Fold expressions (C++17)
 
-Fold-expressions allow to write compact code with variadic templates without using explicit recursion.
+Fold-expressions allow writing compact code with variadic templates without using explicit recursion.
 
 ```cpp
 template<typename... Args> auto sum(Args... args) {

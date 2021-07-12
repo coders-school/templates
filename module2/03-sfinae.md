@@ -43,7 +43,7 @@ ___
 >
 > -- <a href="https://en.cppreference.com/w/cpp/language/sfinae">cppreference.com</a>
 
-<p class="fragment"><strong>Rationale</strong>: have a universal interface without letting the caller to decide which implementation should be called. Selection of an optimal implementation is done by a compiler and is coded by a library creators.</p>
+<p class="fragment"><strong>Rationale</strong>: have a universal interface without letting the caller to decide which implementation should be called. The selection of an optimal implementation is done by a compiler and is coded by library creators.</p>
 
 ___
 
