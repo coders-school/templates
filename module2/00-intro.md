@@ -1,6 +1,7 @@
 ## Something about you
 
-* Have you ever seen a SFINAE in a code?
+* Have you ever seen/used the SFINAE technique?
+* Have you heard about a static polymorphism?
 * What do you expect from today's session?
 
 ___
@@ -67,54 +68,59 @@ ___
 
 ## Pre-test 1/3 🤯
 
-### Which of the following usages of a template function are correct?
+### Is this code correct?
 
 ```cpp
-template <typename T, typename U>
-U fun(T arg1, U arg2);
+template<typename... Args> bool f(Args... args) {
+    return (args && ... && args);
+}
 ```
 
-1. <code>fun(4, 5)</code>
-2. <code>fun(4, 5.5)</code>
-3. <code>fun&lt;int, int&gt;(4, 5)</code>
-4. <code>fun&lt;int, double&gt;(4, 5.5)</code>
-5. <code>fun&lt;int, int&gt;(4, 5.5)</code>
+1. Yes
+2. No, the parameter pack is used twice in fold-expression
+3. No, the ellipsis operator is used incorrectly in fold-expression
+4. No, <code>Args&&</code> should be used as a function argument
 
 ___
 <!-- .slide: style="font-size: 0.9em" -->
 
 ## Pre-test 2/3 🤯
 
-### Which of the following usages of a template function are correct?
+### What is the output of this program?
 
 ```cpp
-template <typename T, typename U, typename V>
-V fun(T arg1, U arg2);
+#include <iostream>
+
+template <typename T>
+void fun(T)
+{
+  static int i;
+  std::cout << ++i;
+}
+
+int main()
+{
+  fun(1);
+  fun(1.0);
+  fun(1);
+}
 ```
 
-1. <code>fun(4, 5.5)</code>
-2. <code>fun(4, 5.5, int)</code>
-3. <code>fun(4, 5.5, 'c')</code>
-4. <code>fun&lt;int, double, int&gt;(4, 5.5)</code>
-5. <code>fun&lt;int, double, char&gt;(4, 5.5)</code>
-6. <code>fun&lt;int, double, char&gt;(4, 5.5, 'c')</code>
-7. <code>fun&lt;char&gt;(4, 5.5)</code>
-8. <code>fun&lt;V = char&gt;(4, 5.5)</code>
-
 ___
-<!-- .slide: style="font-size: 0.95em" -->
+<!-- .slide: style="font-size: 0.8em" -->
 
 ## Pre-test 3/3 🤯
 
-### Which of the following usages of a template function are correct?
+### Mark true statements about this code
 
 ```cpp
-template<typename To, typename From>
-To convert(From f);
+template<typename T> class MyDeleter {};
+template<typename T, typename Policy> class Handle { /* ... */ };
+Handle<FILE, MyDeleter> h;
 ```
 
-1. <code>auto a = convert(3.14);</code>
-2. <code>auto b = convert&lt;int&gt;(3.14);</code>
-3. <code>auto c = convert&lt;int, double&gt;(3.14);</code>
-4. <code>int(*p1)(float) = convert;</code>
-5. <code>int(*p2)(float) = convert&lt;int, float&gt;;</code>
+1. This code compiles
+2. <code>MyDeleter</code> cannot be used as a <code>Policy</code> template argument
+3. <code>template&lt;typename T, template typename Policy&gt;</code> - this should make this code work
+4. <code>template&lt;typename T, template &lt;typname ...&gt; typename Policy&gt;</code> - this should make this code work
+5. <code>template&lt;typename T, template &lt;typname&gt; typename Policy&gt;</code> - this should make this code work

@@ -64,3 +64,29 @@ void foo(double i) {
 <p class="fragment"><code>error: call of overloaded ‘foo(int)’ is ambiguous</code></p>
 <p class="fragment">Why?</p>
 <p class="fragment">Promotion to double and conversion to unsigned are equally viable.</p>
+
+___
+
+## Function overloads vs function specializations
+
+```cpp
+template<class T> void f(T);    // #1: overload for all types
+template<>        void f(int*); // #2: specialization of #1 for pointers to int
+template<class T> void f(T*);   // #3: overload for all pointer types
+
+f(new int{1});
+```
+<!-- .element: class="fragment fade-in" style="font-size: 1.3rem" -->
+
+### Which function is chosen?
+<!-- .element: class="fragment fade-in" -->
+
+It calls #3, even though specialization of #1 would be a perfect match.
+<!-- .element: class="fragment fade-in" -->
+
+### Rules
+<!-- .element: class="fragment fade-in" -->
+
+* <!-- .element: class="fragment fade-in" --> Only non-template and primary template overloads participate in overload resolution
+* <!-- .element: class="fragment fade-in" --> The specializations are not overloads and are not considered
+* <!-- .element: class="fragment fade-in" --> Only after the overload resolution selects the best-matching primary function template, its specializations are examined to see if one is a better match

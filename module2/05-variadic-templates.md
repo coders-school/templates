@@ -11,8 +11,10 @@ ___
 ## Motivation
 
 Variadic templates can be used to create template functions or classes that accept any numer of arguments of any type.
+<!-- .element: class="fragment fade-in" -->
 
 Do you know `printf()` function (from C)?
+<!-- .element: class="fragment fade-in" -->
 
 ```cpp
 #include <cstdio>
@@ -23,6 +25,30 @@ int main() {
    return 0;
 }
 ```
+<!-- .element: class="fragment fade-in" -->
+
+___
+
+## Parameter pack
+
+A template parameter pack is a template parameter that accepts zero or more template arguments
+<!-- .element: class="fragment fade-in" -->
+
+```cpp
+template<typename ... Types> struct Tuple {};
+Tuple<> t0;           // Types contains no arguments
+Tuple<int> t1;        // Types contains one argument: int
+Tuple<int, float> t2; // Types contains two arguments: int and float
+```
+<!-- .element: class="fragment fade-in" -->
+
+```cpp
+template<typename ... Types> void f(Types ... args);
+f();                // OK: args contains no arguments
+f(1);               // OK: args contains one argument: int
+f(2, 1.0);          // OK: args contains two arguments: int and double
+```
+<!-- .element: class="fragment fade-in" -->
 
 ___
 
@@ -31,8 +57,8 @@ ___
 Templates with variable number of arguments use new syntax of parameter pack, that represents many (or zero) parameters of a template.
 
 ```cpp
-template<class... Types>
-void variadic_foo(Types&&... args)
+template<class ... Types>
+void variadic_foo(Types&& ... args)
 { /*...*/ }
 
 int main() {
@@ -40,27 +66,29 @@ int main() {
     return 0;
 }
 ```
+<!-- .element: class="fragment fade-in" -->
 
 ```cpp
-template<class... Types>
+template<class ... Types>
 class variadic_class
 { /*...*/ };
 
 int main() {
     variadic_class<float, int, std::string> v1{};  // default c-tor
-    variadic_class v2{2.0, 5, "Hello"}; // automatic template type deduction for classes from C++17
+    variadic_class v2{2.0, 5, "Hello"}; // automatic deduction from C++17
 }
 ```
+<!-- .element: class="fragment fade-in" -->
 
 ___
 
 ## Unpacking function parameters
 
 Unpacking group parameters uses new syntax of elipsis operator - `...`
+<!-- .element: class="fragment fade-in" -->
 
 In case of function arguments it unpacks them in the order given in template function call.
-
-It is possible to call a function on a parameter pack. In such case given function will be called on every argument from a function call.
+<!-- .element: class="fragment fade-in" -->
 
 ___
 
@@ -97,6 +125,57 @@ tuple<Foo...>(bar...) => tuple<Foo1, Foo2, Foo3, etc>(bar1, bar2, bar3, etc)
 &bar...               => &bar1, &bar2, &bar3, etc
 &&bar...              => &&bar1, &&bar2, &&bar3, etc
 ```
+
+___
+
+## Example with `std::variant`
+
+```cpp
+#include <functional>
+#include <iostream>
+#include <string>
+#include <variant>
+
+template <typename... Ts>
+struct make_visitor
+  : Ts...
+{
+  using Ts::operator()...;
+};
+
+// Deduction guide
+template <typename... Ts>
+make_visitor(Ts...) -> make_visitor<Ts...>;
+
+using variant = std::variant<int, std::string, double>;
+
+int main()
+{
+  {
+    const auto v0 = variant{42.2};
+
+    std::visit(make_visitor{
+      [](int){std::cout << "int\n";},
+      [](std::string){std::cout << "std::string\n";},
+      [](double){std::cout << "double\n";}
+    }, v0);
+
+    // Without deduction guide
+    std::visit(make_visitor<
+        std::function<void(int)>,
+        std::function<void(std::string)>,
+        std::function<void(double)>>
+    {
+      [](int){std::cout << "int\n";},
+      [](std::string){std::cout << "std::string\n";},
+      [](double){std::cout << "double\n";}
+    }, v0);
+  }
+}
+```
+<!-- .element: style="font-size: 1.2rem" -->
+
+[Source](https://gist.github.com/ahamez/383f8e326d2b63d27a2ef6935162ce09)
 
 ___
 
@@ -165,6 +244,46 @@ struct NumOfArguments {
 
 constexpr auto num = NumOfArguments<A, B, C>::value;  // 3
 ```
+
+___
+
+## Task
+
+Write `make_array` function, that can create `std::array<T, N>` from all values passed to it.
+
+```cpp
+std::array<int, 3> a = make_array(1, 2, 3);
+std::array<double, 4> b = make_array(1.1, 2.2, 3.3, 4.4);
+```
+
+### Hints
+<!-- .element: class="fragment fade-in" -->
+
+* <!-- .element: class="fragment fade-in" --> variadic function
+* <!-- .element: class="fragment fade-in" --> <code>sizeof...</code> to deduce size
+* <!-- .element: class="fragment fade-in" --> <code>std::common_type</code> to deduce the type
+* <!-- .element: class="fragment fade-in" --> trailing return type with <code>-></code>
+* <!-- .element: class="fragment fade-in" --> perfect forwarding
+* <!-- .element: class="fragment fade-in" --> <code>constexpr</code>
+
+___
+
+## Solution
+
+```cpp
+template<typename... Ts>
+constexpr auto make_array(Ts&&... ts) -> std::array<std::common_type_t<Ts...>, sizeof...(Ts)> {
+    return { std::forward<Ts>(ts)... };
+}
+
+void foo() {
+    auto b = make_array(1, 2, 3);
+    std::cout << b.size() << '\n';
+    for(auto i : b)
+        std::cout << i << ' ';
+}
+```
+<!-- .element: class="fragment fade-in" -->
 
 ___
 

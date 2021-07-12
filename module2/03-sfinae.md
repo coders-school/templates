@@ -23,33 +23,48 @@ void foo(T* arg) {}
 void foo(int arg) {}
 void foo(int* arg) {}
 </code></pre>
-<p class="fragment">Compiler cannot substitute <code>42</code> as an argument to the second function. It would cause a compilation error. Therefore this overload is discarded.</p>
-<p class="fragment">There is no compilation error - this is SFINAE works.</p>
-<p class="fragment">If the first function is missing, there is a compilation error.</p>
+
+The compiler cannot substitute `42` as an argument to the second function. It would cause a compilation error. Therefore this overload is discarded.
+<!-- .element: class="fragment fade-in" -->
+
+There is no compilation error - this is how SFINAE works.
+<!-- .element: class="fragment fade-in" -->
+
+If the first function is missing, there is a compilation error.
+<!-- .element: class="fragment fade-in" -->
 
 ___
 
 ## SFINAE
 
 <p class="fragment">Substitution Failure Is Not An Error is a meta-programming technique.</p>
-<blockquote class="fragment" cite="https://en.cppreference.com/w/cpp/language/sfinae">
-    &ldquo;This rule applies during overload resolution of function templates: When substituting the explicitly specified or deduced type for the template parameter fails, the specialization is discarded from the overload set instead of causing a compile error.&rdquo;
-    <small>-- <a href="https://en.cppreference.com/w/cpp/language/sfinae">cppreference.com</a></small>
-</blockquote>
+
+> This rule applies during overload resolution of function templates: When substituting the explicitly specified or deduced type for the template parameter fails, the specialization is discarded from the overload set instead of causing a compile error.
+>
+> -- <a href="https://en.cppreference.com/w/cpp/language/sfinae">cppreference.com</a>
+
 <p class="fragment"><strong>Rationale</strong>: have a universal interface without letting the caller to decide which implementation should be called. Selection of an optimal implementation is done by a compiler and is coded by a library creators.</p>
+
+___
+
+<h2><code>type_traits</code> library</h2>
+<p><a href="https://en.cppreference.com/w/cpp/header/type_traits">&lt;type_traits&gt; on cppreference.com</a></p>
 
 ___
 
 ## `std::enable_if`
 
 <p>C++11 has a metaprogramming helper struct - <code>std::enable_if</code>. It is a compile-time switch for enabling or disabling some templates.</p>
-<pre class="fragment"><code class="cpp" data-trim data-line-numbers>
-template &lt;bool Condition, class T = void&gt;
+
+```cpp
+template <bool Condition, class T = void>;
 struct enable_if {};
 
-template &lt;class T&gt;
-struct enable_if&lt;true, T&gt; { using type = T; };
-</code></pre>
+template <class T>
+struct enable_if<true, T> { using type = T; };
+```
+<!-- .element: class="fragment fade-in" -->
+
 <ul>
     <li class="fragment">If <code>Condition</code> is <code>true</code>, accessing internal type by <code>enable_if&lt;Condition, T&gt;::type</code> is valid.</li>
     <li class="fragment">If <code>Condition</code> is <code>false</code>, accessing internal type by <code>enable_if&lt;Condition, T&gt;::type</code> is invalid and substitution is not correct - SFINAE works.</li>
@@ -84,9 +99,26 @@ template <
 
 <p class="fragment">Why <code>* = nullptr</code>?</p>
 
+Note:
+
+Show in IDE
+
+```cpp
+// function(4) generates this implicit instantiation
+template <
+    int,
+    typename std::enable_if<std::is_integral<int>::value, int>::type* = nullptr
+> void function(int& t) {}
+
+template <
+    int,
+    int* = nullptr
+> void function(int& t) {}
+```
+
 ___
 
-## `enable_if` occurences
+## `enable_if` variations
 
 <pre class="fragment"><code class="cpp" data-trim>
 template&lt;class T&gt;     // #1 return type
@@ -111,7 +143,7 @@ template&lt;
 
 ___
 
-## `enable_if` occurences
+## `enable_if` variations
 
 <p>The most elegant way</p>
 <pre class="fragment"><code class="cpp" data-trim>
@@ -129,17 +161,40 @@ template&lt;
 
 ___
 
-<h2><code>type_traits</code> library</h2>
-<p><a href="https://en.cppreference.com/w/cpp/header/type_traits">&lt;type_traits&gt; on cppreference.com</a></p>
+## Concepts (C++20)
+
+```cpp
+template <class T>
+concept HasVirtualDtor = std::has_virtual_destructor_v<T>;
+
+template <HasVirtualDtor T>
+T* construct(T* t)
+{ return new T{}; }
+```
+
+From C++20 concepts should replace the usage of `std::enable_if`.
 
 ___
 
 ## Task
 
-<p>Write a function that allows inserting only subclasses of Shape to the collection. Other parameter types should not compile. Use SFINAE. Find proper type_traits.</p>
+```text
+git clone -b solutions https://github.com/coders-school/modern-cpp.git
+```
+
+Write a function `insert()` in `main.cpp` that allows inserting only subclasses of Shape to the collection. Parameter other than `shared_ptr` to `Circle`, `Square` or `Rectangle` should not compile. Use SFINAE. Use proper type_traits.
+
 <p class="fragment">Hints:</p>
 <ul>
     <li class="fragment"><code>std::is_base_of</code></li>
     <li class="fragment"><code>std::remove_reference</code></li>
     <li class="fragment"><code>std::remove_cv</code></li>
 </ul>
+
+___
+
+## Conclusions
+
+* <!-- .element: class="fragment fade-in" --> SFINAE is a very powerful and difficult technique
+* <!-- .element: class="fragment fade-in" --> Proper usage may not be too ugly 🥴
+* <!-- .element: class="fragment fade-in" --> Where applicable, tag dispatch, static_assert, and concepts, are usually preferred over the direct use of SFINAE
