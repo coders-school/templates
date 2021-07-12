@@ -84,6 +84,8 @@ ___
     print(1, 40, "string", 2.0);
     ```
 
+    Difficult version: try to add a space between elements.
+
 2. Write an `areEven()` function, that
 
    * prints all parameters on screen using above `print()` function
@@ -103,14 +105,18 @@ void print(Args&&... args) {
     (std::cout << ... << args) << '\n';
 }
 
+template<typename ...Args>
+void printSpace(Args&&... args) {
+    ((std::cout << " " << args), ...) << '\n';
+}
+
 template<typename... Numbers>
 auto areEven(Numbers... nums) {
     print(nums...);
     return ((nums % 2 == 0) && ...);
 }
 ```
-
-Try to add a space between elements in `print()`.
+<!-- .element: class="fragment fade-in" -->
 
 ___
 
