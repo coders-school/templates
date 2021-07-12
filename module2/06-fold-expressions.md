@@ -76,7 +76,7 @@ push_back_vec(v, 6, 2, 45, 12);
 
 ___
 
-## Exercise
+## Task
 
 1. Write a `print()` function that can print anything on a screen. You should be able to pass any number of parameters to it. Use fold expressions.
 
