@@ -8,15 +8,22 @@
 
 ___
 
+## What was the most difficult thing?
+
 ## What have you learned today?
 
-## What was the most difficult to understand?
 
 ___
 
 ### Points to remember
 
-* <!-- .element: class="fragment fade-in" --> A
+* <!-- .element: class="fragment fade-in" --> Deduction guides help the compiler to deduce proper template classes
+* <!-- .element: class="fragment fade-in" --> SFINAE is used to disable code generation for a certain types
+* <!-- .element: class="fragment fade-in" --> To pass a template class to a template you need to use so-called template template arguments
+* <!-- .element: class="fragment fade-in" --> If you want a function that can take any number of arguments use variadic templates
+* <!-- .element: class="fragment fade-in" --> Use fold expressions to simplify operations on variadic arguments
+* <!-- .element: class="fragment fade-in" --> If possible, you can replace template functions with generic lambdas (from C++14). Just keep in mind that lambdas are objects and have a limited lifespan.
+* <!-- .element: class="fragment fade-in" --> If possible, use <code>if constexpr</code>, <code>static_assert</code> or concepts to emulate SFINAE.
 
 ___
 
@@ -60,7 +67,7 @@ int main()
 {
   fun(1);
   fun(1.0);
-  fun(1);
+  fun(2);
 }
 ```
 
@@ -82,8 +89,8 @@ Handle<FILE, MyDeleter> h;
 1. <!-- .element: class="fragment highlight-red" --> This code compiles
 2. <!-- .element: class="fragment highlight-green" --> <code>MyDeleter</code> cannot be used as a <code>Policy</code> template argument
 3. <!-- .element: class="fragment highlight-red" --> <code>template&lt;typename T, template typename Policy&gt;</code> - this should make this code work
-4. <!-- .element: class="fragment highlight-green" --> <code>template&lt;typename T, template &lt;typname ...&gt; typename Policy&gt;</code> - this should make this code work
-5. <!-- .element: class="fragment highlight-green" --> <code>template&lt;typename T, template &lt;typname&gt; typename Policy&gt;</code> - this should make this code work
+4. <!-- .element: class="fragment highlight-green" --> <code>template&lt;typename T, template &lt;typename ...&gt; typename Policy&gt;</code> - this should make this code work
+5. <!-- .element: class="fragment highlight-green" --> <code>template&lt;typename T, template &lt;typename&gt; typename Policy&gt;</code> - this should make this code work
 
 ___
 

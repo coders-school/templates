@@ -102,7 +102,7 @@ int main()
 {
   fun(1);
   fun(1.0);
-  fun(1);
+  fun(2);
 }
 ```
 
@@ -122,5 +122,5 @@ Handle<FILE, MyDeleter> h;
 1. This code compiles
 2. <code>MyDeleter</code> cannot be used as a <code>Policy</code> template argument
 3. <code>template&lt;typename T, template typename Policy&gt;</code> - this should make this code work
-4. <code>template&lt;typename T, template &lt;typname ...&gt; typename Policy&gt;</code> - this should make this code work
-5. <code>template&lt;typename T, template &lt;typname&gt; typename Policy&gt;</code> - this should make this code work
+4. <code>template&lt;typename T, template &lt;typename ...&gt; typename Policy&gt;</code> - this should make this code work
+5. <code>template&lt;typename T, template &lt;typename&gt; typename Policy&gt;</code> - this should make this code work
