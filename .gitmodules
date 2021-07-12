@@ -1,0 +1,4 @@
+[submodule "module2/shapes"]
+	path = module2/shapes
+	url = https://github.com/coders-school/modern-cpp.git
+	branch = solutions
