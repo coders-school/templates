@@ -116,7 +116,10 @@ ___
 ```cpp
 template<typename T> class MyDeleter {};
 template<typename T, typename Policy> class Handle { /* ... */ };
-Handle<FILE, MyDeleter> h;
+
+int main() {
+    Handle<int, MyDeleter> h;
+}
 ```
 
 1. This code compiles
