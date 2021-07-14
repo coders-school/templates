@@ -118,6 +118,14 @@ ___
 
 ## Unpacking parameter types
 
+```cpp
+template <typename ... Foo>
+void fun(Foo ... bar);
+```
+
+Assuming the above function below expressions will be expanded in this way:
+<!-- .element: class="fragment fade-in" -->
+
 ```text
 Foo...                => Foo1, Foo2, Foo3, etc
 vector<Foo>...        => vector<Foo1>, vector<Foo2>, vector<Foo3>, etc
@@ -125,6 +133,7 @@ tuple<Foo...>(bar...) => tuple<Foo1, Foo2, Foo3, etc>(bar1, bar2, bar3, etc)
 &bar...               => &bar1, &bar2, &bar3, etc
 &&bar...              => &&bar1, &&bar2, &&bar3, etc
 ```
+<!-- .element: class="fragment fade-in" -->
 
 ___
 
