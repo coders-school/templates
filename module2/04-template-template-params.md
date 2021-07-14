@@ -70,7 +70,7 @@ ___
 
 ```cpp
 template<typename T1, typename T2>
-struct data {
+struct Pair {
     T1 val1;
     T2 val2;
 };
@@ -79,18 +79,18 @@ struct data {
 
 ```cpp
 template<size_t N, template<typename, typename> typename Data, typename T1, typename T2>
-struct data_array {
+struct DataArray {
   std::array<Data<T1, T2>, N> data;
 };
 ```
 <!-- .element: class="fragment fade-in" style="font-size: 1.3rem" -->
 
 ```cpp
-data_array<16, data, int, double> a1;
+DataArray<16, Pair, int, double> a1;
 a1.data[0].val1 = 4;
 a1.data[0].val2 = 3.14;
 
-data_array<8, std::pair, std::string, std::string> a2;
+DataArray<8, std::pair, std::string, std::string> a2;
 a2.data[0].first = "Mickey";
 a2.data[0].second = "Mouse";
 ```
