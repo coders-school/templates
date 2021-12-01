@@ -1,6 +1,6 @@
 <!-- .slide: data-background="#111111" -->
 
-# Template functions
+# Szablony funkcji
 
 <a href="https://coders.school">
     <img width="500" src="../img/coders_school_logo.png" alt="Coders School" class="plain">
@@ -9,9 +9,9 @@
 ___
 <!-- .slide: style="font-size: 0.9em" -->
 
-## Examples
+## Przykłady
 
-Let's assume that we have a function below:
+Załóżmy, że mamy poniższą funkcję:
 
 ```c++
 int add(int first, int second) {
@@ -19,7 +19,7 @@ int add(int first, int second) {
 }
 ```
 
-If we want to have a function that takes doubles as well, we need to write:
+Jeśli chcemy mieć funkcję, która robi to samo dla typu `double`, musimy napisać jej przeciążenie.
 <!-- .element: class="fragment fade-in" -->
 
 ```c++
@@ -29,7 +29,7 @@ double add(double first, double second) {
 ```
 <!-- .element: class="fragment fade-in" -->
 
-And if we want a function that can take complex or any other numbers we would need to write:
+I jeśli chcemy mieć funkcję, która robi to samo dla liczb zespolonych, musimy napisać kolejne przeciążenie.
 <!-- .element: class="fragment fade-in" -->
 
 ```c++
@@ -39,14 +39,14 @@ std::complex<int> add(std::complex<int> first, std::complex<int> second) {
 ```
 <!-- .element: class="fragment fade-in" -->
 
-You can clearly see that we have a code duplication here.
+"Łatwo" widać, że mamy tutaj duplikację kodu.
 <!-- .element: class="fragment fade-in" -->
 
 ___
 
-## Avoiding code duplication
+## Unikanie duplikacji
 
-Instead of writing so many functions we can have only one - template function:
+Zamiast pisać wiele wersji funkcji możemy napisać jedną - funkcję szablonową.
 
 ```c++
 template <typename Type>
@@ -56,7 +56,7 @@ Type add(Type first, Type second) {
 ```
 <!-- .element: class="fragment fade-in" -->
 
-Instead of `Type`, you can have any name you wish. Typically you will see just `T` as a typename, but it is better to have a longer name than only one character, especially, when there is more than only one template parameter. Now, you can use this function like this:
+Zamiast `Type`, możesz nadać dowolną nazwę typu. Zazwyczaj zobaczysz `T`, ale lepiej mieć dłuższą nazwę niż tylko jeden znak, zwłaszcza, gdy jest więcej niż tylko jeden parametr szablonu. Funkcji szablonowej możesz teraz używać w następujący sposób.
 <!-- .element: class="fragment fade-in" -->
 
 ```c++
@@ -66,14 +66,14 @@ auto resultC = add<std::complex<int>>({1, 2}, {2, 3});  // resultC type is std::
 ```
 <!-- .element: class="fragment fade-in" -->
 
-You can play with the code [here](https://ideone.com/fork/NU0L8k)
+[Tutaj](https://ideone.com/fork/NU0L8k) możesz się pobawić tym kodem.
 <!-- .element: class="fragment fade-in" -->
 
 ___
 
-## Function template type deduction
+## Dedukcja typów funkcji szablonowej
 
-There is a function template types deduction in C++. It means that you can skip part with angle braces `<>` and write previous example like this:
+W C++ mamy mechanizm automatycznej dedukcji typów szablonowych na podstawie parametrów funkcji. To oznacza, że można pominąć część z nawiasami trójkątnymi `<>`.
 
 ```c++
 auto resultI = add(4, 5);  // resultI type is int
@@ -81,8 +81,8 @@ auto resultD = add(4.0, 5.0);  // resultD type is double
 auto resultC = add({1, 2}, {2, 3});  // error, does not compile
 ```
 
-`resultC` will not compile, because in this case compiler will not know what is the type of `{1, 2}` or `{2, 3}`. `std::initializer_list` can never be a result of parameter type deduction in templates.
-In this case we have to type it explicitly:
+`resultC` nie skompiluje się jednak w tym przypadku, ponieważ kompilator przyjmie, że typ `{1, 2}` oraz `{2, 3}` to `std::initializer_list`. Ten typ nigdy nie może być wynikiem dedukcji typu szablonowego.
+W tym przypadku musimy jawnie zapisać typ:
 <!-- .element: class="fragment fade-in" -->
 
 ```c++
@@ -90,7 +90,7 @@ auto resultC = add(std::complex<int>{1, 2}, std::complex<int>{2, 3});
 ```
 <!-- .element: class="fragment fade-in" -->
 
-or
+lub
 <!-- .element: class="fragment fade-in" -->
 
 ```c++
@@ -100,9 +100,9 @@ auto resultC = add<std::complex<int>>({1, 2}, {2, 3});
 
 ___
 
-## Exercise
+## Zadanie
 
-Write a function that creates `std::complex` number from two provided numbers. If the types of numbers are different, it should create `std::complex` of the first parameter. Usage:
+Napisz funkcję `makeComplex()`, która tworzy liczbę zespoloną `std::complex` z dwóch dostarczonych liczb. Jeśli typy tych liczb są różne, powinna utworzyć się liczba zespolona z typem pierwszego parametru.
 
 ```c++
 std::complex<int> a = makeComplex(4, 5);        // both ints
@@ -113,16 +113,16 @@ std::complex<int> c = makeComplex(1, 5.0); // int, double -> takes int
 ___
 <!-- .slide: style="font-size: 0.8em" -->
 
-## Multiple template parameters
+## Wiele parametrów szablonowych
 
-The compiler itself deduce which template function parameters should be used. However, if you write the code like this:
+Kompilator sam z siebie dedukuje parametry szablonowe. Ale... jeśli napiszesz taki kod jak poniżej, będzie błąd kompilacji.
 
 ```c++
 auto resultC = add(4, 5.0);  // error: int + double
 ```
 <!-- .element: class="fragment fade-in" -->
 
-We will have a compilation error. The compiler will not deduce parameter, because our template function takes only one type, and both parameters have to be of the same type. We can fix this by adding a new version of the template of add function.
+Kompilator nie potrafi wydedukować parametru, ponieważ funkcja `add()` przyjmuje tylko jeden parametr szablonowy i oba jej argumenty muszą być tego samego typu. Możemy to zmienić dodając nową wersję funkcji szablonowej `add()`
 <!-- .element: class="fragment fade-in" -->
 
 ```c++
@@ -133,7 +133,7 @@ TypeA add(TypeA first, TypeB second) {
 ```
 <!-- .element: class="fragment fade-in" -->
 
-Now the code should work:
+Teraz ten kod się skompiluje
 <!-- .element: class="fragment fade-in" -->
 
 ```c++
@@ -141,14 +141,14 @@ auto resultC = add(4, 5.0);  // resultC type is int
 ```
 <!-- .element: class="fragment fade-in" -->
 
-The output type is the same as the first argument type because it was defined in the template function above as `TypeA`.
+Typ zwracany przez tę funkcję jest taki sam, jak typ pierwszego argumentu, bo tak zapisaliśmy w szablonie. Jest to typ `TypeA`.
 <!-- .element: class="fragment fade-in" -->
 
 ___
-
+<!-- .slide: style="font-size: 0.8em" -->
 ## `typeid`
 
-Generally, you can freely use template types inside functions. For example, you can create new variables of provided types:
+Ogólnie rzecz biorąc, można dowolnie używać typów szablonowych wewnątrz funkcji. Na przykład można utworzyć nowe zmienne typów szablonowych:
 
 ```cpp
 #include <typeinfo>
@@ -161,10 +161,10 @@ void showType() {
 ```
 <!-- .element: class="fragment fade-in" -->
 
-You can use `typeid().name()` to print variable type. You need to include the `typeinfo` header for this. The output is implementation-defined.
+Możesz użyć `typeid().name()` aby wypisać typ zmiennej. Trzeba dołączyć nagłówek `typeinfo`. Jednak to co pojawi się na ekranie jest zależne od implementacji kompilatora. Nie zaleca się używania `typeid` do porównywania typów. Później pokażę Ci `type_traits`, które do tego służą.
 <!-- .element: class="fragment fade-in" -->
 
-You can also notice, that instead of the `typename` keyword, you can also use the `class` keyword. They are interchangeable.
+Możesz też zauważyć, że zamiast słowa kluczowego `typename`, użyliśmy słowa `class`. Można je stosować zamiennie i nie ma między nimi absolutnie żadnej różnicy.
 <!-- .element: class="fragment fade-in" -->
 
 ```cpp
@@ -177,7 +177,7 @@ ___
 
 ## No matching function
 
-In previous case if you want to use `showType()` function without providing explicit templates, the code will not compile:
+Jeśli chcemy użyć funkcji `showType()` z poprzedniego slajdu bez jawnego podania typu szablonowego, kod się nie skompiluje. Mam nadzieję że wiesz dlaczego 🙂
 
 ```c++
 int main() {
@@ -201,13 +201,9 @@ prog.cpp:15:12: note:   couldn't deduce template parameter ‘T’
 
 ___
 
-## Template function parameter type deduction
+## Dedukcja typów szablonowych dla funkcji
 
-The compiler cannot deduce parameters, because the functions do not take any parameters. You need to provide the type explicitly:
-
-<div style="display: flex; align-items:center;">
-
-<div style="width: 50%">
+Kompilator nie może wydedukować parametrów, ponieważ funkcja nie przyjmuje żadnych parametrów. Musisz podać typ jawnie:
 
 ```c++
 int main() {
@@ -215,12 +211,10 @@ int main() {
     return 0;
 }
 ```
+<!-- .element: class="fragment fade-in" -->
 
-</div>
-
-or
-
-<div style="width: 50%">
+lub np.
+<!-- .element: class="fragment fade-in" -->
 
 ```c++
 int main() {
@@ -228,18 +222,14 @@ int main() {
     return 0;
 }
 ```
-
-</div>
-
-</div>
 <!-- .element: class="fragment fade-in" -->
 
-You can also play with the code [here](https://ideone.com/fork/oZZybw)
+[Tutaj](https://ideone.com/fork/oZZybw) możesz pobawić się tym kodem.
 <!-- .element: class="fragment fade-in" -->
 
 ___
 
-## STL example
+## Przykłady szablonów z STL
 
 ```cpp
 template<class InputIt, class UnaryPredicate>
