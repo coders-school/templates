@@ -51,7 +51,7 @@ ___
 
 ## Pre-test 3/3 🤯
 
-### Które z poniższych użyć funkcji szablonowej `fun` są poprawne?
+### Które z poniższych użyć funkcji szablonowej `convert` są poprawne?
 
 ```cpp
 template<typename To, typename From>
