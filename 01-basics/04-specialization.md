@@ -1,21 +1,21 @@
 <!-- .slide: data-background="#111111" -->
 
-# Specialization
+# Specjalizacje
 
 <a href="https://coders.school">
     <img width="500" src="../img/coders_school_logo.png" alt="Coders School" class="plain">
 </a>
 
 ___
-<!-- .slide: style="font-size: .75em" -->
+<!-- .slide: style="font-size: .65em" -->
 
-## Function specialization
+## Specjalizacje funkcji
 
-If we want to have the same function name, but we want our code to behave differently for some types, we can create a specialization.
+Jeśli chcemy mieć tę samą nazwę funkcji, ale chcemy, aby nasz kod zachowywał się inaczej dla niektórych typów, możemy stworzyć specjalizację.
 <!-- .element: class="fragment fade-in" -->
 
 ```cpp
-//generic function
+// generic function
 template <typename T>
 void print(T arg) {
     std::cout << arg << '\n';
@@ -32,6 +32,9 @@ void print<double>(double arg) {
 ```
 <!-- .element: class="fragment fade-in" -->
 
+Ale czemu by nie użyć przeciążenia?
+<!-- .element: class="fragment fade-in" -->
+
 ```cpp
 // better: overload
 void print(double arg) {
@@ -40,26 +43,26 @@ void print(double arg) {
 ```
 <!-- .element: class="fragment fade-in" -->
 
-Tip: do not use function specializations. Always prefer function overloads.
+Wskazówka: Nie używaj specjalizacji funkcji! Zawsze preferuj przeciążenia funkcji.
 <!-- .element: class="fragment fade-in" -->
 
-Template function specializations do not take part in overload resolution. Only the exact type match is considered.
+Specjalizacje funkcji szablonów nie biorą udziału w początkowych fazach procesu "overload resolution" (o nim opowiem niebawem). Kompilator rozważa tylko dokładne dopasowania typów.
 <!-- .element: class="fragment fade-in" -->
 
-Above specialization does not work for `float`. Overload does.
+Czyli: powyższa specjalizacja nie zadziała dla typu `float`. Przeciążenie zadziała.
 <!-- .element: class="fragment fade-in" -->
 
 ___
 
-## Class specialization
+## Specjalizacje klas
 
-A class can have not only different behaviour (different methods implementations) but also different layouts. You can have completely different fields and/or their values.
+Klasa może mieć nie tylko inne zachowanie (różne implementacje metod), ale także różne pola lub ich domyślne wartości!
 <!-- .element: class="fragment fade-in" -->
 
 ___
 <!-- .slide: style="font-size: .8em" -->
 
-## Specialization example #1 - methods
+## Przykład #1 - metody
 
 ```c++
 #include <iostream>
@@ -88,7 +91,7 @@ int main() {
 ___
 <!-- .slide: style="font-size: .8em" -->
 
-## Specialization example #2 - field values
+## Przykład #2 - wartości pól
 
 ```c++
 #include <iostream>
@@ -112,14 +115,14 @@ int main() {
 ```
 <!-- .element: style="font-size: .65em" -->
 
-You can play with the code [here](https://ideone.com/fork/LEIx7e)
+[Tutaj](https://ideone.com/fork/LEIx7e) możesz pobawić się tym kodem.
 
 ___
 <!-- .slide: style="font-size: 0.85em" -->
 
-## Specialization example #3 - &lt;type_traits&gt;
+## Przykład #3 - &lt;type_traits&gt;
 
-To achieve the last behavior, we can use `std::false_type` and `std::true_type`. The below code is equivalent to the one from the previous example.
+Aby osiągnąć to samo zachowanie, możemy użyć `std::false_type` i `std::true_type`. Poniższy kod jest równoważny z przykładem #2.
 
 ```c++
 #include <iostream>
@@ -140,14 +143,14 @@ int main() {
 }
 ```
 
-The interactive version of this code is [here](https://ideone.com/fork/GaTh0B)
+Interaktywna wersja [tutaj](https://ideone.com/fork/GaTh0B)
 
 ___
 
-### Exercise - `is_int_key`
+### Zadanie - `is_int_key`
 
-In `VectorMap` write a class constant `is_int_key` that holds a boolean value. It should be `true` when the key is `int` and `false` otherwise.
+W klasie `VectorMap` dodaj stałą `is_int_key` typu `bool`. Powinna być ona ustawiona na `true` gdy klucz jest typu `int`, a na `false` w przeciwnym przypadku.
 
-Generally, it should do the same job as the `isIntKey()` method, but we want to have it available even without having an object.
+Ogólnie ta stała powinna robić to samo co metoda `isIntKey()`, z tą różnicą, że nie musimy tworzyć obieku klasy, aby ją dostać (to właśnie jest metaprogramowanie).
 
-Take a look in the `<type_traits>` library for that. It should be useful 🙂
+Poszukaj przydatnych rzeczy w bibliotece `<type_traits>` 🙂
