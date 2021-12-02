@@ -8,12 +8,12 @@
 
 ___
 
-## Constraints
+## Ograniczenia
 
-`<type_traits>` library is used to examine type properties. It is usually used in templates to gain some knowledge about provided types.
+Biblioteka `<type_traits>` jest używana do sprawdzania własności typów. Zazwyczaj używa się jej w szablonach, aby uzyskać jakąś wiedzę na temat dostarczonych typów.
 <!-- .element: class="fragment fade-in" -->
 
-We can for example constrain our templates to work only with some specific types. The common practice is using it together with `static_assert`.
+Z jej pomocą możemy np. sprawić, że nasze szablony zadziałają tylko z określonymi typami. Najłatwiej używać jej wraz ze `static_assert`.
 <!-- .element: class="fragment fade-in" -->
 
 ```cpp
@@ -32,11 +32,11 @@ public:
 
 ___
 
-## [`<type_traits>` on cppreference](https://en.cppreference.com/w/cpp/types#Type_traits)
+## [`<type_traits>` na cppreference](https://en.cppreference.com/w/cpp/types#Type_traits)
 
 ___
 
-## Advanced constraints
+## Zaawansowane ograniczenia
 
 * [SFINAE](https://en.cppreference.com/w/cpp/language/sfinae)
 * [`constexpr if`](https://en.cppreference.com/w/cpp/language/if#Constexpr_if)
@@ -55,18 +55,20 @@ concept copy_constructible =
 
 ___
 
-## Exercise - `static_assert`
+## Zadanie - `static_assert`
 
-Add a constraint to our `VectorMap`.
+Dodaj ograniczenie do naszej `VectorMap`.
 
-Do not allow to create an object when `ValueType` does not have a default constructor.
+Nie pozwól na stworzenie jej, gdy `ValueType` nie posiada domyślnego konstruktora.
 
-Use `static_assert` and proper trait from [`<type_traits>`](https://en.cppreference.com/w/cpp/types#Type_traits) library.
+Użyj `static_assert` wraz z odpowiednim [`type_traitem`](https://en.cppreference.com/w/cpp/types#Type_traits)
 
-Check if it works properly.
+Sprawdź, czy działa prawidłowo 🙂
 
-## Exercise - `isIntKey()`
+___
 
-Write a function `isIntKey()` in `VectorMap`. It should return `true` when the KeyType is `int` and `false` otherwise.
+## Zadanie - `isIntKey()`
 
-Check the [`<type_traits>`](https://en.cppreference.com/w/cpp/types#Type_traits) library for some inspiration 🙂
+Napisz metodą `isIntKey()` w `VectorMap`. Powinna ona zwracać `true` gdy `KeyType` jest `int`em i lub `false` w przeciwnym przypadku.
+
+Przejrzyj listę [`<type_traits>`](https://en.cppreference.com/w/cpp/types#Type_traits) w poszukiwaniu inspiracji 🙂
