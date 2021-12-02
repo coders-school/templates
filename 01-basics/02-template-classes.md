@@ -8,9 +8,9 @@
 
 ___
 
-## Template class example
+## Przykład
 
-Template classes are as well used to avoid code duplication, as to create so-called meta-programs within them. Here is an example of a simple template class and its usage:
+Szablony klas są również używane w celu unikania duplikacji kodu lub aby utworzyć tak zwane meta-programy. Oto przykład prostej klasy szablonowej i jej użycie:
 <!-- .element: class="fragment fade-in" -->
 
 ```c++
@@ -35,9 +35,9 @@ int main() {
 
 ___
 
-## Template classes in STL
+## Klasy szablonowe w STLu
 
-Template classes are heavily used in STL. For example `std::vector`, `std::list` and other containers are template classes and if you want to use them, you do it like here:
+Klasy szablonowe są mocno używane w STLu. Na przykład `std::vector`, `std::list` i inne kontenery są klasami szablonowymi.
 <!-- .element: class="fragment fade-in" -->
 
 ```c++
@@ -49,15 +49,15 @@ std::list<char> l{'c', 'd', 'b'};
 ___
 <!-- .slide: style="font-size: .95em" -->
 
-## Template type deduction for classes (C++17)
+## Dedukcja typów szablonowych dla klas (C++17)
 
-Template types can also be automatically deduced by the compiler thanks to... template functions.
+Typy szablonowe również mogą być automatycznie wydedukowane przez kompilator dzięki... funkcjom szablonowym.
 <!-- .element: class="fragment fade-in" -->
 
-The compiler uses class constructors to achieve that.
+Kompilator w tym celu posługuje się konstruktorami klas.
 <!-- .element: class="fragment fade-in" -->
 
-From C++17 you can write a code like this:
+Od C++17 możesz pisać kod w ten sposób:
 <!-- .element: class="fragment fade-in" -->
 
 ```c++
@@ -66,7 +66,7 @@ std::list l{'c', 'd', 'b'}; // std::list<char> is deduced
 ```
 <!-- .element: class="fragment fade-in" -->
 
-That's not gonna work:
+Ale to nie zadziała:
 <!-- .element: class="fragment fade-in" -->
 
 ```cpp
@@ -81,13 +81,13 @@ That's not gonna work:
 
 ___
 
-## Exercise - `VectorMap`
+## Zadanie - `VectorMap`
 
-Write a template class `VectorMap` that represents an over-engineered `std::map`.
+Napisz klasę szablonową `VectorMap`, która ma reprezentować przekombinowaną `std::map`.
 
-Inside, it should hold 2 `std::vectors` of the same size, each with different types. The first vector should hold keys, the other one values.
+Wewnątrz ma ona mieć 2 `std::vector` tego samego rozmiaru. Pierwszy vector będzie przechowywał klucze, a drugi wartości.
 
-Elements at the same position in both vectors should create a pair like `1` and `'c'` below.
+Elementy na tej samej pozycji w obu wektorach tworzą parę, tak jak `1` i `c` na poniższym przykładzie.
 
 ```c++
 VectorMap<int, char> map;
@@ -97,9 +97,9 @@ std::cout << map[1];    // prints 'e'
 map.at(2);              // throw std::out_of_range
 ```
 
-Implement the mentioned above `insert()`, `operator[]`, `at()` methods.
+Zaimplementuj metody `insert()`, `operator[]`, `at()`.
 
-Do not bother about duplicated keys for now.
-You can also try to implement additional methods from the `std::map` interface 🙂
+Nie przejmuj się możliwymi duplikatami kluczy. To nie jest ważne w tym zadaniu.
+Możesz za to zaimplementować dodatkowe metody z interfejsu `std::map` 🙂
 
-Use [cppreference](http://en.cppreference.com/w/cpp/container/map).
+Używaj [cppreference](http://en.cppreference.com/w/cpp/container/map).
