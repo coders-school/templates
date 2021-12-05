@@ -1,6 +1,6 @@
 <!-- .slide: data-background="#111111" -->
 
-# Variable templates (C++17)
+# Szablony zmiennych (C++17)
 
 <a href="https://coders.school">
     <img width="500" src="../img/coders_school_logo.png" alt="Coders School" class="plain">
@@ -8,12 +8,12 @@
 
 ___
 
-## Why?
+## Po co?
 
-Eg. different precision
+Np. inna precyzja.
 <!-- .element: class="fragment fade-in" -->
 
-```cpp
+```cpp []
 template<class T>
 constexpr T pi = T(3.1415926535897932385L);
 
@@ -22,18 +22,18 @@ T circular_area(T r) { return pi<T> * r * r; }
 ```
 <!-- .element: class="fragment fade-in" -->
 
-But it is really rarely used.
+Ale to jest niesamowicie rzadko używane.
 <!-- .element: class="fragment fade-in" -->
 
 ___
 <!-- .slide: style="font-size: .8em" -->
 
-## Specialization example #2 - field values
+## Przykład specjalizacji #2 - wartości pól
 
-Remember this code?
+Pamiętasz ten kod?
 <!-- .element: class="fragment fade-in" -->
 
-```c++ []
+```c++ [|13-14]
 #include <iostream>
 
 template<typename T>   // primary template
@@ -57,17 +57,17 @@ int main() {
 ```
 <!-- .element: class="fragment fade-in" -->
 
-We mainly use template variables as helpers to class template field values.
+Szablonów zmiennych używamy głównie jako "pomocników" (helpers) dla statycznych wartości pobieranych z klas szablonowych.
 <!-- .element: class="fragment fade-in" -->
 
 ___
 
-Check out [`type_traits` on cppreference.com](https://en.cppreference.com/w/cpp/header/type_traits)
+Zobacz [`type_traits` na cppreference.com](https://en.cppreference.com/w/cpp/header/type_traits)
 
-Every trait has a corresponding helper variable template.
+Każdy `type_trait` ma odpowiedni szablon zmiennej, dzięki któremu jego zapis można uprościć.
 
 ___
 
-## Exercise
+## Zadanie
 
-Write a variable template `is_int_key_v`. It should return a value of the `is_int_key` field in a given template type.
+Napisz szablon zmiennej `is_int_key_v`. Zmienna powinna mieć wartość taką samą jak pole `is_int_key` dla podanego typu szablonowego.
