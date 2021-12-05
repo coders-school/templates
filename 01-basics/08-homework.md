@@ -8,36 +8,25 @@
 
 ___
 
-## `vector` - template class
+## `vector` - klasa szablonowa
 
-Implement your own `vector<T>` class. It should have the same behaviour as `std::vector<T>`
+Zaimplementuj swój własny `vector<T>`. Powinien on zachowywać się dokładnie tak samo jak `std::vector`.
 
-Remember about internal member types.
+W celu uproszczenia implementacji możesz wewnątrz użyć dynamicznie alokowanej zwykłej tablicy.
 
-Remember about `bool` specialization.
+Pamiętaj o typach zdefiniowanych wewnątrz wektora.
 
-You don't need to remember about all constructors.
+Pamiętaj o specjalizacji dla `bool`.
 
-A more advanced version can also have a template parameter `Allocator`.
+Nie musisz implementować wszystkich możliwych przeciążeń dla funkcji.
 
-You don't need to implement everything. Just start and try as much as you can.
+### Bonusowe wymagania (niestety nie oceniane)
 
-___
-
-## `remove` - template function
-
-Implement your own `remove()` function. It should mimic the behaviour of `std::remove()` algorithm.
+* Dodaj obsługę alokatorów poprzez zdefiniowane dodatkowego typu szablonowego - `Allocator`.
+* Użyj `placement new`, aby odpowiednio zarządzać pamięcią. Dzięki niemu możesz tworzyć elementy wektora w uprzednio zaalokowanej, ale jeszcze nie wykorzystywanej pamięci (capacity).
 
 ___
 
-### Code Review
+## `remove` - funkcja szablonowa
 
-Send me a link to the repository with your implementation for my code review.
-
-#### [lukasz@coders.school](mailto:lukasz@coders.school)
-
-___
-
-## Post-test
-
-The link will be sent after the training with all materials.
+Zaimplementuj własną funkcję `remove()`. Powinna robić to samo co algorytm `std::remove()`.
