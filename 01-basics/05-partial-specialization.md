@@ -1,6 +1,6 @@
 <!-- .slide: data-background="#111111" -->
 
-# Partial specialization
+# Częściowe specjalizacje
 
 <a href="https://coders.school">
     <img width="500" src="../img/coders_school_logo.png" alt="Coders School" class="plain">
@@ -8,16 +8,16 @@
 
 ___
 
-## Template function partial specialization
+## Częściowa specjalizacja funkcji szablonowych
 
-In C++ we cannot partially specialize functions.
+W C++ nie możemy robić częściowej specjalizacji funkcji. Kropka. Tyle w temacie.
 
 ___
 <!-- .slide: style="font-size: 0.85em" -->
 
-## Template class partial specialization
+## Częściowa specjalizacja klas szablonowych
 
-In C++ we can specialize classes partially. It means that we need to leave at least one template parameter.
+W C++ możemy robić częściowe specjalizacje klas. Oznacza to, że tworząc specjalizację klasy musimy pozostawić przynajmniej 1 parametr szablonowy.
 
 ```cpp
 // primary template
@@ -44,7 +44,7 @@ class A<double, double, int> {};
 ___
 <!-- .slide: style="font-size: 0.85em" -->
 
-## Advanced partial specialization
+## Zaawansowana częściowa specjalizacja
 
 ```cpp
 template <typename T1, typename T2, typename I>
@@ -66,8 +66,8 @@ class A<X, T*, I> {};        // #4: partial specialization where T2 is a pointer
 
 ___
 
-## Exercise
+## Zadanie
 
-Write a partial specialization of `VectorMap` for boolean keys. We can have only 2 values for boolean keys. There is no need to keep vectors inside.
+Napisz częściową specjalizację klasy `VectorMap` dla kluczy typu `bool`. Taka wersja mapy może trzymać tylko 2 pary, bo możemy mieć tylko 2 klucze: `true` oraz `false`. Nie musimy zatem trzymać wewnątrz wektorów i możemy zoptymalizować implementację.
 
-Implement properly all currently available functions.
+Zaimplementuj odpowiednio wszystkie metody dostępne w głównym szablonie.
