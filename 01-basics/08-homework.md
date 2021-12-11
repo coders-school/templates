@@ -7,6 +7,7 @@
 </a>
 
 ___
+<!-- .slide: style="font-size: 0.85em" -->
 
 ## `vector` - klasa szablonowa
 
