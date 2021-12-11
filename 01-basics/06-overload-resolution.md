@@ -8,20 +8,23 @@
 
 ___
 
-## Template instantiation
+## Instancjonowanie szablonów
 
-* <!-- .element: class="fragment fade-in" --> Template by itself is not a type, or an object, or a function, or any other entity
-* <!-- .element: class="fragment fade-in" --> No code is generated from a source file that contains only template definitions
-* <!-- .element: class="fragment fade-in" --> In order for any code to appear, a template must be instantiated so that the compiler can generate an actual entity and its implementation
+* <!-- .element: class="fragment fade-in" --> Szablon sam z siebie nie jest typem, ani obiektem, ani funkcją ani nawet kodem programu
+* <!-- .element: class="fragment fade-in" --> Żaden kod nie zostanie wygenerowany jeśli szablon nie zostanie użyty (np. gdy kompilujesz plik w którym jest tylko definicja szablonu)
+* <!-- .element: class="fragment fade-in" --> Aby kompilator wygenerował kod, szablon musi zostać użyty z konkretnym typem. Dopiero wtedy kompilator generuje "instancję szablonu"
 
-<span class="fragment highlight-green">The definition of a template must be visible at the point of implicit instantiation, which is why template libraries typically provide all template definitions in the headers.</span>
+<span class="fragment highlight-green">Definicja szablonu musi być widoczna w miejscach, gdzie ich używamy. Dlatego szablony definiuje się w nagłówkach (<code>hpp</code>) i dołącza w każdym miejscu ich użycia. Gdyby ich implementacje były w plikach źródłowych (<code>cpp</code>) to kompilator wygenerowałby same definicje bez implementacji i mielibyśmy błąd linkera.</span>
+<!-- .element: class="fragment fade-in" -->
+
+### [cppinsights.io](https://cppinsights.io)
 <!-- .element: class="fragment fade-in" -->
 
 ___
 
 ## Overload resolution
 
-Selecting the right function to call consist of a few steps.
+Wybór odpowiedniej funkcji do wywołania składa się z kilku kroków.
 <!-- .element: class="fragment fade-in" -->
 
 * <!-- .element: class="fragment fade-in" --> Candidate functions (+)
@@ -29,40 +32,40 @@ Selecting the right function to call consist of a few steps.
 * <!-- .element: class="fragment fade-in" --> Implicit conversions (+)
 * <!-- .element: class="fragment fade-in" --> Best viable function (-)
 
-After this process compiler has chosen the winner function. The linker knows which function should it be linked against.
+Po tym procesie, kompilator wybrał jedną zwycięską funkcję. Dzięki temu linker wie, z którą implementacją funkcji powinien powiązać jej wywołanie.
 <!-- .element: class="fragment fade-in" -->
 
 ___
 
 ## Candidate functions
 
-Candidate functions are selected by the name lookup process.
+Funkcje kandydujące są wybierane podczas procedury "name lookup".
 <!-- .element: class="fragment fade-in" -->
 
 Name lookup:
 <!-- .element: class="fragment fade-in" -->
 
 * <!-- .element: class="fragment fade-in" --> ADL (Argument Dependent Lookup)
-* <!-- .element: class="fragment fade-in" --> Template Argument Deduction -> implicit specializations are generated
+* <!-- .element: class="fragment fade-in" --> Template Argument Deduction -> kompilator niejawnie generuje specjalizacje
 
-If name lookup produces more than one candidate function, the overload resolution is performed to select the function that will be called.
+Jeśli proces "name lookup" wyprodukuje więcej niż jedną funkcję kandydującą, następuje właściwy proces "overload resolution", czyli wyboru najlepszej funkcji do wywołania.
 <!-- .element: class="fragment fade-in" -->
 
 ___
 
-## So templates are overloading, right?
+## A więc szablony są przeciążeniami, prawda?
 
-Yes and no.
+I tak, i nie.
 <!-- .element: class="fragment fade-in" -->
 
-* <!-- .element: class="fragment fade-in" --> Function templates participate in name resolution for overloaded functions, but the rules are different.
-* <!-- .element: class="fragment fade-in" --> For a template to be considered in overload resolution, the type has to match exactly.
-* <!-- .element: class="fragment fade-in" --> If the types <span class="fragment highlight-green">do not match exactly, the conversions are not considered</span> and the template is simply dropped from the set of viable functions.
-* <!-- .element: class="fragment fade-in" --> That’s what is known as “SFINAE” — Substitution Failure Is Not An Error.
+* <!-- .element: class="fragment fade-in" --> Szablony funkcji uczestniczą w procesie "overload resolution" ale reguły dla nich są inne.
+* <!-- .element: class="fragment fade-in" --> Aby szablon funkcji w ogóle został rozważony to musi to być dokładne dopasowanie. Kompilator nie próbuje robić konwersji.
+* <!-- .element: class="fragment fade-in" --> Jeśli typy <span class="fragment highlight-green">nie pasują idealnie, to kompilator nie próbuje robić konwersji, aby je dopasować</span>, więc szablon jest po prostu odrzucany z grupy możliwych kandydatów.
+* <!-- .element: class="fragment fade-in" --> Jest to znane pod nazwą “SFINAE” — Substitution Failure Is Not An Error.
 
 ___
 
-## SFINAE - example
+## SFINAE - przykład
 
 ```cpp []
 #include <iostream>
@@ -74,7 +77,7 @@ void foo(int x)    { std::cout << "foo(int)\n"; }
 void foo(double x) { std::cout << "foo(double)\n"; }
 ```
 
-### Which functions are called?
+### Które funkcje zostaną wywołane?
 <!-- .element: class="fragment fade-in" -->
 
 * <!-- .element: class="fragment fade-in" --> <code>foo(42)</code>
@@ -88,7 +91,7 @@ void foo(double x) { std::cout << "foo(double)\n"; }
 
 ___
 
-## Function overloads vs function specializations
+## Przeciążenia funkcji vs specjalizacje
 
 ```cpp
 template<class T> void f(T);    // #1: overload for all types
@@ -97,7 +100,7 @@ template<class T> void f(T*);   // #3: overload for all pointer types
 ```
 <!-- .element: class="fragment fade-in" -->
 
-### Which function is called?
+### Która funkcja zostanie wywołana?
 <!-- .element: class="fragment fade-in" -->
 
 ```cpp
@@ -105,23 +108,23 @@ f(new int{1});
 ```
 <!-- .element: class="fragment fade-in" -->
 
-Calls #3, even though #2 (specialization of #1) would be a perfect match
+#3, pomimo tego, że #2 (która jest specjalizacją #1) jest idealnym dopasowaniem 🤯
 <!-- .element: class="fragment fade-in" -->
 
-* <!-- .element: class="fragment fade-in" --> Only non-template and primary template overloads participate in overload resolution
-* <!-- .element: class="fragment fade-in" --> The specializations are not overloads and are not considered
-* <!-- .element: class="fragment fade-in" --> Only after the overload resolution selects the best-matching primary function template, its specializations are examined to see if one is a better match
+* <!-- .element: class="fragment fade-in" --> Tylko GŁÓWNE SZABLONY i funkcje nieszablonowe uczestniczą w procesie "overload resolution"
+* <!-- .element: class="fragment fade-in" --> Specjalizacje nie są przeciążeniami i nie są brane pod uwagę
+* <!-- .element: class="fragment fade-in" --> Dopiero po tym, gdy "overload resolution" wybierze, że najlepiej pasuje główny szablon, to badane są jego specjalizacje, aby sprawdzić, czy któraś nie będzie lepszym dopasowaniem
 
 ___
 
-## General rule
+## Ogólna zasada
 <!-- .element: class="fragment fade-in" -->
 
-If possible, create function overloads, not specializations.
+Jeśli to możliwe, twórz przeciążenia funkcji, a nie specjalizacje.
 <!-- .element: class="fragment fade-in" -->
 
 ___
 
-## More information
+## Więcej info
 
-[Overload resolution rules on cppreference.com](https://en.cppreference.com/w/cpp/language/overload_resolution)
+[Overload resolution rules na cppreference.com](https://en.cppreference.com/w/cpp/language/overload_resolution)
