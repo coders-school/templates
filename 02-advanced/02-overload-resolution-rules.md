@@ -2,72 +2,95 @@
 
 # Overload resolution rules
 
+## Reguły rozwiązywanie przeciążeń
+
 <a href="https://coders.school">
     <img width="500" src="../img/coders_school_logo.png" alt="Coders School" class="plain">
 </a>
 
 ___
 
-<h2>Overload resolution</h2>
+## Overload resolution
 
-<pre><code class="cpp" data-trim data-line-numbers>
+```cpp []
 void foo(unsigned i) {
-    std::cout &lt;&lt; "unsigned " &lt;&lt; i &lt;&lt; "\n";
+    std::cout << "unsigned " << i << "\n";
 }
 
-template &lt;typename T&gt;
+template <typename T>
 void foo(const T& t) {
-    std::cout &lt;&lt; "template " &lt;&lt; t &lt;&lt; "\n";
+    std::cout << "template " << t << "\n";
 }
-</code></pre>
+```
 
-<p>What is the result of calling <code>foo(42)</code>?</p>
-<p class="fragment"><code>template 42</code></p>
-<p class="fragment">Why <code>const int &</code> is a better match than <code>unsigned</code>?</p>
-<p class="fragment">Const reference can bind to r-values. No conversion is needed, there is an exact match, so this option is chosen.</p>
+Jaki jest wynik wywołania `foo(42)`?
+<!-- .element: class="fragment fade-in" -->
+
+`template 42`
+<!-- .element: class="fragment fade-in" -->
+
+Czemu `const int &` jest lepszym dopasowaniem niż  `unsigned`?
+<!-- .element: class="fragment fade-in" -->
+
+Przy dopasowaniu typu w szablonach nie może zajść konwersja. Stała referencja złapie r-value i będzie to lepszym wyborem (exact match) niż konwersja z `int` na `unsigned`.
+<!-- .element: class="fragment fade-in" -->
 
 ___
 
-<h2>Overload resolution</h2>
+## Overload resolution
 
-<pre><code class="cpp" data-trim data-line-numbers>
+```cpp []
 void foo(unsigned i) {
-    std::cout &lt;&lt; "unsigned " &lt;&lt; i &lt;&lt; "\n";
+    std::cout << "unsigned " << i << "\n";
 }
 
-template &lt;typename T&gt;
+template <typename T>
 void foo(T& t) {
-    std::cout &lt;&lt; "template " &lt;&lt; t &lt;&lt; "\n";
+    std::cout << "template " << t << "\n";
 }
-</code></pre>
+```
 
-<p>What is the result of calling <code>foo(42)</code> now?</p>
-<p class="fragment"><code>unsigned 42</code></p>
-<p class="fragment">Why <code>unsigned</code> is a better match than <code>int &</code>?</p>
-<p class="fragment">Reference (non-const) cannot bind to r-values. There is only one function matching. Implicit conversion from int to unsigned is applied.</p>
+Jaki teraz będzie wynik wywołania `foo(42)`?
+<!-- .element: class="fragment fade-in" -->
+
+`unsigned 42`
+<!-- .element: class="fragment fade-in" -->
+
+Dlaczego `unsigned` jest lepszym wyborem niż `int &`?
+<!-- .element: class="fragment fade-in" -->
+
+Referencja (non-const) nie łapie r-values. Mamy więc tylko jeden wybór. Zajdzie niejawna konwersja z `int` na `unsigned`.
+<!-- .element: class="fragment fade-in" -->
 
 ___
 
-<h2>Overload resolution</h2>
+## Overload resolution
 
-<pre><code class="cpp" data-trim data-line-numbers>
+```cpp []
 void foo(unsigned i) {
-    std::cout &lt;&lt; "unsigned " &lt;&lt; i &lt;&lt; "\n";
+    std::cout << "unsigned " << i << "\n";
 }
 
 void foo(double i) {
-    std::cout &lt;&lt; "double " &lt;&lt; i &lt;&lt; "\n";
+    std::cout << "double " << i << "\n";
 }
-</code></pre>
+```
 
-<p>What is the result of calling <code>foo(42)</code>?</p>
-<p class="fragment"><code>error: call of overloaded ‘foo(int)’ is ambiguous</code></p>
-<p class="fragment">Why?</p>
-<p class="fragment">Promotion to double and conversion to unsigned are equally viable.</p>
+Jaki teraz będzie wynik wywołania `foo(42)`?
+<!-- .element: class="fragment fade-in" -->
+
+`error: call of overloaded ‘foo(int)’ is ambiguous`
+<!-- .element: class="fragment fade-in" -->
+
+Dlaczego?
+<!-- .element: class="fragment fade-in" -->
+
+Promocja na `double` i konwersja na `unsigned` mają taki sam priorytet, więc kompilator nie wie co wybrać.
+<!-- .element: class="fragment fade-in" -->
 
 ___
 
-## Function overloads vs function specializations
+## Przeciążenia funkcji vs specjalizacje funkcji szablonowych
 
 ```cpp
 template<class T> void f(T);    // #1: overload for all types
@@ -78,15 +101,39 @@ f(new int{1});
 ```
 <!-- .element: class="fragment fade-in" style="font-size: 1.3rem" -->
 
-### Which function is chosen?
+### Która wersja funkcji `f` zostanie wywołana?
+
+### #3
 <!-- .element: class="fragment fade-in" -->
 
-It calls #3, even though specialization of #1 would be a perfect match.
+Dlaczego?
 <!-- .element: class="fragment fade-in" -->
 
-### Rules
+Pomimo tego, że #2 wydaje się być idealnym dopasowaniem, to jest to specjalizacja szablonu #1, który jest gorszym dopasowaniem niż szablon #3.
 <!-- .element: class="fragment fade-in" -->
 
-* <!-- .element: class="fragment fade-in" --> Only non-template and primary template overloads participate in overload resolution
-* <!-- .element: class="fragment fade-in" --> The specializations are not overloads and are not considered
-* <!-- .element: class="fragment fade-in" --> Only after the overload resolution selects the best-matching primary function template, its specializations are examined to see if one is a better match
+___
+
+## Zasady rozwiązywania przeciążeń
+
+* <!-- .element: class="fragment fade-in" --> Tylko funkcje nie szablonowe oraz szablony główne uczestniczą w procesie rozwiązywania przeciążeń
+* <!-- .element: class="fragment fade-in" --> Specjalizacje nie są przeciążeniami i nie są brane pod uwagę
+* <!-- .element: class="fragment fade-in" --> Dopiero po zakończeniu procesu rozwiązywania przeciążeń dostajemy najlepiej pasującą funkcję. Jeśli jest to funkcja szablonowa, to sprawdzamy czy jej specjalizacje nie będą lepszym dopasowaniem.
+
+___
+
+## Zmieńmy kolejność
+
+```cpp
+template<class T> void f(T);    // #1: overload for all types
+template<class T> void f(T*);   // #3: overload for all pointer types
+template<>        void f(int*); // #2: now, it's a specialization of #3
+
+f(new int{1});
+```
+<!-- .element: style="font-size: 1.3rem" -->
+
+### Która wersja funkcji `f` zostanie teraz wywołana?
+
+#### #2
+<!-- .element: class="fragment fade-in" -->
