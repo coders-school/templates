@@ -2,21 +2,23 @@
 
 # Deduction guides
 
+## Podpowiedzi dedukcyjne
+
 <a href="https://coders.school">
     <img width="500" src="../img/coders_school_logo.png" alt="Coders School" class="plain">
 </a>
 
 ___
 
-## Template type deduction for classes (C++17)
+## Dedukcja typów szablonowych dla klas (C++17)
 
-Template types can be automatically deduced by the compiler thanks to... template functions.
+Typy szablonowe klas mogą być automatycznie wydedukowane przez kompilator dzięki... szablonom funkcji.
 <!-- .element: class="fragment fade-in" -->
 
-The compiler uses class constructors to achieve that.
+W tym celu kompilator używa konstruktorów klas.
 <!-- .element: class="fragment fade-in" -->
 
-From C++17 you can write a code like this:
+Od C++17 możesz więc napisać taki kod:
 <!-- .element: class="fragment fade-in" -->
 
 ```c++
@@ -25,7 +27,7 @@ std::list l{'c', 'd', 'b'}; // std::list<char> is deduced
 ```
 <!-- .element: class="fragment fade-in" -->
 
-That's not gonna work:
+Ale to nie zadziała:
 <!-- .element: class="fragment fade-in" -->
 
 ```cpp
@@ -37,7 +39,7 @@ That's not gonna work:
 ___
 <!-- .slide: data-visibility="hidden" style="font-size: 0.85em" -->
 
-## Template class argument deduction
+## Dedukcja argumentów szablonów klas
 
 ```cpp
 template<class T>
@@ -48,7 +50,7 @@ struct UniquePtr {
 ```
 <!-- .element: class="fragment fade-in" -->
 
-### What is deduced here?
+### Co wydedukuje tu kompilator?
 <!-- .element: class="fragment fade-in" -->
 
 ```cpp
@@ -59,7 +61,7 @@ UniquePtr p1{new auto(2.0)};
 `UniquePtr<double>`
 <!-- .element: class="fragment fade-in" -->
 
-### And what is deduced here?
+### A tu?
 <!-- .element: class="fragment fade-in" -->
 
 ```cpp
@@ -70,13 +72,13 @@ UniquePtr p2{new double[10]{}};  // T should be a single object or an array?
 `UniquePtr<double>`
 <!-- .element: class="fragment fade-in" -->
 
-When automatic deduction guides work against you, it is better to disable them for a specific constructor argument.
+Gdy automatyczne reguły dedukcji działają przeciwko tobie, lepiej jest je wyłączyć dla określonego typu argumentu konstruktora.
 <!-- .element: class="fragment fade-in" -->
 
 ___
 <!-- .slide: data-visibility="hidden" -->
 
-## Disabling deduction guides
+## Wyłączanie podpowiedzi dedukcyjnych
 
 ```cpp
 template<typename T>
@@ -105,10 +107,11 @@ UniquePtr<double[]> p2{new double[10]{}};
 
 ___
 
-## User-defined deduction guides
+## Definiowanie własnych podpowiedzi dedukcyjnych
 
-* <!-- .element: class="fragment fade-in" --> The syntax is similar to function declaration with a trailing return type, except that it uses the name of a class template as the function name.
-* <!-- .element: class="fragment fade-in" --> It's not a function and does not have a body.
+* <!-- .element: class="fragment fade-in" --> Składnia jest podobna do deklaracji funkcji ze strzałką. Jako nazwę funkcji używamy nazwę klasy (czyli konstruktor).
+* <!-- .element: class="fragment fade-in" --> Podpowiedź dedukcyjna nie jest funkcją i nie ma ciała.
+* <!-- .element: class="fragment fade-in" --> Po strzałce podajemy typ, jaki kompilator ma wydedukować
 
 ```cpp
 template<class T>
@@ -134,7 +137,7 @@ auto c3 = container{v.begin(), v.end()};  // deduces T = int
 
 ___
 
-## Example with `std::variant`
+## Przykład z `std::variant`
 
 ```cpp
 #include <functional>
@@ -181,8 +184,8 @@ int main()
 ```
 <!-- .element: style="font-size: 1.2rem" -->
 
-[Source](https://gist.github.com/ahamez/383f8e326d2b63d27a2ef6935162ce09)
+[Źródło](https://gist.github.com/ahamez/383f8e326d2b63d27a2ef6935162ce09)
 
 ___
 
-### [More on cppreference.com](https://en.cppreference.com/w/cpp/language/class_template_argument_deduction)
+### [Więcej na cppreference.com](https://en.cppreference.com/w/cpp/language/class_template_argument_deduction)
