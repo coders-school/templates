@@ -149,7 +149,7 @@ template <typename... Ts>
 struct make_visitor
   : Ts...
 {
-  using Ts::operator()...;
+    using Ts::operator()...;
 };
 
 // Deduction guide
@@ -160,13 +160,12 @@ using variant = std::variant<int, std::string, double>;
 
 int main()
 {
-  {
     const auto v0 = variant{42.2};
 
     std::visit(make_visitor{
-      [](int){std::cout << "int\n";},
-      [](std::string){std::cout << "std::string\n";},
-      [](double){std::cout << "double\n";}
+        [](int){std::cout << "int\n";},
+        [](std::string){std::cout << "std::string\n";},
+        [](double){std::cout << "double\n";}
     }, v0);
 
     // Without deduction guide
@@ -175,11 +174,10 @@ int main()
         std::function<void(std::string)>,
         std::function<void(double)>>
     {
-      [](int){std::cout << "int\n";},
-      [](std::string){std::cout << "std::string\n";},
-      [](double){std::cout << "double\n";}
+        [](int){std::cout << "int\n";},
+        [](std::string){std::cout << "std::string\n";},
+        [](double){std::cout << "double\n";}
     }, v0);
-  }
 }
 ```
 <!-- .element: style="font-size: 1.2rem" -->
