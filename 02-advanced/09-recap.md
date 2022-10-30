@@ -33,7 +33,7 @@ ___
 
 ## Pre-test 1/3 🤯
 
-### Is this code correct?
+### Czy poniższy kod jest poprawny?
 
 ```cpp
 template<typename... Args> bool f(Args... args) {
@@ -41,17 +41,17 @@ template<typename... Args> bool f(Args... args) {
 }
 ```
 
-1. <!-- .element: class="fragment highlight-red" --> Yes
-2. <!-- .element: class="fragment highlight-green" --> No, the parameter pack is used twice in fold-expression
-3. <!-- .element: class="fragment highlight-red" --> No, the ellipsis operator is used incorrectly in fold-expression
-4. <!-- .element: class="fragment highlight-red" --> No, <code>Args&&</code> should be used as a function argument
+1. <!-- .element: class="fragment highlight-red" --> Tak
+2. <!-- .element: class="fragment highlight-green" --> Nie, paczka parametrów jest użyta dwukrotnie w wyrażeniu fold
+3. <!-- .element: class="fragment highlight-red" --> Nie, operator elipsis (wielokropka) jest źle użyty
+4. <!-- .element: class="fragment highlight-red" --> Nie, jako typ argumentu funkcja powinna przyjmować <code>Args&&...</code>
 
 ___
 <!-- .slide: style="font-size: 0.9em" -->
 
 ## Pre-test 2/3 🤯
 
-### What is the output of this program?
+### Co wypisze się na ekranie?
 
 ```cpp
 #include <iostream>
@@ -78,7 +78,7 @@ ___
 
 ## Pre-test 3/3 🤯
 
-### Mark true statements about this code
+### Zaznacz prawdziwe stwierdzenia o poniższym kodzie
 
 ```cpp
 template<typename T> class MyDeleter {};
@@ -89,12 +89,8 @@ int main() {
 }
 ```
 
-1. <!-- .element: class="fragment highlight-red" --> This code compiles
-2. <!-- .element: class="fragment highlight-green" --> <code>MyDeleter</code> cannot be used as a <code>Policy</code> template argument
-3. <!-- .element: class="fragment highlight-red" --> <code>template&lt;typename T, template typename Policy&gt;</code> - this should make this code work
-4. <!-- .element: class="fragment highlight-green" --> <code>template&lt;typename T, template &lt;typename ...&gt; typename Policy&gt;</code> - this should make this code work
-5. <!-- .element: class="fragment highlight-green" --> <code>template&lt;typename T, template &lt;typename&gt; typename Policy&gt;</code> - this should make this code work
-
-___
-
-## [Rate this training session](https://forms.gle/ADXRttpAaZgW8KwM6)
+1. <!-- .element: class="fragment highlight-red" --> Kod się kompiluje
+2. <!-- .element: class="fragment highlight-green" --> <code>MyDeleter</code>  nie może być użyte jako argument szablonowy <code>Policy</code>
+3. <!-- .element: class="fragment highlight-red" --> <code>template&lt;typename T, template typename Policy&gt;</code> - to powinno naprawić ten kod
+4. <!-- .element: class="fragment highlight-green" --> <code>template&lt;typename T, template &lt;typename ...&gt; typename Policy&gt;</code> - to powinno naprawić ten kod
+5. <!-- .element: class="fragment highlight-green" --> <code>template&lt;typename T, template &lt;typename&gt; typename Policy&gt;</code> - to powinno naprawić ten kod
