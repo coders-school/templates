@@ -8,48 +8,56 @@
 
 ___
 
-## Simple SFINAE example
+## Prosty przykład SFINAE
 
-<pre><code class="cpp" data-trim data-line-numbers>
-template &lt;typename T&gt;
+```cpp []
+template <typename T>
 void foo(T arg) {}
 
-template &lt;typename T&gt;
+template <typename T>
 void foo(T* arg) {}
-</code></pre>
+```
 
-<p class="fragment">Calling <code>foo(42)</code> makes a compiler to generate two functions.</p>
-<pre class="fragment"><code class="cpp" data-trim data-line-numbers>
+Wywołanie `foo(42)` spowoduje, że kompilator spróbuje wygenerować 2 funkcje.
+<!-- .element: class="fragment fade-in" -->
+
+```cpp []
 void foo(int arg) {}
 void foo(int* arg) {}
-</code></pre>
+```
 
-The compiler cannot substitute `42` as an argument to the second function. It would cause a compilation error. Therefore this overload is discarded.
+Gdyby kompilator podstawił `42` jako argument drugiej funkcji, spowodowałoby to błąd kompilacji. Wobec tego odrzuca on to przeciążenie.
 <!-- .element: class="fragment fade-in" -->
 
-There is no compilation error - this is how SFINAE works.
+Ostatecznie nie ma żadnego błędu kompilacji, bo udało się dopasować pierwszą funkcję. Tada! Oto właśnie SFINAE w praktyce.
 <!-- .element: class="fragment fade-in" -->
 
-If the first function is missing, there is a compilation error.
+Gdyby nie było pierwszej funkcji, dostalibyśmy błąd kompilacji.
 <!-- .element: class="fragment fade-in" -->
 
 ___
 
 ## SFINAE
 
-<p class="fragment">Substitution Failure Is Not An Error is a meta-programming technique.</p>
+Substitution Failure Is Not An Error - to technika meta-programowania.
+<!-- .element: class="fragment fade-in" -->
 
 > This rule applies during overload resolution of function templates: When substituting the explicitly specified or deduced type for the template parameter fails, the specialization is discarded from the overload set instead of causing a compile error.
 >
 > -- <a href="https://en.cppreference.com/w/cpp/language/sfinae">cppreference.com</a>
 <!-- .element: class="fragment fade-in" -->
 
-<p class="fragment"><strong>Rationale</strong>: have a universal interface without letting the caller to decide which implementation should be called. The selection of an optimal implementation is done by a compiler and is coded by library creators.</p>
+### Co nam to daje?
+<!-- .element: class="fragment fade-in" -->
+
+Możemy mieć uniwersalny interfejs i to my jako twórcy kodu (biblioteki) decydujemy, która implementacja ma się wykonać. Kompilator może więc wybrać optymalną implementację w zależności od typu danych.
+<!-- .element: class="fragment fade-in" -->
 
 ___
 
-<h2><code>type_traits</code> library</h2>
-<p><a href="https://en.cppreference.com/w/cpp/header/type_traits">&lt;type_traits&gt; on cppreference.com</a></p>
+## Biblioteka `type_traits`
+
+<a href="https://en.cppreference.com/w/cpp/header/type_traits">&lt;type_traits&gt; on cppreference.com</a>
 
 ___
 
