@@ -269,11 +269,11 @@ std::array<double, 4> b = make_array(1.1, 2.2, 3.3, 4.4);
 <!-- .element: class="fragment fade-in" -->
 
 * <!-- .element: class="fragment fade-in" --> variadic function
-* <!-- .element: class="fragment fade-in" --> <code>sizeof...</code> to deduce size
-* <!-- .element: class="fragment fade-in" --> <code>std::common_type</code> to deduce the type
-* <!-- .element: class="fragment fade-in" --> trailing return type with <code>-></code>
+* <!-- .element: class="fragment fade-in" --> `sizeof...` to deduce size
+* <!-- .element: class="fragment fade-in" --> `std::common_type` to deduce the type
+* <!-- .element: class="fragment fade-in" --> trailing return type with `->`
 * <!-- .element: class="fragment fade-in" --> perfect forwarding
-* <!-- .element: class="fragment fade-in" --> <code>constexpr</code>
+* <!-- .element: class="fragment fade-in" --> `constexpr`
 
 ___
 

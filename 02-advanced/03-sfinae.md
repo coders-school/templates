@@ -57,13 +57,13 @@ ___
 
 ## Biblioteka `type_traits`
 
-<a href="https://en.cppreference.com/w/cpp/header/type_traits">&lt;type_traits&gt; on cppreference.com</a>
+<a href="https://en.cppreference.com/w/cpp/header/type_traits"><type_traits> on cppreference.com</a>
 
 ___
 
 ## `std::enable_if`
 
-<p>C++11 has a metaprogramming helper struct - <code>std::enable_if</code>. It is a compile-time switch for enabling or disabling some templates.</p>
+C++11 has a metaprogramming helper struct - `std::enable_if`. It is a compile-time switch for enabling or disabling some templates.
 
 ```cpp
 template <bool Condition, class T = void>;
@@ -74,21 +74,23 @@ struct enable_if<true, T> { using type = T; };
 ```
 <!-- .element: class="fragment fade-in" -->
 
-<ul>
-    <li class="fragment">If <code>Condition</code> is <code>true</code>, accessing internal type by <code>enable_if&lt;Condition, T&gt;::type</code> is valid.</li>
-    <li class="fragment">If <code>Condition</code> is <code>false</code>, accessing internal type by <code>enable_if&lt;Condition, T&gt;::type</code> is invalid and substitution is not correct - SFINAE works.</li>
-</ul>
+
+* If `Condition` is `true`, accessing internal type by `enable_if<Condition, T>::type` is valid.
+* If `Condition` is `false`, accessing internal type by `enable_if<Condition, T>::type` is invalid and substitution is not correct - SFINAE works.
+
 
 ___
 
 ## `std::enable_if_t`
 
-<p>C++14 defines a helper type:</p>
-<pre><code data-trim data-line-numbers>
-template &lt;bool B, class T = void&gt;
-using enable_if_t = typename enable_if&lt;B, T&gt;::type;
-</code></pre>
-<p class="fragment">Using both is equivalent.</p>
+C++14 defines a helper type:
+
+```cpp []
+template <bool B, class T = void>
+using enable_if_t = typename enable_if<B, T>::type;
+```
+
+Using both is equivalent.
 
 ```cpp []
 template <
@@ -106,7 +108,7 @@ template <
 ```
 <!-- .element: class="fragment fade-in" -->
 
-<p class="fragment">Why <code>* = nullptr</code>?</p>
+Why `* = nullptr`?
 
 Note:
 
@@ -129,44 +131,47 @@ ___
 
 ## `enable_if` variations
 
-<pre class="fragment"><code class="cpp" data-trim>
-template&lt;class T&gt;     // #1 return type
-auto construct(T* t) -&gt;
-typename std::enable_if_t&lt;std::has_virtual_destructor_v&lt;T&gt;, T&gt;*
+```cpp []
+template<class T>     // #1 return type
+auto construct(T* t) ->
+typename std::enable_if_t<std::has_virtual_destructor_v<T>, T>*
 { return new T{}; }
-</code></pre>
-<pre class="fragment"><code class="cpp" data-trim>
-template&lt;class T&gt;     // #2 parameter
+```
+
+```cpp []
+template<class T>     // #2 parameter
 T* construct(
     T* t,
-    typename std::enable_if_t&lt;std::has_virtual_destructor_v&lt;T&gt;&gt;* = nullptr
+    typename std::enable_if_t<std::has_virtual_destructor_v<T>>* = nullptr
 ) { return new T{}; }
-</code></pre>
-<pre class="fragment"><code class="cpp" data-trim>
-template&lt;
+```
+
+```cpp []
+template<
     class T,          // #3 template parameter - usual choice from C++11
-    typename std::enable_if_t&lt;std::has_virtual_destructor_v&lt;T&gt;&gt;* = nullptr
-&gt; T* construct(T* t)
+    typename std::enable_if_t<std::has_virtual_destructor_v<T>>* = nullptr
+> T* construct(T* t)
 { return new T{}; }
-</code></pre>
+```
 
 ___
 
 ## `enable_if` variations
 
-<p>The most elegant way</p>
-<pre class="fragment"><code class="cpp" data-trim>
-template &lt;typename T&gt;
-using HasVirtDtor = std::enable_if_t&lt;std::has_virtual_destructor_v&lt;T&gt;&gt;;
-</code></pre>
+The most elegant way
 
-<pre class="fragment"><code class="cpp" data-trim>
-template&lt;
+```cpp []
+template <typename T>
+using HasVirtDtor = std::enable_if_t<std::has_virtual_destructor_v<T>>;
+```
+
+```cpp []
+template<
     class T,          // the same as #3 - template parameter
-    typename = HasVirtDtor&lt;T&gt;
-&gt; T* construct(T* t)
+    typename = HasVirtDtor<T>
+> T* construct(T* t)
 { return new T{}; }
-</code></pre>
+```
 
 ___
 
@@ -193,12 +198,11 @@ Write an `insert()` function in `main.cpp`. It should allow inserting only subcl
 
 The function should create a `shared_ptr` from the object passed as the first parameter and put it in the collection, which should be provided as the second parameter.
 
-<p class="fragment">Hints:</p>
-<ul>
-    <li class="fragment"><code>std::is_base_of</code></li>
-    <li class="fragment"><code>std::remove_reference</code></li>
-    <li class="fragment"><code>std::remove_cv</code></li>
-</ul>
+Hints:
+
+* `std::is_base_of`
+* `std::remove_reference`
+* `std::remove_cv`
 
 ___
 

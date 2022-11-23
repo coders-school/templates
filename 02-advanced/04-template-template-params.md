@@ -101,9 +101,9 @@ ___
 ## Task
 
 1. Write a template class `Holder`.
-   1. <!-- .element: style="font-size: 0.7em" --> The class should have a <code>vector&lt;T&gt;</code> as a member field.
-   2. <!-- .element: style="font-size: 0.7em" --> The class should have a constructor, that can take any of 4 sequential containers (<code>vector</code>, <code>list</code>, <code>forward_list</code>, <code>deque</code>). This constructor should copy all values to the internal vector.
-   3. <!-- .element: style="font-size: 0.7em" --> The template parameter of the class <code>T</code> should be automatically deduced. Write a deduction guide if needed.
+   1. <!-- .element: style="font-size: 0.7em" --> The class should have a `vector<T>` as a member field.
+   2. <!-- .element: style="font-size: 0.7em" --> The class should have a constructor, that can take any of 4 sequential containers (`vector`, `list`, `forward_list`, `deque`). This constructor should copy all values to the internal vector.
+   3. <!-- .element: style="font-size: 0.7em" --> The template parameter of the class `T` should be automatically deduced. Write a deduction guide if needed.
 
 2. Add a print function for printing the content of the internal `vector<T>` field
 
@@ -165,5 +165,5 @@ Holder(const std::array<T, N> & a) -> Holder<T, std::vector>;
 <!-- .element: class="fragment fade-in" style="font-size: 1.3rem" -->
 
 * <!-- .element: class="fragment fade-in" --> Template template arguments
-* <!-- .element: class="fragment fade-in" --> Additional constructor for <code>std::array</code>
+* <!-- .element: class="fragment fade-in" --> Additional constructor for `std::array`
 * <!-- .element: class="fragment fade-in" --> Additional and counterintuitive deduction guide for array

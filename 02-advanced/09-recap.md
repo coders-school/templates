@@ -23,7 +23,7 @@ ___
 * <!-- .element: class="fragment fade-in" --> If you want a function that can take any number of arguments use variadic templates
 * <!-- .element: class="fragment fade-in" --> Use fold expressions to simplify operations on variadic arguments
 * <!-- .element: class="fragment fade-in" --> If possible, you can replace template functions with generic lambdas (from C++14). Just keep in mind that lambdas are objects and have a limited lifespan.
-* <!-- .element: class="fragment fade-in" --> If possible, use <code>if constexpr</code>, <code>static_assert</code> or concepts to emulate SFINAE.
+* <!-- .element: class="fragment fade-in" --> If possible, use `if constexpr`, `static_assert` or concepts to emulate SFINAE.
 
 ___
 
@@ -44,7 +44,7 @@ template<typename... Args> bool f(Args... args) {
 1. <!-- .element: class="fragment highlight-red" --> Tak
 2. <!-- .element: class="fragment highlight-green" --> Nie, paczka parametrów jest użyta dwukrotnie w wyrażeniu fold
 3. <!-- .element: class="fragment highlight-red" --> Nie, operator elipsis (wielokropka) jest źle użyty
-4. <!-- .element: class="fragment highlight-red" --> Nie, jako typ argumentu funkcja powinna przyjmować <code>Args&&...</code>
+4. <!-- .element: class="fragment highlight-red" --> Nie, jako typ argumentu funkcja powinna przyjmować `Args&&...`
 
 ___
 <!-- .slide: style="font-size: 0.9em" -->
@@ -71,7 +71,7 @@ int main()
 }
 ```
 
-#### <code class="fragment fade-in">112</code>
+#### <code class="fragment fade-in">112`
 
 ___
 <!-- .slide: style="font-size: 0.8em" -->
@@ -90,7 +90,7 @@ int main() {
 ```
 
 1. <!-- .element: class="fragment highlight-red" --> Kod się kompiluje
-2. <!-- .element: class="fragment highlight-green" --> <code>MyDeleter</code>  nie może być użyte jako argument szablonowy <code>Policy</code>
-3. <!-- .element: class="fragment highlight-red" --> <code>template&lt;typename T, template typename Policy&gt;</code> - to powinno naprawić ten kod
-4. <!-- .element: class="fragment highlight-green" --> <code>template&lt;typename T, template &lt;typename ...&gt; typename Policy&gt;</code> - to powinno naprawić ten kod
-5. <!-- .element: class="fragment highlight-green" --> <code>template&lt;typename T, template &lt;typename&gt; typename Policy&gt;</code> - to powinno naprawić ten kod
+2. <!-- .element: class="fragment highlight-green" --> `MyDeleter`  nie może być użyte jako argument szablonowy `Policy`
+3. <!-- .element: class="fragment highlight-red" --> `template<typename T, template typename Policy>` - to powinno naprawić ten kod
+4. <!-- .element: class="fragment highlight-green" --> `template<typename T, template <typename ...> typename Policy>` - to powinno naprawić ten kod
+5. <!-- .element: class="fragment highlight-green" --> `template<typename T, template <typename></typename> typename Policy>` - to powinno naprawić ten kod

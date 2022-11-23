@@ -15,7 +15,7 @@ template<typename... Args> bool f(Args... args) {
 1. Tak
 2. Nie, paczka parametrów jest użyta dwukrotnie w wyrażeniu fold
 3. Nie, operator elipsis (wielokropka) jest źle użyty
-4. Nie, jako typ argumentu funkcja powinna przyjmować <code>Args&&...</code>
+4. Nie, jako typ argumentu funkcja powinna przyjmować `Args&&...`
 
 ___
 <!-- .slide: style="font-size: 0.9em" -->
@@ -59,7 +59,7 @@ int main() {
 ```
 
 1. Kod się kompiluje
-2. <code>MyDeleter</code> nie może być użyte jako argument szablonowy <code>Policy</code>
-3. <code>template&lt;typename T, template typename Policy&gt;</code> - to powinno naprawić ten kod
-4. <code>template&lt;typename T, template &lt;typename ...&gt; typename Policy&gt;</code> - to powinno naprawić ten kod
-5. <code>template&lt;typename T, template &lt;typename&gt; typename Policy&gt;</code> -  to powinno naprawić ten kod
+2. `MyDeleter` nie może być użyte jako argument szablonowy `Policy`
+3. `template<typename T, template typename Policy></typename>` - to powinno naprawić ten kod
+4. `template<typename T, template <typename ...> typename Policy>` - to powinno naprawić ten kod
+5. `template<typename T, template <typename> typename Policy>` -  to powinno naprawić ten kod
