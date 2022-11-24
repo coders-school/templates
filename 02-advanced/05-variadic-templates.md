@@ -52,9 +52,9 @@ f(2, 1.0);          // OK: args contains two arguments: int and double
 
 ___
 
-## Syntax
+## Składnia
 
-Templates with a variable number of arguments use the new syntax of parameter pack, which represents many (or zero) parameters of a template.
+Szablony ze zmienną liczbą argumentów używają nowej składni pakietu parametrów, która reprezentuje wiele (lub zero) parametrów szablonu.
 
 ```cpp
 template<class ... Types>
@@ -82,17 +82,17 @@ int main() {
 
 ___
 
-## Unpacking function parameters
+## Rozpakowywanie parametrów funkcji
 
-Unpacking group parameters uses new syntax of elipsis operator - `...`
+Rozpakowywanie grup parametrów wykorzystuje nową składnię operatora wielokropka - `...`
 <!-- .element: class="fragment fade-in" -->
 
-In the case of function arguments, it unpacks them in the order given in the template function call.
+W przypadku argumentów funkcji rozpakowuje je w kolejności podanej przy wywołaniu funkcji szablonowej.
 <!-- .element: class="fragment fade-in" -->
 
 ___
 
-## Two ways of passing arguments
+## Dwa sposoby przekazywania argumentów
 
 ```cpp
 template <typename... Args>
@@ -116,14 +116,14 @@ int main() {
 
 ___
 
-## Unpacking parameter types
+## Rozpakowywanie typów parametrów
 
 ```cpp
 template <typename ... Foo>
 void fun(Foo ... bar);
 ```
 
-Assuming the above function below expressions will be expanded in this way:
+Zakładając że powyższa funkcja poniżej wyrażeń zostanie rozwinięta następująco:
 <!-- .element: class="fragment fade-in" -->
 
 ```text
@@ -137,7 +137,7 @@ tuple<Foo...>(bar...) => tuple<Foo1, Foo2, Foo3, etc>(bar1, bar2, bar3, etc)
 
 ___
 
-## Example with `std::variant`
+## Przykłady z `std::variant`
 
 ```cpp
 #include <functional>
@@ -184,13 +184,13 @@ int main()
 ```
 <!-- .element: style="font-size: 1.2rem" -->
 
-[Source](https://gist.github.com/ahamez/383f8e326d2b63d27a2ef6935162ce09)
+[Źródło](https://gist.github.com/ahamez/383f8e326d2b63d27a2ef6935162ce09)
 
 ___
 
-## Head tail recursion
+## Rekurencja Head tail
 
-It is also possible to use recursion to unpack every single argument. It requires the variadic template Head/Tail and non-template function to be defined.
+Możliwe jest również użycie rekurencji do rozpakowania każdego pojedynczego argumentu. Wymaga to wariadycznego szablonu Head/Tail i funkcji nie będącej szablonem do zdefiniowania.
 
 ```cpp
 void variadic_foo() {}
@@ -204,9 +204,9 @@ void variadic_foo(Head const& head, Tail const&... tail) {
 
 ___
 
-## Head tail recursion in classes
+## Rekurencja Head tail w klasach
 
-It is possible to unpack all types at once (e.g. in the case of a base class that is a variadic template class) or using partial and full specializations.
+Możliwe jest rozpakowanie wszystkich typów na raz (np. w przypadku bazowej klasy, będącej wariadyczną klasą szablonową) lub skorzystanie z częściowej, albo pełnej specjalizacji.
 
 ```cpp
 template<int... Number>
@@ -227,7 +227,7 @@ constexpr auto value = Sum<1, 2, 3, 4, 5>::RESULT; // = 15
 
 ___
 
-## Handling inheritance from variadic classes
+## Obsługa dziedziczenia z klas wariadycznych
 
 ```cpp
 template<class... Types>
@@ -241,9 +241,9 @@ struct Derived : Base<Types...>
 
 ___
 
-## `sizeof...` operator
+## Operator `sizeof...`
 
-`sizeof...` returns the number of parameters in a parameter pack.
+`sizeof...` zwraca liczbę parametrów w pakiecie parametrów.
 
 ```cpp
 template<class... Types>
@@ -256,28 +256,28 @@ constexpr auto num = NumOfArguments<A, B, C>::value;  // 3
 
 ___
 
-## Task
+## Zadanie
 
-Write a `make_array()` function, that can create `std::array<T, N>` from all values passed to it.
+Napisz funkcję `make_array()`, która może utworzyć `std::array<T, N>` ze wszystkich przekazanych jej wartości.
 
 ```cpp
 std::array<int, 3> a = make_array(1, 2, 3);
 std::array<double, 4> b = make_array(1.1, 2.2, 3.3, 4.4);
 ```
 
-### Hints
+### Podpowiedzi
 <!-- .element: class="fragment fade-in" -->
 
-* <!-- .element: class="fragment fade-in" --> variadic function
-* <!-- .element: class="fragment fade-in" --> `sizeof...` to deduce size
-* <!-- .element: class="fragment fade-in" --> `std::common_type` to deduce the type
-* <!-- .element: class="fragment fade-in" --> trailing return type with `->`
+* <!-- .element: class="fragment fade-in" --> funkcje wariadyczne
+* <!-- .element: class="fragment fade-in" --> `sizeof...` by wydedukować rozmiar
+* <!-- .element: class="fragment fade-in" --> `std::common_type` by wydedukować typ
+* <!-- .element: class="fragment fade-in" --> końcowy typ powrotu z `->`
 * <!-- .element: class="fragment fade-in" --> perfect forwarding
 * <!-- .element: class="fragment fade-in" --> `constexpr`
 
 ___
 
-## Solution
+## Rozwiązanie
 
 ```cpp
 #include <array>
@@ -302,7 +302,7 @@ ___
 
 ## Perfect forwarding
 
-It is recommended to use `&&` and `std::forward` with variadic arguments to handle r-values and l-values correctly. It is so-called **perfect forwarding**.
+Rekomendowanym jest, by korzystać z  `&&` oraz `std::forward` z argumentami wariadycznymi, by obsługiwać r-values i l-values poprawnie. to tak zwany **perfect forwarding**.
 
 ```cpp
 #include <utility>
