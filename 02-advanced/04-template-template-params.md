@@ -1,6 +1,6 @@
 <!-- .slide: data-background="#111111" -->
 
-# Template template parameters
+# Parametry szablonu szablonu
 
 <a href="https://coders.school">
     <img width="500" src="../img/coders_school_logo.png" alt="Coders School" class="plain">
@@ -8,9 +8,9 @@
 
 ___
 
-## Example
+## Przykład
 
-We want to use a template class as a template argument.
+Chcemy użyć klasy szablonu jako argumentu szablonu.
 <!-- .element: class="fragment fade-in" -->
 
 ```cpp
@@ -20,13 +20,14 @@ Handle<FILE, MyDeleter> h;
 ```
 <!-- .element: class="fragment fade-in" style="font-size: 1.35rem" -->
 
-It causes a compilation error:
+Powoduje to błąd kompilacji:
 <!-- .element: class="fragment fade-in" -->
 
 `error: type/value mismatch at argument 2 in template parameter list for ‘template<class T, class Policy> class Handle’`
 <!-- .element: class="fragment fade-in" style="font-size: 1.35rem" -->
 
 We tried to pass a template class instead of a specific class (like instantiated template class). This should work:
+Próbowaliśmy przekazać szablon klasy zamiast określonej klasy (jak np. utworzona klasa szablonu). To powinno działać:
 <!-- .element: class="fragment fade-in" -->
 
 ```cpp
@@ -36,9 +37,9 @@ Handle<FILE, MyDeleter<FILE>> h;
 
 ___
 
-## Template of template
+## Szablon szablonu
 
-To allow using a template class, we need to use so-called `template template` arguments.
+Aby umożliwić użycie klasy szablonu, musimy użyć tak zwanych argumentów `template template`.
 <!-- .element: class="fragment fade-in" -->
 
 ```cpp
@@ -51,7 +52,7 @@ Handle<FILE, MyDeleter> h;
 
 ___
 
-## Template template parameters
+## Parametry szablonu szablonu
 
 ```cpp
 template<template<parameter-list> typename|class name> declaration
@@ -66,7 +67,7 @@ template<template<parameter-list> typename|class ...> declaration
 
 ___
 
-## More examples
+## Więcej przykładów
 
 ```cpp
 template<typename T1, typename T2>
@@ -98,20 +99,20 @@ a2.data[0].second = "Mouse";
 
 ___
 
-## Task
+## Zadanie
 
-1. Write a template class `Holder`.
-   1. <!-- .element: style="font-size: 0.7em" --> The class should have a `vector<T>` as a member field.
-   2. <!-- .element: style="font-size: 0.7em" --> The class should have a constructor, that can take any of 4 sequential containers (`vector`, `list`, `forward_list`, `deque`). This constructor should copy all values to the internal vector.
-   3. <!-- .element: style="font-size: 0.7em" --> The template parameter of the class `T` should be automatically deduced. Write a deduction guide if needed.
+1. Napisz szablon klasy `Holder`.
+   1. <!-- .element: style="font-size: 0.7em" --> Klasa powinna mieć `vector<T>` jako pole składowe.
+   2. <!-- .element: style="font-size: 0.7em" --> Klasa powinna mieć konstruktor, który może przyjąć dowolny z 4 kolejnych kontenerów (`vector`, `list`, `forward_list`, `deque`). Ten konstruktor powinien skopiować wszystkie wartości do wektora wewnętrznego.
+   3. <!-- .element: style="font-size: 0.7em" --> Parametr szablonu klasy `T` powinien zostać automatycznie wydedukowany. W razie potrzeby zadeklaruj deduction guide.
 
-2. Add a print function for printing the content of the internal `vector<T>` field
+2. Dodaj funkcję print do drukowania zawartości wewnętrznego pola `vector<T>`
 
-3. Add support of `std::array<T, N>`. The constructor should allow copying the content to the internal vector.
+3. Dodaj obsługę `std::array<T, N>`. Konstruktor powinien umożliwiać kopiowanie zawartości do wektora wewnętrznego.
 
 ___
 
-## Solution #1 (easier)
+## Rozwiązanie #1 (łatwiejsze)
 
 ```cpp
 template <typename T>
@@ -133,12 +134,12 @@ Holder(const Container & c) -> Holder<typename Container::value_type>;
 ```
 <!-- .element: class="fragment fade-in" style="font-size: 1.3rem" -->
 
-* <!-- .element: class="fragment fade-in" --> No template template arguments
-* <!-- .element: class="fragment fade-in" --> Simple deduction guide
+* <!-- .element: class="fragment fade-in" --> Brak argumentów szablonu szablonu
+* <!-- .element: class="fragment fade-in" --> Prosty deduction guide
 
 ___
 <!-- .slide: style="font-size: 0.85em" -->
-## Solution #2
+## Rozwiązanie #2
 
 ```cpp
 template <typename T, template <typename...> typename Container>
@@ -164,6 +165,6 @@ Holder(const std::array<T, N> & a) -> Holder<T, std::vector>;
 ```
 <!-- .element: class="fragment fade-in" style="font-size: 1.3rem" -->
 
-* <!-- .element: class="fragment fade-in" --> Template template arguments
-* <!-- .element: class="fragment fade-in" --> Additional constructor for `std::array`
-* <!-- .element: class="fragment fade-in" --> Additional and counterintuitive deduction guide for array
+* <!-- .element: class="fragment fade-in" --> Argumenty szablonu szablonu
+* <!-- .element: class="fragment fade-in" --> Dodatkowy konstruktor dla `std::array`
+* <!-- .element: class="fragment fade-in" --> Dodatkowy i nieintuicyjny deduction guide dla tablicy
