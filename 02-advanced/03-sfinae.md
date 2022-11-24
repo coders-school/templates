@@ -63,7 +63,7 @@ ___
 
 ## `std::enable_if`
 
-C++11 has a metaprogramming helper struct - `std::enable_if`. It is a compile-time switch for enabling or disabling some templates.
+W C++11 znajduje się pomocnicza struktura metaprogramowania - `std::enable_if`. Jest to przełącznik czasu kompilacji do włączania lub wyłączania niektórych szablonów.
 
 ```cpp
 template <bool Condition, class T = void>;
@@ -75,22 +75,22 @@ struct enable_if<true, T> { using type = T; };
 <!-- .element: class="fragment fade-in" -->
 
 
-* If `Condition` is `true`, accessing internal type by `enable_if<Condition, T>::type` is valid.
-* If `Condition` is `false`, accessing internal type by `enable_if<Condition, T>::type` is invalid and substitution is not correct - SFINAE works.
+* Jeśli `Condition` ma wartość `true`, dostęp do typu wewnętrznego przez `enable_if<Condition, T>::type` jest prawidłowy.
+* Jeśli `Condition` ma wartość `false`, dostęp do typu wewnętrznego przez `enable_if<Condition, T>::type` jest nieprawidłowy i podstawienie nie jest poprawne - SFINAE działa.
 
 
 ___
 
 ## `std::enable_if_t`
 
-C++14 defines a helper type:
+C++14 definiuje typ pomocniczy:
 
 ```cpp []
 template <bool B, class T = void>
 using enable_if_t = typename enable_if<B, T>::type;
 ```
 
-Using both is equivalent.
+Użycie obu jest równoważne.
 
 ```cpp []
 template <
@@ -108,11 +108,11 @@ template <
 ```
 <!-- .element: class="fragment fade-in" -->
 
-Why `* = nullptr`?
+Dlaczego `* = nullptr`?
 
-Note:
+Notatka:
 
-Show in IDE
+Pokazać w IDE
 
 ```cpp
 // function(4) generates this implicit instantiation
@@ -129,7 +129,7 @@ template <
 
 ___
 
-## `enable_if` variations
+## warianty `enable_if`
 
 ```cpp []
 template<class T>     // #1 return type
@@ -156,9 +156,9 @@ template<
 
 ___
 
-## `enable_if` variations
+## variations `enable_if`
 
-The most elegant way
+Najbardziej elegancka opcja
 
 ```cpp []
 template <typename T>
@@ -175,7 +175,7 @@ template<
 
 ___
 
-## Concepts (C++20)
+## Koncepcje (C++20)
 
 ```cpp
 template <class T>
@@ -186,19 +186,19 @@ T* construct(T* t)
 { return new T{}; }
 ```
 
-From C++20 concepts should replace the usage of `std::enable_if`.
+Od C++20 koncepcje powinny zastąpić użycie `std::enable_if`.
 
 ___
 
-## Task
+## Zadanie
 
-Take a look into `module2/shapes` directory.
+Zajrzyj do katalogu `module2/shapes`.
 
-Write an `insert()` function in `main.cpp`. It should allow inserting only subclasses of Shape to the collection. Parameters other than `Circle`, `Square` or `Rectangle` should not compile. Use SFINAE. Use proper type_traits.
+Napisz funkcję `insert()` w pliku `main.cpp`. Powinna umożliwiać wstawianie do kolekcji tylko podklas Shape. Parametry inne niż `Circle`, `Square`  lub `Rectangle`  nie powinny się kompilować. Użyj SFINAE. Użyj odpowiednich type_traits.
 
-The function should create a `shared_ptr` from the object passed as the first parameter and put it in the collection, which should be provided as the second parameter.
+Funkcja powinna utworzyć `shared_ptr` z obiektu przekazanego jako pierwszy parametr i umieścić go w kolekcji, która powinna zostać podana jako drugi parametr.
 
-Hints:
+Podpowiedzi:
 
 * `std::is_base_of`
 * `std::remove_reference`
@@ -206,7 +206,7 @@ Hints:
 
 ___
 
-## Solution
+## Rozwiązanie
 
 ```cpp
 template <typename T>
@@ -243,18 +243,18 @@ void insertC(T&& item, Collection& collection) {
 ```
 <!-- .element: class="fragment fade-in" -->
 
-* <!-- .element: class="fragment fade-in" --> can replace SFINAE mechanism
-* <!-- .element: class="fragment fade-in" --> available from C++17
-* <!-- .element: class="fragment fade-in" --> the result is not a substitution error, but usually empty code
+* <!-- .element: class="fragment fade-in" --> może zastąpić mechanizm SFINAE
+* <!-- .element: class="fragment fade-in" --> dostępne od C++17
+* <!-- .element: class="fragment fade-in" --> zazwyczaj wynikiem nie jest błąd podstawienia, ale pusty kod
 
 ___
 
-## Conclusions
+## Podsumowanie
 
-* <!-- .element: class="fragment fade-in" --> SFINAE is a very powerful and difficult technique
-* <!-- .element: class="fragment fade-in" --> Proper usage may not be too ugly 🥴
-* <!-- .element: class="fragment fade-in" --> Where applicable, use below techniques instead of SFINAE:
+* <!-- .element: class="fragment fade-in" --> SFINAE to bardzo potężna i trudna technika
+* <!-- .element: class="fragment fade-in" --> Właściwe użycie może nie być zbyt brzydkie 🥴
+* <!-- .element: class="fragment fade-in" --> W stosownych przypadkach użyj poniższych technik zamiast SFINAE:
   * [tag dispatch](https://arne-mertz.de/2016/10/tag-dispatch/)
   * `static_assert` (C++11)
   * `if constexpr` (C++17)
-  * concepts (C++20)
+  * koncepcje (C++20)
