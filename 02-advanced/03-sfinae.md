@@ -10,21 +10,23 @@ ___
 
 ## Prosty przykład SFINAE
 
-```cpp []
+<pre class="fragment"><code class="cpp" data-trim>
 template <typename T>
 void foo(T arg) {}
 
 template <typename T>
 void foo(T* arg) {}
-```
+</code></pre>
+<!-- .element: class="fragment fade-in" -->
 
 Wywołanie `foo(42)` spowoduje, że kompilator spróbuje wygenerować 2 funkcje.
 <!-- .element: class="fragment fade-in" -->
 
-```cpp []
+<pre class="fragment"><code class="cpp" data-trim>
 void foo(int arg) {}
 void foo(int* arg) {}
-```
+</code></pre>
+<!-- .element: class="fragment fade-in" -->
 
 Gdyby kompilator podstawił `42` jako argument drugiej funkcji, spowodowałoby to błąd kompilacji. Wobec tego odrzuca on to przeciążenie.
 <!-- .element: class="fragment fade-in" -->
@@ -63,7 +65,8 @@ ___
 
 ## `std::enable_if`
 
-W C++11 znajduje się pomocnicza struktura metaprogramowania - `std::enable_if`. Jest to przełącznik czasu kompilacji do włączania lub wyłączania niektórych szablonów.
+<p>W C++11 znajduje się pomocnicza struktura metaprogramowania - `std::enable_if`. Jest to przełącznik czasu kompilacji do włączania lub wyłączania niektórych szablonów.</p>
+<!-- .element: class="fragment fade-in" -->
 
 <pre class="fragment"><code class="cpp" data-trim>
 template <bool Condition, class T = void>;
@@ -75,22 +78,24 @@ struct enable_if<true, T> { using type = T; };
 <!-- .element: class="fragment fade-in" -->
 
 
-* Jeśli `Condition` ma wartość `true`, dostęp do typu wewnętrznego przez `enable_if<Condition, T>::type` jest prawidłowy.
-* Jeśli `Condition` ma wartość `false`, dostęp do typu wewnętrznego przez `enable_if<Condition, T>::type` jest nieprawidłowy i podstawienie nie jest poprawne - SFINAE działa.
-
+* <!-- .element: class="fragment fade-in" --> Jeśli <code>Condition</code> ma wartość <code>true</code>, dostęp do typu wewnętrznego przez <code>enable_if<Condition, T>::type</code> jest prawidłowy.
+* <!-- .element: class="fragment fade-in" --> Jeśli <code>Condition</code> ma wartość <code>false</code>, dostęp do typu wewnętrznego przez <code>enable_if<Condition, T>::type</code> jest nieprawidłowy i podstawienie nie jest poprawne - SFINAE działa.
 
 ___
 
 ## `std::enable_if_t`
 
-C++14 definiuje typ pomocniczy:
+<p>C++14 definiuje typ pomocniczy:</p>
+<!-- .element: class="fragment fade-in" -->
 
-```cpp []
+<pre class="fragment"><code class="cpp" data-trim>
 template <bool B, class T = void>
 using enable_if_t = typename enable_if<B, T>::type;
-```
+</code></pre>
+<!-- .element: class="fragment fade-in" -->
 
-Użycie obu jest równoważne.
+<p>Użycie obu jest równoważne.</p>
+<!-- .element: class="fragment fade-in" -->
 
 <pre class="fragment"><code class="cpp" data-trim>
 template <

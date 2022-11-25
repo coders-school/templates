@@ -2,18 +2,20 @@
 
 # Variadic templates
 
+## Szablony wariadyczne
+
 <a href="https://coders.school">
     <img width="500" src="../img/coders_school_logo.png" alt="Coders School" class="plain">
 </a>
 
 ___
 
-## Motivation
+## Motywacja
 
-<p>Variadic templates can be used to create template functions or classes that accept any numer of arguments of any type.</p>
+<p>Szablony wariadyczne mogą być używane do tworzenia funkcji lub klas szablonowych, które akceptują dowolną liczbę argumentów wszelkiego typu.</p>
 <!-- .element: class="fragment fade-in" -->
 
-<p>Do you know <code>printf()</code> function (from C)?</p>
+<p>Znasz funkcję <code>printf()</code> (z języka C)?</p>
 <!-- .element: class="fragment fade-in" -->
 
 <pre class="fragment"><code class="cpp" data-trim>
@@ -29,9 +31,9 @@ int main() {
 
 ___
 
-## Parameter pack
+## Pakiet parametrów
 
-<p>A template parameter pack is a template parameter that accepts zero or more template arguments</p>
+<p>Pakiet parametrów szablonu to parametr szablonu, który akceptuje zero lub więcej argumentów szablonu</p>
 <!-- .element: class="fragment fade-in" -->
 
 <pre class="fragment"><code class="cpp" data-trim>

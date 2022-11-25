@@ -1,6 +1,7 @@
 <!-- .slide: data-background="#111111" -->
 
-# Parametry szablonu szablonu
+# Template template parameters
+## Parametry szablonu szablonu
 
 <a href="https://coders.school">
     <img width="500" src="../img/coders_school_logo.png" alt="Coders School" class="plain">
@@ -137,7 +138,7 @@ Holder(const Container & c) -> Holder<typename Container::value_type>;
 * <!-- .element: class="fragment fade-in" --> Prosta podpowiedź dedukcyjna
 
 ___
-<!-- .slide: style="font-size: 0.85em" -->
+<!-- .slide: style="font-size: 0.7em" -->
 ## Rozwiązanie #2
 
 <pre class="fragment"><code class="cpp" data-trim>
