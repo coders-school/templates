@@ -57,7 +57,7 @@ ___
 
 ## Biblioteka `type_traits`
 
-<a href="https://en.cppreference.com/w/cpp/header/type_traits"><type_traits> on cppreference.com</a>
+<a href="https://en.cppreference.com/w/cpp/header/type_traits">&lt;type_traits&gt; on cppreference.com</a>
 
 ___
 
@@ -65,13 +65,13 @@ ___
 
 W C++11 znajduje się pomocnicza struktura metaprogramowania - `std::enable_if`. Jest to przełącznik czasu kompilacji do włączania lub wyłączania niektórych szablonów.
 
-```cpp
+<pre class="fragment"><code class="cpp" data-trim>
 template <bool Condition, class T = void>;
 struct enable_if {};
 
 template <class T>
 struct enable_if<true, T> { using type = T; };
-```
+</code></pre>
 <!-- .element: class="fragment fade-in" -->
 
 
@@ -92,20 +92,20 @@ using enable_if_t = typename enable_if<B, T>::type;
 
 Użycie obu jest równoważne.
 
-```cpp []
+<pre class="fragment"><code class="cpp" data-trim>
 template <
     typename T,
     typename std::enable_if<std::is_integral<T>::value, T>::type* = nullptr
 > void function(T& t) {}
-```
+</code></pre>
 <!-- .element: class="fragment fade-in" -->
 
-```cpp []
+<pre class="fragment"><code class="cpp" data-trim>
 template <
     typename T,
     typename std::enable_if_t<std::is_integral_v<T>, T>* = nullptr
 > void function(T& t) {}
-```
+</code></pre>
 <!-- .element: class="fragment fade-in" -->
 
 Dlaczego `* = nullptr`?
@@ -208,7 +208,7 @@ ___
 
 ## Rozwiązanie
 
-```cpp
+<pre class="fragment"><code class="cpp" data-trim>
 template <typename T>
 using removeCvRef = std::remove_cv_t<std::remove_reference_t<T>>;
 template <typename T>
@@ -221,14 +221,14 @@ template <
 void insert(T&& item, Collection& collection) {
     collection.emplace_back(make_shared<removeCvRef<T>>(item));
 }
-```
+</code></pre>
 <!-- .element: class="fragment fade-in" style="font-size: 1.4rem" -->
 
 ___
 
 ## `if constexpr`
 
-```cpp
+<pre class="fragment"><code class="cpp" data-trim>
 template <typename T>
 using removeCvRef = std::remove_cv_t<std::remove_reference_t<T>>;
 
@@ -237,10 +237,10 @@ void insertC(T&& item, Collection& collection) {
     if constexpr (std::is_base_of_v<Shape, removeCvRef<T>>) {
         collection.emplace_back(make_shared<removeCvRef<T>>(item));
     } else {
-        std::cout << "Sorry\n";
+        std::cout <<code "Sorry\n";
     }
 }
-```
+</code></pre>
 <!-- .element: class="fragment fade-in" -->
 
 * <!-- .element: class="fragment fade-in" --> może zastąpić mechanizm SFINAE
