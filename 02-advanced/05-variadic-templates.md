@@ -10,13 +10,13 @@ ___
 
 ## Motivation
 
-Variadic templates can be used to create template functions or classes that accept any numer of arguments of any type.
+<p>Variadic templates can be used to create template functions or classes that accept any numer of arguments of any type.</p>
 <!-- .element: class="fragment fade-in" -->
 
-Do you know `printf()` function (from C)?
+<p>Do you know <code>printf()</code> function (from C)?</p>
 <!-- .element: class="fragment fade-in" -->
 
-```cpp
+<pre class="fragment"><code class="cpp" data-trim>
 #include <cstdio>
 
 int main() {
@@ -24,30 +24,30 @@ int main() {
    printf("Just a text\n");
    return 0;
 }
-```
+</code></pre>
 <!-- .element: class="fragment fade-in" -->
 
 ___
 
 ## Parameter pack
 
-A template parameter pack is a template parameter that accepts zero or more template arguments
+<p>A template parameter pack is a template parameter that accepts zero or more template arguments</p>
 <!-- .element: class="fragment fade-in" -->
 
-```cpp
+<pre class="fragment"><code class="cpp" data-trim>
 template<typename ... Types> struct Tuple {};
 Tuple<> t0;           // Types contains no arguments
 Tuple<int> t1;        // Types contains one argument: int
 Tuple<int, float> t2; // Types contains two arguments: int and float
-```
+</code></pre>
 <!-- .element: class="fragment fade-in" -->
 
-```cpp
+<pre class="fragment"><code class="cpp" data-trim>
 template<typename ... Types> void f(Types ... args);
 f();                // OK: args contains no arguments
 f(1);               // OK: args contains one argument: int
 f(2, 1.0);          // OK: args contains two arguments: int and double
-```
+</code></pre>
 <!-- .element: class="fragment fade-in" -->
 
 ___
@@ -56,7 +56,7 @@ ___
 
 Szablony ze zmienną liczbą argumentów używają nowej składni pakietu parametrów, która reprezentuje wiele (lub zero) parametrów szablonu.
 
-```cpp
+<pre class="fragment"><code class="cpp" data-trim>
 template<class ... Types>
 void variadic_foo(Types&& ... args)
 { /*...*/ }
@@ -65,10 +65,10 @@ int main() {
     variadic_foo(1, "", 2u);
     return 0;
 }
-```
+</code></pre>
 <!-- .element: class="fragment fade-in" -->
 
-```cpp
+<pre class="fragment"><code class="cpp" data-trim>
 template<class ... Types>
 class variadic_class
 { /*...*/ };
@@ -77,17 +77,17 @@ int main() {
     variadic_class<float, int, std::string> v1{};  // default c-tor
     variadic_class v2{2.0, 5, "Hello"}; // automatic deduction from C++17
 }
-```
+</code></pre>
 <!-- .element: class="fragment fade-in" -->
 
 ___
 
 ## Rozpakowywanie parametrów funkcji
 
-Rozpakowywanie grup parametrów wykorzystuje nową składnię operatora wielokropka - `...`
+<p>Rozpakowywanie grup parametrów wykorzystuje nową składnię operatora wielokropka - <code>...</code></p>
 <!-- .element: class="fragment fade-in" -->
 
-W przypadku argumentów funkcji rozpakowuje je w kolejności podanej przy wywołaniu funkcji szablonowej.
+<p>W przypadku argumentów funkcji rozpakowuje je w kolejności podanej przy wywołaniu funkcji szablonowej.</p>
 <!-- .element: class="fragment fade-in" -->
 
 ___
@@ -123,23 +123,23 @@ template <typename ... Foo>
 void fun(Foo ... bar);
 ```
 
-Zakładając że powyższa funkcja poniżej wyrażeń zostanie rozwinięta następująco:
+<code>Zakładając że powyższa funkcja poniżej wyrażeń zostanie rozwinięta następująco:</code>
 <!-- .element: class="fragment fade-in" -->
 
-```text
+<pre class="fragment"><code class="cpp" data-trim>
 Foo...                => Foo1, Foo2, Foo3, etc
 vector<Foo>...        => vector<Foo1>, vector<Foo2>, vector<Foo3>, etc
 tuple<Foo...>(bar...) => tuple<Foo1, Foo2, Foo3, etc>(bar1, bar2, bar3, etc)
 &bar...               => &bar1, &bar2, &bar3, etc
 &&bar...              => &&bar1, &&bar2, &&bar3, etc
-```
+</code></pre>
 <!-- .element: class="fragment fade-in" -->
 
 ___
 
 ## Przykłady z `std::variant`
 
-```cpp
+<pre class="fragment"><code class="cpp" data-trim>
 #include <functional>
 #include <iostream>
 #include <string>
@@ -181,7 +181,7 @@ int main()
     }, v0);
   }
 }
-```
+</code></pre>
 <!-- .element: style="font-size: 1.2rem" -->
 
 [Źródło](https://gist.github.com/ahamez/383f8e326d2b63d27a2ef6935162ce09)
@@ -269,17 +269,17 @@ std::array<double, 4> b = make_array(1.1, 2.2, 3.3, 4.4);
 <!-- .element: class="fragment fade-in" -->
 
 * <!-- .element: class="fragment fade-in" --> funkcje wariadyczne
-* <!-- .element: class="fragment fade-in" --> `sizeof...` by wydedukować rozmiar
-* <!-- .element: class="fragment fade-in" --> `std::common_type` by wydedukować typ
-* <!-- .element: class="fragment fade-in" --> końcowy typ powrotu z `->`
+* <!-- .element: class="fragment fade-in" --> <code>sizeof...</code> by wydedukować rozmiar
+* <!-- .element: class="fragment fade-in" --> <code>std::common_type</code> by wydedukować typ
+* <!-- .element: class="fragment fade-in" --> końcowy typ powrotu z <code>-></code>
 * <!-- .element: class="fragment fade-in" --> perfect forwarding
-* <!-- .element: class="fragment fade-in" --> `constexpr`
+* <!-- .element: class="fragment fade-in" --> <code>constexpr</code>
 
 ___
 
 ## Rozwiązanie
 
-```cpp
+<pre class="fragment"><code class="cpp" data-trim>
 #include <array>
 #include <iostream>
 #include <type_traits>
@@ -295,7 +295,7 @@ int main() {
     for(auto i : b)
         std::cout << i << ' ';
 }
-```
+</code></pre>
 <!-- .element: class="fragment fade-in" style="font-size: 1.18rem" -->
 
 ___
