@@ -1,6 +1,6 @@
 <!-- .slide: data-background="#111111" -->
 
-# Recap
+# Powtórka
 
 <a href="https://coders.school">
     <img width="500" src="../img/coders_school_logo.png" alt="Coders School" class="plain">
@@ -8,26 +8,25 @@
 
 ___
 
-## What was the most difficult thing?
+## Co wydaje Ci się być najtrudniejsze?
 
-## What have you learned today?
-
-
-___
-
-### Points to remember
-
-* <!-- .element: class="fragment fade-in" --> Deduction guides help the compiler to deduce proper template classes
-* <!-- .element: class="fragment fade-in" --> SFINAE is used to disable code generation for a certain types
-* <!-- .element: class="fragment fade-in" --> To pass a template class to a template you need to use so-called template template arguments
-* <!-- .element: class="fragment fade-in" --> If you want a function that can take any number of arguments use variadic templates
-* <!-- .element: class="fragment fade-in" --> Use fold expressions to simplify operations on variadic arguments
-* <!-- .element: class="fragment fade-in" --> If possible, you can replace template functions with generic lambdas (from C++14). Just keep in mind that lambdas are objects and have a limited lifespan.
-* <!-- .element: class="fragment fade-in" --> If possible, use `if constexpr`, `static_assert` or concepts to emulate SFINAE.
+## Czego się nauczyłeś z tych materiałów?
 
 ___
 
-## Pre-test answers
+### Rzeczy do zapamiętania
+
+* <!-- .element: class="fragment fade-in" --> Deduction guides pomagają kompilatorowi wydedukować odpowiednie klasy szablonów
+* <!-- .element: class="fragment fade-in" --> SFINAE służy do wyłączania generowania kodu dla niektórych typów
+* <!-- .element: class="fragment fade-in" --> Aby przekazać klasę szablonu do szablonu, musisz użyć tak zwanych argumentów szablonu szablonu (template template arguments)
+* <!-- .element: class="fragment fade-in" --> Jeśli potrzebujesz funkcji, która może przyjmować dowolną liczbę argumentów, użyj szablonów wariancyjnych
+* <!-- .element: class="fragment fade-in" --> Używaj fold expressions, aby uprościć operacje na argumentach wariadycznych
+* <!-- .element: class="fragment fade-in" --> Jeśli to możliwe, możesz zastąpić funkcje szablonu generycznymi wyrażeniami lambda (z C++ 14). Pamiętaj tylko, że lambdy są obiektami i mają ograniczony czas życia.
+* <!-- .element: class="fragment fade-in" -->Jeśli to możliwe, użyj `if constexpr`, `static_assert` lub koncepcji, aby emulować SFINAE.
+
+___
+
+## Odpowiedzi do pre-testu
 
 ___
 
