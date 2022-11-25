@@ -110,9 +110,9 @@ template <
 
 Dlaczego `* = nullptr`?
 
-Notatka:
+Note:
 
-Pokazać w IDE
+Show in IDE
 
 ```cpp
 // function(4) generates this implicit instantiation
