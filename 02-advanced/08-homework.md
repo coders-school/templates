@@ -10,8 +10,8 @@ ___
 
 ## `make_unique`
 
-Implement `make_unique` function. It should be able to take any number of parameters and it should return a unique_ptr to the given type. The object of the given type should be created with all parameters passed to it.
-The main challenge is to properly unit tests for l-values and r-values.
+Zaimplementuj funkcję `make_unique`. Powinna być w stanie przyjąć dowolną liczbę parametrów i powinna zwracać wartość `unique_ptr` dla danego typu. Należy stworzyć obiekt danego typu z przekazanymi mu wszystkimi parametrami.
+Głównym wyzwaniem jest prawidłowe wykonanie testów jednostkowych dla l-values i r-values.
 
 ```cpp
 struct MyType {
@@ -32,9 +32,9 @@ int main(){
 
 ___
 
-### Code Review
+### Przegląd kodu
 
-Send me a link to the repository with your implementation for my code review.
+Wyślij mi link do repozytorium z twoją implementacją do mojej recenzji kodu.
 
 #### [lukasz@coders.school](mailto:lukasz@coders.school)
 
@@ -42,4 +42,4 @@ ___
 
 ## Post-test
 
-The link will be sent after the training with all materials.
+Link zostanie przesłany po szkoleniu wraz ze wszystkimi materiałami.
