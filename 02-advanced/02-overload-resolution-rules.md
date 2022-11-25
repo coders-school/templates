@@ -102,7 +102,7 @@ f(new int{1});
 <!-- .element: class="fragment fade-in" style="font-size: 1.3rem" -->
 
 ### Która wersja funkcji `f` zostanie wywołana?
-
+<!-- .element: class="fragment fade-in" -->
 ### #3
 <!-- .element: class="fragment fade-in" -->
 
