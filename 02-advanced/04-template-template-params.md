@@ -10,7 +10,7 @@ ___
 
 ## Przykład
 
-Chcemy użyć klasy szablonu jako argumentu szablonu.
+<p>Chcemy użyć klasy szablonu jako argumentu szablonu.</p>
 <!-- .element: class="fragment fade-in" -->
 
 <pre class="fragment"><code class="cpp" data-trim>
@@ -20,14 +20,13 @@ Handle<FILE, MyDeleter> h;
 </code></pre>
 <!-- .element: class="fragment fade-in" style="font-size: 1.35rem" -->
 
-Powoduje to błąd kompilacji:
+<p>Powoduje to błąd kompilacji:</p>
 <!-- .element: class="fragment fade-in" -->
 
 `error: type/value mismatch at argument 2 in template parameter list for ‘template<class T, class Policy> class Handle’`
 <!-- .element: class="fragment fade-in" style="font-size: 1.35rem" -->
 
-We tried to pass a template class instead of a specific class (like instantiated template class). This should work:
-Próbowaliśmy przekazać szablon klasy zamiast określonej klasy (jak np. utworzona klasa szablonu). To powinno działać:
+<p>Próbowaliśmy przekazać szablon klasy zamiast określonej klasy (jak np. utworzona klasa szablonu). To powinno działać:</p>
 <!-- .element: class="fragment fade-in" -->
 
 <pre class="fragment"><code class="cpp" data-trim>
@@ -39,7 +38,7 @@ ___
 
 ## Szablon szablonu
 
-Aby umożliwić użycie klasy szablonu, musimy użyć tak zwanych argumentów `template template`.
+<p>Aby umożliwić użycie klasy szablonu, musimy użyć tak zwanych argumentów <code>template template</code>.</p>
 <!-- .element: class="fragment fade-in" -->
 
 <pre class="fragment"><code class="cpp" data-trim>
