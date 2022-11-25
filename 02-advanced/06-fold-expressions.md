@@ -10,7 +10,7 @@ ___
 
 ## Fold expressions (C++17)
 
-Fold-expressions allow writing compact code with variadic templates without using explicit recursion.
+Fold-expressions umożliwiają pisanie zwartego kodu przy użyciu szablonów wariadycznych bez użycia jawnej rekurencji.
 
 ```cpp
 template<typename... Args> auto sum(Args... args) {
@@ -32,7 +32,7 @@ ___
 
 ## Fold-expressions
 
-Reduces (folds) a parameter pack over a binary operator op.
+Zmniejsza (składa) pakiet parametrów nad operatorem binarnym op.
 
 ### Operators
 <!-- .element: class="fragment fade-in" -->
@@ -40,18 +40,18 @@ Reduces (folds) a parameter pack over a binary operator op.
 `+ - * / % ^ & | = < > << >> += -= *= /= %= ^= &= |= <<= >>= == != <= >= && || , .* ->*`
 <!-- .element: class="fragment fade-in" -->
 
-* <!-- .element: class="fragment fade-in" --> unary right fold
+* <!-- .element: class="fragment fade-in" --> jednoargumentowe złożenie prawe
   * `(pack op ...)`
-* <!-- .element: class="fragment fade-in" --> binary right fold
+* <!-- .element: class="fragment fade-in" --> binarne złożenie prawe
   * `(pack op ... op init)`
-* <!-- .element: class="fragment fade-in" --> unary left fold
+* <!-- .element: class="fragment fade-in" --> jednoargumentowe złożenie lewe
   * `(... op pack)`
-* <!-- .element: class="fragment fade-in" --> binary left fold
+* <!-- .element: class="fragment fade-in" --> binarne złożenie lewe
   * `(init op ... op pack)`
 
 ___
 
-## Examples
+## Przykłady
 
 ```cpp
 template<typename... Args>
@@ -76,20 +76,20 @@ push_back_vec(v, 6, 2, 45, 12);
 
 ___
 
-## Task
+## Zadanie
 
-1. Write a `print()` function that can print anything on a screen. You should be able to pass any number of parameters to it. Use fold expressions.
+1. Napisz funkcję `print()`, która może wydrukować wszystko na ekranie. Powinieneś być w stanie przekazać do niego dowolną liczbę parametrów. Użyj fold-expressions.
 
     ```cpp
     print(1, 40, "string", 2.0);
     ```
 
-    Difficult version: try to add a space between elements.
+    Trudna wersja: spróbuj dodać odstępy między elementami.
 
-2. Write an `areEven()` function, that
+2. Napisz funkcję `areEven()`, która
 
-   * prints all parameters on screen using above `print()` function
-   * check if all numbers in parameter pack are even and return a proper boolean value
+   * drukuje wszystkie parametry na ekranie za pomocą powyższej funkcji `print()`
+   * sprawdzi, czy wszystkie liczby w pakiecie parametrów są parzyste i zwróci odpowiednią wartość logiczną
 
     ```cpp
     bool allEven = areEven(2, 4, 6, 9);
@@ -97,7 +97,7 @@ ___
 
 ___
 
-## Solution
+## Rozwiązanie
 
 ```cpp
 template<typename ...Args>
@@ -122,9 +122,9 @@ ___
 
 ## Fold expressions
 
-Default values when parameter pack is empty
+Wartości domyślne, gdy pakiet parametrów jest pusty
 
-| Operator |  Value   |
+| Operator |  wartość   |
 | :------: | :------: |
 |   `*`    |   `1`    |
 |   `+`    | `int()`  |
