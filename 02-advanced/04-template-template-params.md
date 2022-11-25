@@ -13,11 +13,11 @@ ___
 Chcemy użyć klasy szablonu jako argumentu szablonu.
 <!-- .element: class="fragment fade-in" -->
 
-```cpp
+<pre class="fragment"><code class="cpp" data-trim>
 template<typename T> class MyDeleter {};
 template<typename T, typename Policy> class Handle { /* ... */ };
 Handle<FILE, MyDeleter> h;
-```
+</code></pre>
 <!-- .element: class="fragment fade-in" style="font-size: 1.35rem" -->
 
 Powoduje to błąd kompilacji:
@@ -30,9 +30,9 @@ We tried to pass a template class instead of a specific class (like instantiated
 Próbowaliśmy przekazać szablon klasy zamiast określonej klasy (jak np. utworzona klasa szablonu). To powinno działać:
 <!-- .element: class="fragment fade-in" -->
 
-```cpp
+<pre class="fragment"><code class="cpp" data-trim>
 Handle<FILE, MyDeleter<FILE>> h;
-```
+</code></pre>
 <!-- .element: class="fragment fade-in" -->
 
 ___
@@ -42,12 +42,12 @@ ___
 Aby umożliwić użycie klasy szablonu, musimy użyć tak zwanych argumentów `template template`.
 <!-- .element: class="fragment fade-in" -->
 
-```cpp
+<pre class="fragment"><code class="cpp" data-trim>
 template<typename T> class MyDeleter {};
 template<typename T, template<typename> typename Policy> class Handle { /* ... */ };
 // template<typename T, typename Policy> class Handle { /* ... */ };  // previously
 Handle<FILE, MyDeleter> h;
-```
+</code></pre>
 <!-- .element: class="fragment fade-in" style="font-size: 1.35rem" -->
 
 ___
@@ -69,24 +69,24 @@ ___
 
 ## Więcej przykładów
 
-```cpp
+<pre class="fragment"><code class="cpp" data-trim>
 template<typename T1, typename T2>
 struct Pair {
     T1 val1;
     T2 val2;
 };
-```
+</code></pre>
 <!-- .element: class="fragment fade-in" style="font-size: 1.3rem" -->
 
-```cpp
+<pre class="fragment"><code class="cpp" data-trim>
 template<size_t N, template<typename, typename> typename Data, typename T1, typename T2>
 struct DataArray {
   std::array<Data<T1, T2>, N> data;
 };
-```
+</code></pre>
 <!-- .element: class="fragment fade-in" style="font-size: 1.3rem" -->
 
-```cpp
+<pre class="fragment"><code class="cpp" data-trim>
 DataArray<16, Pair, int, double> a1;
 a1.data[0].val1 = 4;
 a1.data[0].val2 = 3.14;
@@ -94,7 +94,7 @@ a1.data[0].val2 = 3.14;
 DataArray<8, std::pair, std::string, std::string> a2;
 a2.data[0].first = "Mickey";
 a2.data[0].second = "Mouse";
-```
+</code></pre>
 <!-- .element: class="fragment fade-in" style="font-size: 1.3rem" -->
 
 ___
@@ -102,9 +102,9 @@ ___
 ## Zadanie
 
 1. Napisz szablon klasy `Holder`.
-   1. <!-- .element: style="font-size: 0.7em" --> Klasa powinna mieć `vector<T>` jako pole składowe.
-   2. <!-- .element: style="font-size: 0.7em" --> Klasa powinna mieć konstruktor, który może przyjąć dowolny z 4 kolejnych kontenerów (`vector`, `list`, `forward_list`, `deque`). Ten konstruktor powinien skopiować wszystkie wartości do wektora wewnętrznego.
-   3. <!-- .element: style="font-size: 0.7em" --> Parametr szablonu klasy `T` powinien zostać automatycznie wydedukowany. W razie potrzeby zadeklaruj podpowiedź dedukcyjną.
+   1. <!-- .element: style="font-size: 0.7em" --> Klasa powinna mieć <code>vector<T></code> jako pole składowe.
+   2. <!-- .element: style="font-size: 0.7em" --> Klasa powinna mieć konstruktor, który może przyjąć dowolny z 4 kolejnych kontenerów (<code>vector</code>, <code>list</code>, <code>forward_list</code>, <code>deque</code>). Ten konstruktor powinien skopiować wszystkie wartości do wektora wewnętrznego.
+   3. <!-- .element: style="font-size: 0.7em" --> Parametr szablonu klasy <code>T</code> powinien zostać automatycznie wydedukowany. W razie potrzeby zadeklaruj podpowiedź dedukcyjną.
 
 2. Dodaj funkcję print do drukowania zawartości wewnętrznego pola `vector<T>`
 
@@ -114,7 +114,7 @@ ___
 
 ## Rozwiązanie #1 (łatwiejsze)
 
-```cpp
+<pre class="fragment"><code class="cpp" data-trim>
 template <typename T>
 class Holder {
     std::vector<T> v_;
@@ -131,7 +131,7 @@ public:
 
 template <typename Container>
 Holder(const Container & c) -> Holder<typename Container::value_type>;
-```
+</code></pre>
 <!-- .element: class="fragment fade-in" style="font-size: 1.3rem" -->
 
 * <!-- .element: class="fragment fade-in" --> Brak argumentów szablonu szablonu
@@ -141,7 +141,7 @@ ___
 <!-- .slide: style="font-size: 0.85em" -->
 ## Rozwiązanie #2
 
-```cpp
+<pre class="fragment"><code class="cpp" data-trim>
 template <typename T, template <typename...> typename Container>
 class Holder {
     std::vector<T> v_;
@@ -162,9 +162,9 @@ public:
 
 template <typename T, size_t N>
 Holder(const std::array<T, N> & a) -> Holder<T, std::vector>;
-```
+</code></pre>
 <!-- .element: class="fragment fade-in" style="font-size: 1.3rem" -->
 
 * <!-- .element: class="fragment fade-in" --> Argumenty szablonu szablonu
-* <!-- .element: class="fragment fade-in" --> Dodatkowy konstruktor dla `std::array`
+* <!-- .element: class="fragment fade-in" --> Dodatkowy konstruktor dla <code>std::array</code>
 * <!-- .element: class="fragment fade-in" --> Dodatkowa i nieintuicyjna podpowiedź dedukcyjna dla tablicy
