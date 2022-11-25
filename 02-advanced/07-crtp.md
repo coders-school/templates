@@ -62,4 +62,4 @@ ___
 * <!-- .element: class="fragment fade-in" --> Curiously Recurring Template Pattern
 * <!-- .element: class="fragment fade-in" --> Idiom w C++, w którym klasa X wywodzi się z instancji szablonu klasy, używając samego X jako argumentu szablonu
 * <!-- .element: class="fragment fade-in" --> Czasami nazywane „Upside-Down Inheritance” (Dziedziczenie do góry nogami) ze względu na sposób, w jaki umożliwia rozszerzanie hierarchii klas poprzez zastępowanie różnych klas podstawowych
-* <!-- .element: class="fragment fade-in" --> Polimorfizm czasu kompilacji bez dodatkowych kosztów (bez vtable, vptr)
+* <!-- .element: class="fragment fade-in" --> Polimorfizm czasu kompilacji bez dodatkowych kosztów (bez <code>vtable</code>, <code>vptr</code>)
