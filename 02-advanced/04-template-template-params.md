@@ -104,7 +104,7 @@ ___
 1. Napisz szablon klasy `Holder`.
    1. <!-- .element: style="font-size: 0.7em" --> Klasa powinna mieć `vector<T>` jako pole składowe.
    2. <!-- .element: style="font-size: 0.7em" --> Klasa powinna mieć konstruktor, który może przyjąć dowolny z 4 kolejnych kontenerów (`vector`, `list`, `forward_list`, `deque`). Ten konstruktor powinien skopiować wszystkie wartości do wektora wewnętrznego.
-   3. <!-- .element: style="font-size: 0.7em" --> Parametr szablonu klasy `T` powinien zostać automatycznie wydedukowany. W razie potrzeby zadeklaruj deduction guide.
+   3. <!-- .element: style="font-size: 0.7em" --> Parametr szablonu klasy `T` powinien zostać automatycznie wydedukowany. W razie potrzeby zadeklaruj podpowiedź dedukcyjną.
 
 2. Dodaj funkcję print do drukowania zawartości wewnętrznego pola `vector<T>`
 
@@ -135,7 +135,7 @@ Holder(const Container & c) -> Holder<typename Container::value_type>;
 <!-- .element: class="fragment fade-in" style="font-size: 1.3rem" -->
 
 * <!-- .element: class="fragment fade-in" --> Brak argumentów szablonu szablonu
-* <!-- .element: class="fragment fade-in" --> Prosty deduction guide
+* <!-- .element: class="fragment fade-in" --> Prosta podpowiedź dedukcyjna
 
 ___
 <!-- .slide: style="font-size: 0.85em" -->
@@ -167,4 +167,4 @@ Holder(const std::array<T, N> & a) -> Holder<T, std::vector>;
 
 * <!-- .element: class="fragment fade-in" --> Argumenty szablonu szablonu
 * <!-- .element: class="fragment fade-in" --> Dodatkowy konstruktor dla `std::array`
-* <!-- .element: class="fragment fade-in" --> Dodatkowy i nieintuicyjny deduction guide dla tablicy
+* <!-- .element: class="fragment fade-in" --> Dodatkowa i nieintuicyjna podpowiedź dedukcyjna dla tablicy

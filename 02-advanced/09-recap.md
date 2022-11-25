@@ -16,7 +16,7 @@ ___
 
 ### Rzeczy do zapamiętania
 
-* <!-- .element: class="fragment fade-in" --> Deduction guides pomagają kompilatorowi wydedukować odpowiednie klasy szablonów
+* <!-- .element: class="fragment fade-in" --> Podpowiedzi dedukcyjne pomagają kompilatorowi wydedukować odpowiednie klasy szablonów
 * <!-- .element: class="fragment fade-in" --> SFINAE służy do wyłączania generowania kodu dla niektórych typów
 * <!-- .element: class="fragment fade-in" --> Aby przekazać klasę szablonu do szablonu, musisz użyć tak zwanych argumentów szablonu szablonu (template template arguments)
 * <!-- .element: class="fragment fade-in" --> Jeśli potrzebujesz funkcji, która może przyjmować dowolną liczbę argumentów, użyj szablonów wariancyjnych
