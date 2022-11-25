@@ -10,28 +10,28 @@ ___
 
 ## Prosty przykład SFINAE
 
-<pre class="fragment"><code class="cpp" data-trim>
+```cpp
 template <typename T>
 void foo(T arg) {}
-
 template <typename T>
 void foo(T* arg) {}
-</code></pre>
+```
 <!-- .element: class="fragment fade-in" -->
 
 Wywołanie `foo(42)` spowoduje, że kompilator spróbuje wygenerować 2 funkcje.
 <!-- .element: class="fragment fade-in" -->
 
-<pre class="fragment"><code class="cpp" data-trim>
+
+```cpp []
 void foo(int arg) {}
 void foo(int* arg) {}
-</code></pre>
+```
 <!-- .element: class="fragment fade-in" -->
 
-Gdyby kompilator podstawił `42` jako argument drugiej funkcji, spowodowałoby to błąd kompilacji. Wobec tego odrzuca on to przeciążenie.
+<p>Gdyby kompilator podstawił <code>42</code> jako argument drugiej funkcji, spowodowałoby to błąd kompilacji. Wobec tego odrzuca on to przeciążenie.</p>
 <!-- .element: class="fragment fade-in" -->
 
-Ostatecznie nie ma żadnego błędu kompilacji, bo udało się dopasować pierwszą funkcję. Tada! Oto właśnie SFINAE w praktyce.
+<p>Ostatecznie nie ma żadnego błędu kompilacji, bo udało się dopasować pierwszą funkcję. Tada! Oto właśnie SFINAE w praktyce.</p>
 <!-- .element: class="fragment fade-in" -->
 
 Gdyby nie było pierwszej funkcji, dostalibyśmy błąd kompilacji.
@@ -41,7 +41,7 @@ ___
 
 ## SFINAE
 
-Substitution Failure Is Not An Error - to technika meta-programowania.
+<p>Substitution Failure Is Not An Error - to technika meta-programowania.</p>
 <!-- .element: class="fragment fade-in" -->
 
 > This rule applies during overload resolution of function templates: When substituting the explicitly specified or deduced type for the template parameter fails, the specialization is discarded from the overload set instead of causing a compile error.
@@ -52,7 +52,7 @@ Substitution Failure Is Not An Error - to technika meta-programowania.
 ### Co nam to daje?
 <!-- .element: class="fragment fade-in" -->
 
-Możemy mieć uniwersalny interfejs i to my jako twórcy kodu (biblioteki) decydujemy, która implementacja ma się wykonać. Kompilator może więc wybrać optymalną implementację w zależności od typu danych.
+<p>Możemy mieć uniwersalny interfejs i to my jako twórcy kodu (biblioteki) decydujemy, która implementacja ma się wykonać. Kompilator może więc wybrać optymalną implementację w zależności od typu danych.</p>
 <!-- .element: class="fragment fade-in" -->
 
 ___
@@ -68,15 +68,13 @@ ___
 <p>W C++11 znajduje się pomocnicza struktura metaprogramowania - `std::enable_if`. Jest to przełącznik czasu kompilacji do włączania lub wyłączania niektórych szablonów.</p>
 <!-- .element: class="fragment fade-in" -->
 
-<pre class="fragment"><code class="cpp" data-trim>
+```cpp
 template <bool Condition, class T = void>;
 struct enable_if {};
-
 template <class T>
 struct enable_if<true, T> { using type = T; };
-</code></pre>
+```
 <!-- .element: class="fragment fade-in" -->
-
 
 * <!-- .element: class="fragment fade-in" --> Jeśli <code>Condition</code> ma wartość <code>true</code>, dostęp do typu wewnętrznego przez <code>enable_if<Condition, T>::type</code> jest prawidłowy.
 * <!-- .element: class="fragment fade-in" --> Jeśli <code>Condition</code> ma wartość <code>false</code>, dostęp do typu wewnętrznego przez <code>enable_if<Condition, T>::type</code> jest nieprawidłowy i podstawienie nie jest poprawne - SFINAE działa.
@@ -89,29 +87,29 @@ ___
 <p>C++14 definiuje typ pomocniczy:</p>
 <!-- .element: class="fragment fade-in" -->
 
-<pre class="fragment"><code class="cpp" data-trim>
+```cpp []
 template <bool B, class T = void>
 using enable_if_t = typename enable_if<B, T>::type;
-</code></pre>
+```
 <!-- .element: class="fragment fade-in" -->
 
 <p>Użycie obu jest równoważne.</p>
 <!-- .element: class="fragment fade-in" -->
 
-<pre class="fragment"><code class="cpp" data-trim>
+```cpp []
 template <
     typename T,
     typename std::enable_if<std::is_integral<T>::value, T>::type* = nullptr
 > void function(T& t) {}
-</code></pre>
+```
 <!-- .element: class="fragment fade-in" -->
 
-<pre class="fragment"><code class="cpp" data-trim>
+```cpp []
 template <
     typename T,
     typename std::enable_if_t<std::is_integral_v<T>, T>* = nullptr
 > void function(T& t) {}
-</code></pre>
+```
 <!-- .element: class="fragment fade-in" -->
 
 <p>Dlaczego <code>* = nullptr</code>?</p>
@@ -215,12 +213,11 @@ ___
 
 ## Rozwiązanie
 
-<pre class="fragment"><code class="cpp" data-trim>
+```cpp
 template <typename T>
 using removeCvRef = std::remove_cv_t<std::remove_reference_t<T>>;
 template <typename T>
 using isBaseOfShape = std::enable_if_t<std::is_base_of_v<Shape, removeCvRef<T>>>;
-
 template <
     class T,
     typename = isBaseOfShape<T>
@@ -228,7 +225,7 @@ template <
 void insert(T&& item, Collection& collection) {
     collection.emplace_back(make_shared<removeCvRef<T>>(item));
 }
-</code></pre>
+```
 <!-- .element: class="fragment fade-in" style="font-size: 1.4rem" -->
 
 ___

@@ -14,11 +14,11 @@ ___
 <p>Chcemy użyć klasy szablonu jako argumentu szablonu.</p>
 <!-- .element: class="fragment fade-in" -->
 
-<pre class="fragment"><code class="cpp" data-trim>
+```cpp
 template<typename T> class MyDeleter {};
 template<typename T, typename Policy> class Handle { /* ... */ };
 Handle<FILE, MyDeleter> h;
-</code></pre>
+```
 <!-- .element: class="fragment fade-in" style="font-size: 1.35rem" -->
 
 <p>Powoduje to błąd kompilacji:</p>
@@ -30,9 +30,9 @@ Handle<FILE, MyDeleter> h;
 <p>Próbowaliśmy przekazać szablon klasy zamiast określonej klasy (jak np. utworzona klasa szablonu). To powinno działać:</p>
 <!-- .element: class="fragment fade-in" -->
 
-<pre class="fragment"><code class="cpp" data-trim>
+```cpp
 Handle<FILE, MyDeleter<FILE>> h;
-</code></pre>
+```
 <!-- .element: class="fragment fade-in" -->
 
 ___
@@ -42,12 +42,12 @@ ___
 <p>Aby umożliwić użycie klasy szablonu, musimy użyć tak zwanych argumentów <code>template template</code>.</p>
 <!-- .element: class="fragment fade-in" -->
 
-<pre class="fragment"><code class="cpp" data-trim>
+```cpp
 template<typename T> class MyDeleter {};
 template<typename T, template<typename> typename Policy> class Handle { /* ... */ };
 // template<typename T, typename Policy> class Handle { /* ... */ };  // previously
 Handle<FILE, MyDeleter> h;
-</code></pre>
+```
 <!-- .element: class="fragment fade-in" style="font-size: 1.35rem" -->
 
 ___
@@ -69,32 +69,31 @@ ___
 
 ## Więcej przykładów
 
-<pre class="fragment"><code class="cpp" data-trim>
+```cpp
 template<typename T1, typename T2>
 struct Pair {
     T1 val1;
     T2 val2;
 };
-</code></pre>
+```
 <!-- .element: class="fragment fade-in" style="font-size: 1.3rem" -->
 
-<pre class="fragment"><code class="cpp" data-trim>
+```cpp
 template<size_t N, template<typename, typename> typename Data, typename T1, typename T2>
 struct DataArray {
   std::array<Data<T1, T2>, N> data;
 };
-</code></pre>
+```
 <!-- .element: class="fragment fade-in" style="font-size: 1.3rem" -->
 
-<pre class="fragment"><code class="cpp" data-trim>
+```cpp
 DataArray<16, Pair, int, double> a1;
 a1.data[0].val1 = 4;
 a1.data[0].val2 = 3.14;
-
 DataArray<8, std::pair, std::string, std::string> a2;
 a2.data[0].first = "Mickey";
 a2.data[0].second = "Mouse";
-</code></pre>
+```
 <!-- .element: class="fragment fade-in" style="font-size: 1.3rem" -->
 
 ___
@@ -114,7 +113,7 @@ ___
 
 ## Rozwiązanie #1 (łatwiejsze)
 
-<pre class="fragment"><code class="cpp" data-trim>
+```cpp
 template <typename T>
 class Holder {
     std::vector<T> v_;
@@ -123,15 +122,13 @@ public:
     Holder(const Container & c)
         : v_{c.begin(), c.end()}
     {}
-
     void print() {
         std::copy(v_.begin(), v_.end(), std::ostream_iterator<T>(std::cout, " "));
     }
 };
-
 template <typename Container>
 Holder(const Container & c) -> Holder<typename Container::value_type>;
-</code></pre>
+```
 <!-- .element: class="fragment fade-in" style="font-size: 1.3rem" -->
 
 * <!-- .element: class="fragment fade-in" --> Brak argumentów szablonu szablonu
@@ -141,7 +138,7 @@ ___
 <!-- .slide: style="font-size: 0.7em" -->
 ## Rozwiązanie #2
 
-<pre class="fragment"><code class="cpp" data-trim>
+```cpp
 template <typename T, template <typename...> typename Container>
 class Holder {
     std::vector<T> v_;
@@ -149,20 +146,17 @@ public:
     Holder(const Container<T> & c)
         : v_{c.begin(), c.end()}
     {}
-
     template <size_t N>
     Holder(const std::array<T, N> & a)
         : v_{a.begin(), a.end()}
     {}
-
     void print() {
         std::copy(v_.begin(), v_.end(), std::ostream_iterator<T>(std::cout, " "));
     }
 };
-
 template <typename T, size_t N>
 Holder(const std::array<T, N> & a) -> Holder<T, std::vector>;
-</code></pre>
+```
 <!-- .element: class="fragment fade-in" style="font-size: 1.3rem" -->
 
 * <!-- .element: class="fragment fade-in" --> Argumenty szablonu szablonu
