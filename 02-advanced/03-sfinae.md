@@ -82,6 +82,7 @@ struct enable_if<true, T> { using type = T; };
 * <!-- .element: class="fragment fade-in" --> Jeśli <code>Condition</code> ma wartość <code>false</code>, dostęp do typu wewnętrznego przez <code>enable_if<Condition, T>::type</code> jest nieprawidłowy i podstawienie nie jest poprawne - SFINAE działa.
 
 ___
+<!-- .element: style="font-size: 0.9em" -->
 
 ## `std::enable_if_t`
 
@@ -113,7 +114,8 @@ template <
 </code></pre>
 <!-- .element: class="fragment fade-in" -->
 
-Dlaczego `* = nullptr`?
+<p>Dlaczego <code>* = nullptr</code>?</p>
+<!-- .element: class="fragment fade-in" -->
 
 Note:
 
@@ -161,7 +163,7 @@ template<
 
 ___
 
-## variations `enable_if`
+## warianty `enable_if`
 
 Najbardziej elegancka opcja
 
@@ -233,19 +235,18 @@ ___
 
 ## `if constexpr`
 
-<pre class="fragment"><code class="cpp" data-trim>
+```cpp
 template <typename T>
 using removeCvRef = std::remove_cv_t<std::remove_reference_t<T>>;
-
 template <class T>
 void insertC(T&& item, Collection& collection) {
     if constexpr (std::is_base_of_v<Shape, removeCvRef<T>>) {
         collection.emplace_back(make_shared<removeCvRef<T>>(item));
     } else {
-        std::cout <<code "Sorry\n";
+        std::cout << "Sorry\n";
     }
 }
-</code></pre>
+```
 <!-- .element: class="fragment fade-in" -->
 
 * <!-- .element: class="fragment fade-in" --> może zastąpić mechanizm SFINAE
