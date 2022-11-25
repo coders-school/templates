@@ -124,7 +124,7 @@ struct container {
 template<class Iter>
 container(Iter b, Iter e) -> container<typename std::iterator_traits<Iter>::value_type>;
 ```
-<!-- .element: class="fragment fade-in" style="font-size: 1.2rem" -->
+<!-- .element: class="fragment fade-in" style="font-size: 1.1rem" -->
 
 ```cpp
 container c1{2.71};                       // deduces T = double using an automatic guide
@@ -133,7 +133,7 @@ container c2{v.begin(), v.end()};         // deduces T = int
 auto c3 = container{v.begin(), v.end()};  // deduces T = int
 //container c4{5, 6};                     // Error: no std::iterator_traits<int>::value_type
 ```
-<!-- .element: class="fragment fade-in" style="font-size: 1.2rem" -->
+<!-- .element: class="fragment fade-in" style="font-size: 1.1rem" -->
 
 ___
 
