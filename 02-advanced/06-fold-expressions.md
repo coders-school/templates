@@ -12,7 +12,7 @@ ___
 
 Fold-expressions umożliwiają pisanie zwartego kodu przy użyciu szablonów wariadycznych bez użycia jawnej rekurencji.
 
-```cpp
+<pre class="fragment"><code class="cpp" data-trim>
 template<typename... Args> auto sum(Args... args) {
     return (args + ...);
     // return (... + args);     // the same
@@ -25,7 +25,7 @@ template<typename... Args> bool f(Args... args) {
     return (args && ... && args); // error: both operands
 }                                 // contain unexpanded
                                   // parameter packs
-```
+</code></pre>
 <!-- .element: class="fragment fade-in" -->
 
 ___
@@ -53,17 +53,17 @@ ___
 
 ## Przykłady
 
-```cpp
+<pre class="fragment"><code class="cpp" data-trim>
 template<typename... Args>
 bool all(Args... args) {
     return (... && args);
 }
 
 bool b = all(true, true, true, false);
-```
+</code></pre>
 <!-- .element: class="fragment fade-in" -->
 
-```cpp
+<pre class="fragment"><code class="cpp" data-trim>
 template<typename T, typename... Args>
 void push_back_vec(std::vector<T>& v, Args&&... args) {
     (v.push_back(args), ...);
@@ -71,7 +71,7 @@ void push_back_vec(std::vector<T>& v, Args&&... args) {
 
 std::vector<int> v;
 push_back_vec(v, 6, 2, 45, 12);
-```
+</code></pre>
 <!-- .element: class="fragment fade-in" -->
 
 ___
@@ -99,7 +99,7 @@ ___
 
 ## Rozwiązanie
 
-```cpp
+<pre class="fragment"><code class="cpp" data-trim>
 template<typename ...Args>
 void print(Args&&... args) {
     (std::cout << ... << args) << '\n';
@@ -115,7 +115,7 @@ auto areEven(Numbers... nums) {
     print(nums...);
     return ((nums % 2 == 0) && ...);
 }
-```
+</code></pre>
 <!-- .element: class="fragment fade-in" -->
 
 ___
