@@ -8,7 +8,7 @@
 
 ___
 
-## Dynamic polymorphism
+## Dynamiczny polimorfizm
 
 ```cpp []
 class Base {
@@ -33,7 +33,7 @@ class Derived : public Base {
 
 ___
 
-## Static polymorphism = CRTP
+## Statyczny polimorfizm = CRTP
 
 ```cpp []
 template<class Child>
@@ -60,6 +60,6 @@ ___
 ## CRTP
 
 * <!-- .element: class="fragment fade-in" --> Curiously Recurring Template Pattern
-* <!-- .element: class="fragment fade-in" --> An idiom in C++ in which a class X derives from a class template instantiation using X itself as a template argument
-* <!-- .element: class="fragment fade-in" --> Sometimes called "Upside-Down Inheritance" due to the way it allows class hierarchies to be extended by substituting different base classes
-* <!-- .element: class="fragment fade-in" --> Compile time polymorphism at no extra cost (no vtable, no vptr)
+* <!-- .element: class="fragment fade-in" --> Idiom w C++, w którym klasa X wywodzi się z instancji szablonu klasy, używając samego X jako argumentu szablonu
+* <!-- .element: class="fragment fade-in" --> Czasami nazywane „Upside-Down Inheritance” (Dziedziczenie do góry nogami) ze względu na sposób, w jaki umożliwia rozszerzanie hierarchii klas poprzez zastępowanie różnych klas podstawowych
+* <!-- .element: class="fragment fade-in" --> Polimorfizm czasu kompilacji bez dodatkowych kosztów (bez vtable, vptr)
