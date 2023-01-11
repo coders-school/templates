@@ -32,7 +32,7 @@ Jaki jest wynik wywołania `foo(42)`?
 Czemu `const int &` jest lepszym dopasowaniem niż  `unsigned`?
 <!-- .element: class="fragment fade-in" -->
 
-Przy dopasowaniu typu w szablonach nie może zajść konwersja. Stała referencja złapie r-value i będzie to lepszym wyborem (exact match) niż konwersja z `int` na `unsigned`.
+Przy dopasowaniu typu w szablonach nie może zajść konwersja. Stała referencja złapie r-value (jest nim `42`) i będzie to lepszym wyborem (exact match) niż konwersja z `int` na `unsigned`.
 <!-- .element: class="fragment fade-in" -->
 
 ___
@@ -59,7 +59,7 @@ Jaki teraz będzie wynik wywołania `foo(42)`?
 Dlaczego `unsigned` jest lepszym wyborem niż `int &`?
 <!-- .element: class="fragment fade-in" -->
 
-Referencja (non-const) nie łapie r-values. Mamy więc tylko jeden wybór. Zajdzie niejawna konwersja z `int` na `unsigned`.
+Referencja (non-const) nie łapie r-values (obiektów tymczasowych). Mamy więc tylko jeden wybór. Zajdzie niejawna konwersja z `int` na `unsigned`.
 <!-- .element: class="fragment fade-in" -->
 
 ___
@@ -107,6 +107,9 @@ f(new int{1});
 <!-- .element: class="fragment fade-in" -->
 
 Dlaczego?
+<!-- .element: class="fragment fade-in" -->
+
+Specjalizacje szablonów nie biorą udziału w pierwszej fazie procesu overload resolution.
 <!-- .element: class="fragment fade-in" -->
 
 Pomimo tego, że #2 wydaje się być idealnym dopasowaniem, to jest to specjalizacja szablonu #1, który jest gorszym dopasowaniem niż szablon #3.
