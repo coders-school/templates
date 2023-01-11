@@ -7,11 +7,12 @@
 </a>
 
 ___
-
+<!-- .slide: style="font-size: 0.85em" -->
 ## `make_unique`
 
-Zaimplementuj funkcję `make_unique`. Powinna być w stanie przyjąć dowolną liczbę parametrów i powinna zwracać wartość `unique_ptr` dla danego typu. Należy stworzyć obiekt danego typu z przekazanymi mu wszystkimi parametrami.
-Głównym wyzwaniem jest prawidłowe wykonanie testów jednostkowych dla l-values i r-values.
+Zaimplementuj funkcję `make_unique`. Powinna być w stanie przyjąć dowolną liczbę parametrów i powinna zwracać `unique_ptr` dla danego typu. Należy stworzyć obiekt danego typu i przekazać mu wszystkie parametry do konstruktora. Pamiętaj o perfect forwardingu.
+
+Głównym wyzwaniem jest prawidłowe napisanie testów jednostkowych dla l-value i r-value, które pokryje wszystkie przypadki.
 
 ```cpp
 struct MyType {
@@ -29,17 +30,14 @@ int main(){
 }
 ```
 
-
 ___
 
-### Przegląd kodu
+### Code review
 
-Wyślij mi link do repozytorium z twoją implementacją do mojej recenzji kodu.
-
-#### [lukasz@coders.school](mailto:lukasz@coders.school)
+Wyślij na Discordzie na kanale `#szablony` link do repozytorium z twoją implementacją, abym ja lub inni kursanci rzucili na nią okiem i powiedzieli czy jest ok, czy jeszcze coś trzeba poprawić 🙂
 
 ___
 
 ## Post-test
 
-Link zostanie przesłany po szkoleniu wraz ze wszystkimi materiałami.
+[Link do testu](https://forms.gle/jPk9ntqhdTVtbVvv5)
