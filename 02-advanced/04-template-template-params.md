@@ -1,6 +1,7 @@
 <!-- .slide: data-background="#111111" -->
 
 # Template template parameters
+
 ## Parametry szablonu szablonu
 
 <a href="https://coders.school">
@@ -11,7 +12,7 @@ ___
 
 ## Przykład
 
-<p>Chcemy użyć klasy szablonu jako argumentu szablonu.</p>
+Chcemy użyć klasy szablonu jako argumentu szablonu.
 <!-- .element: class="fragment fade-in" -->
 
 ```cpp
@@ -21,13 +22,13 @@ Handle<FILE, MyDeleter> h;
 ```
 <!-- .element: class="fragment fade-in" style="font-size: 1.35rem" -->
 
-<p>Powoduje to błąd kompilacji:</p>
+Powoduje to błąd kompilacji:
 <!-- .element: class="fragment fade-in" -->
 
 `error: type/value mismatch at argument 2 in template parameter list for ‘template<class T, class Policy> class Handle’`
 <!-- .element: class="fragment fade-in" style="font-size: 1.35rem" -->
 
-<p>Próbowaliśmy przekazać szablon klasy zamiast określonej klasy (jak np. utworzona klasa szablonu). To powinno działać:</p>
+Próbowaliśmy przekazać szablon klasy zamiast konkretnego typu (jak np. instancja klasy szablonowej). Takie coś powinno zadziałać:
 <!-- .element: class="fragment fade-in" -->
 
 ```cpp
@@ -39,7 +40,7 @@ ___
 
 ## Szablon szablonu
 
-<p>Aby umożliwić użycie klasy szablonu, musimy użyć tak zwanych argumentów <code>template template</code>.</p>
+Aby umożliwić użycie klasy szablonowej, musimy użyć tak zwanych argumentów <code>template template</code>.
 <!-- .element: class="fragment fade-in" -->
 
 ```cpp
@@ -102,8 +103,8 @@ ___
 
 1. Napisz szablon klasy `Holder`.
    1. <!-- .element: style="font-size: 0.7em" --> Klasa powinna mieć <code>vector<T></code> jako pole składowe.
-   2. <!-- .element: style="font-size: 0.7em" --> Klasa powinna mieć konstruktor, który może przyjąć dowolny z 4 kolejnych kontenerów (<code>vector</code>, <code>list</code>, <code>forward_list</code>, <code>deque</code>). Ten konstruktor powinien skopiować wszystkie wartości do wektora wewnętrznego.
-   3. <!-- .element: style="font-size: 0.7em" --> Parametr szablonu klasy <code>T</code> powinien zostać automatycznie wydedukowany. W razie potrzeby zadeklaruj podpowiedź dedukcyjną.
+   2. <!-- .element: style="font-size: 0.7em" --> Klasa powinna mieć konstruktor, który może przyjąć dowolny z 4 kolejnych kontenerów (<code>vector</code>, <code>list</code>, <code>forward_list</code>, <code>deque</code>). Ten konstruktor powinien skopiować wszystkie wartości z podanego kontenera do wektora wewnętrznego.
+   3. <!-- .element: style="font-size: 0.7em" --> Parametr szablonu klasy <code>T</code> powinien zostać automatycznie wydedukowany. W razie potrzeby utwórz podpowiedź dedukcyjną.
 
 2. Dodaj funkcję print do drukowania zawartości wewnętrznego pola `vector<T>`
 
