@@ -15,7 +15,7 @@ ___
 Typy szablonowe klas mogą być automatycznie wydedukowane przez kompilator dzięki... szablonom funkcji.
 <!-- .element: class="fragment fade-in" -->
 
-W tym celu kompilator używa konstruktorów klas.
+W tym celu kompilator używa konstruktorów klas (które przecież są funkcjami).
 <!-- .element: class="fragment fade-in" -->
 
 Od C++17 możesz więc napisać taki kod:
@@ -32,86 +32,14 @@ Ale to nie zadziała:
 
 ```cpp
 // std::vector v1;          // compilation error, vector of what?
-// std::vector v2(10)       // compilation error, 10 elements of what?
+// std::vector v2(10)       // compilation error, 10 elements of what kind?
 ```
 <!-- .element: class="fragment fade-in" -->
 
 ___
-<!-- .slide: data-visibility="hidden" style="font-size: 0.85em" -->
-
-## Dedukcja argumentów szablonów klas
-
-```cpp
-template<class T>
-struct UniquePtr {
-    UniquePtr(T* t);
-    // ...
-};
-```
-<!-- .element: class="fragment fade-in" -->
-
-### Co wydedukuje tu kompilator?
-<!-- .element: class="fragment fade-in" -->
-
-```cpp
-UniquePtr p1{new auto(2.0)};
-```
-<!-- .element: class="fragment fade-in" -->
-
-`UniquePtr<double>`
-<!-- .element: class="fragment fade-in" -->
-
-### A tu?
-<!-- .element: class="fragment fade-in" -->
-
-```cpp
-UniquePtr p2{new double[10]{}};  // T should be a single object or an array?
-```
-<!-- .element: class="fragment fade-in" -->
-
-`UniquePtr<double>`
-<!-- .element: class="fragment fade-in" -->
-
-Gdy automatyczne reguły dedukcji działają przeciwko tobie, lepiej jest je wyłączyć dla określonego typu argumentu konstruktora.
-<!-- .element: class="fragment fade-in" -->
-
-___
-<!-- .slide: data-visibility="hidden" -->
-
-## Wyłączanie podpowiedzi dedukcyjnych
-
-```cpp
-template<typename T>
-struct type_identity { using type = T; };
-
-template<typename T>
-using type_identity_t = typename type_identity<T>::type;
-```
-<!-- .element: class="fragment fade-in" -->
-
-```cpp
-template<class T>
-struct UniquePtr {
-    UniquePtr(type_identity_t<T>* t);
-    // UniquePtr(T* t);
-    // ...
-};
-```
-<!-- .element: class="fragment fade-in" -->
-
-```cpp
-UniquePtr<double> p1{new auto(2.0)};
-UniquePtr<double[]> p2{new double[10]{}};
-```
-<!-- .element: class="fragment fade-in" -->
-
-___
+<!-- .slide: style="font-size: 0.9em" -->
 
 ## Definiowanie własnych podpowiedzi dedukcyjnych
-
-* <!-- .element: class="fragment fade-in" --> Składnia jest podobna do deklaracji funkcji ze strzałką. Jako nazwę funkcji używamy nazwę klasy (czyli konstruktor).
-* <!-- .element: class="fragment fade-in" --> Podpowiedź dedukcyjna nie jest funkcją i nie ma ciała.
-* <!-- .element: class="fragment fade-in" --> Po strzałce podajemy typ, jaki kompilator ma wydedukować
 
 ```cpp
 template<class T>
@@ -120,11 +48,15 @@ struct container {
     template<class Iter> container(Iter beg, Iter end);
 };
 
-// additional deduction guide
+// deduction guide
 template<class Iter>
 container(Iter b, Iter e) -> container<typename std::iterator_traits<Iter>::value_type>;
 ```
 <!-- .element: class="fragment fade-in" style="font-size: 1.1rem" -->
+
+* <!-- .element: class="fragment fade-in" --> Składnia jest podobna do deklaracji funkcji ze strzałką. Jako nazwę funkcji używamy nazwę klasy (czyli konstruktor).
+* <!-- .element: class="fragment fade-in" --> Podpowiedź dedukcyjna nie jest funkcją i nie ma ciała.
+* <!-- .element: class="fragment fade-in" --> Po strzałce podajemy typ, jaki kompilator ma wydedukować
 
 ```cpp
 container c1{2.71};                       // deduces T = double using an automatic guide
@@ -156,11 +88,9 @@ struct make_visitor
 template <typename... Ts>
 make_visitor(Ts...) -> make_visitor<Ts...>;
 
-using variant = std::variant<int, std::string, double>;
-
 int main()
 {
-    const auto v0 = variant{42.2};
+    const auto v0 = std::variant<int, std::string, double>{42.2};
 
     std::visit(make_visitor{
         [](int){std::cout << "int\n";},
@@ -182,8 +112,80 @@ int main()
 ```
 <!-- .element: style="font-size: 1.2rem" -->
 
-[Źródło](https://gist.github.com/ahamez/383f8e326d2b63d27a2ef6935162ce09)
+[Źródło](https://gist.github.com/ahamez/383f8e326d2b63d27a2ef6935162ce09), [`std::visit`](https://en.cppreference.com/w/cpp/utility/variant/visit)
 
 ___
 
+## CTAD
+
+### Class template argument deduction
+
 ### [Więcej na cppreference.com](https://en.cppreference.com/w/cpp/language/class_template_argument_deduction)
+
+___
+<!-- .slide: style="font-size: 0.85em" -->
+
+## Bonus
+
+```cpp
+template<class T>
+struct UniquePtr {
+    UniquePtr(T* t);
+    // ...
+};
+```
+<!-- .element: class="fragment fade-in" -->
+
+### Co wydedukuje tu kompilator?
+<!-- .element: class="fragment fade-in" -->
+
+```cpp
+UniquePtr p1{new auto(2.0)};
+```
+<!-- .element: class="fragment fade-in" -->
+
+#### `UniquePtr<double>`
+<!-- .element: class="fragment fade-in" -->
+
+### A tu?
+<!-- .element: class="fragment fade-in" -->
+
+```cpp
+UniquePtr p2{new double[10]{}};  // T should be a single object or an array?
+```
+<!-- .element: class="fragment fade-in" -->
+
+#### `UniquePtr<double>`
+<!-- .element: class="fragment fade-in" -->
+
+Gdy automatyczne reguły dedukcji działają przeciwko tobie, lepiej jest je wyłączyć dla wybranego konstruktora.
+<!-- .element: class="fragment fade-in" -->
+
+___
+
+## Wyłączanie podpowiedzi dedukcyjnych
+
+```cpp
+template<typename T>
+struct type_identity { using type = T; };
+
+template<typename T>
+using type_identity_t = typename type_identity<T>::type;
+```
+<!-- .element: class="fragment fade-in" -->
+
+```cpp
+template<class T>
+struct UniquePtr {
+    UniquePtr(type_identity_t<T>* t);
+    // UniquePtr(T* t);
+    // ...
+};
+```
+<!-- .element: class="fragment fade-in" -->
+
+```cpp
+UniquePtr<double> p1{new auto(2.0)};
+UniquePtr<double[]> p2{new double[10]{}};
+```
+<!-- .element: class="fragment fade-in" -->
