@@ -12,10 +12,10 @@ ___
 
 ## Motywacja
 
-<p>Szablony wariadyczne mogą być używane do tworzenia funkcji lub klas szablonowych, które akceptują dowolną liczbę argumentów wszelkiego typu.</p>
+Szablony wariadyczne mogą być używane do tworzenia funkcji lub klas szablonowych, które akceptują dowolną liczbę argumentów wszelkiego typu.
 <!-- .element: class="fragment fade-in" -->
 
-<p>Znasz funkcję <code>printf()</code> (z języka C)?</p>
+Znasz funkcję <code>printf()</code> (z języka C)?
 <!-- .element: class="fragment fade-in" -->
 
 ```cpp
@@ -30,9 +30,9 @@ int main() {
 
 ___
 
-## Pakiet parametrów
+## Paczka parametrów
 
-<p>Pakiet parametrów szablonu to parametr szablonu, który akceptuje zero lub więcej argumentów szablonu</p>
+Paczka parametrów szablonu to parametr szablonu, który akceptuje zero lub więcej argumentów szablonu
 <!-- .element: class="fragment fade-in" -->
 
 ```cpp
@@ -55,7 +55,7 @@ ___
 
 ## Składnia
 
-Szablony ze zmienną liczbą argumentów używają nowej składni pakietu parametrów, która reprezentuje wiele (lub zero) parametrów szablonu.
+Szablony z dowolną liczbą argumentów używają nowej składni z paczką parametrów, która reprezentuje wiele (lub zero) parametrów szablonu.
 
 ```cpp
 template<class ... Types>
@@ -83,10 +83,10 @@ ___
 
 ## Rozpakowywanie parametrów funkcji
 
-<p>Rozpakowywanie grup parametrów wykorzystuje nową składnię operatora wielokropka - <code>...</code></p>
+Rozpakowanie paczki parametrów wykorzystuje nową składnię operatora wielokropka - <code>...</code> (ang. elipsis operator)
 <!-- .element: class="fragment fade-in" -->
 
-<p>W przypadku argumentów funkcji rozpakowuje je w kolejności podanej przy wywołaniu funkcji szablonowej.</p>
+W przypadku argumentów funkcji kompilator rozpakowuje je w kolejności podanej przy wywołaniu funkcji szablonowej.
 <!-- .element: class="fragment fade-in" -->
 
 ___
@@ -122,7 +122,7 @@ template <typename ... Foo>
 void fun(Foo ... bar);
 ```
 
-<code>Zakładając że powyższa funkcja poniżej wyrażeń zostanie rozwinięta następująco:</code>
+Oto jak rozwinie się paczka parametrów `bar` typu `Foo...` w zależności od tego gdzie postawimy `...` lub czym "udekorujemy" paczkę podczas rozpakowywania.
 <!-- .element: class="fragment fade-in" -->
 
 ```text
@@ -145,9 +145,9 @@ ___
 #include <variant>
 template <typename... Ts>
 struct make_visitor
-  : Ts...
+    : Ts...
 {
-  using Ts::operator()...;
+    using Ts::operator()...;
 };
 // Deduction guide
 template <typename... Ts>
@@ -155,35 +155,23 @@ make_visitor(Ts...) -> make_visitor<Ts...>;
 using variant = std::variant<int, std::string, double>;
 int main()
 {
-  {
     const auto v0 = variant{42.2};
     std::visit(make_visitor{
-      [](int){std::cout << "int\n";},
-      [](std::string){std::cout << "std::string\n";},
-      [](double){std::cout << "double\n";}
+        [](int){std::cout << "int\n";},
+        [](std::string){std::cout << "std::string\n";},
+        [](double){std::cout << "double\n";}
     }, v0);
-    // Without deduction guide
-    std::visit(make_visitor<
-        std::function<void(int)>,
-        std::function<void(std::string)>,
-        std::function<void(double)>>
-    {
-      [](int){std::cout << "int\n";},
-      [](std::string){std::cout << "std::string\n";},
-      [](double){std::cout << "double\n";}
-    }, v0);
-  }
 }
 ```
 <!-- .element: style="font-size: 1.2rem" -->
 
-[Źródło](https://gist.github.com/ahamez/383f8e326d2b63d27a2ef6935162ce09)
+[Źródło](https://gist.github.com/ahamez/383f8e326d2b63d27a2ef6935162ce09), [`std::visit`](https://en.cppreference.com/w/cpp/utility/variant/visit)
 
 ___
 
-## Rekurencja Head tail
+## Rozpakowanie z rekurencją
 
-Możliwe jest również użycie rekurencji do rozpakowania każdego pojedynczego argumentu. Wymaga to wariadycznego szablonu Head/Tail i funkcji nie będącej szablonem do zdefiniowania.
+Możliwe jest również użycie rekurencji do rozpakowania każdego argumentu. Wymaga to zdefiniowania wariadycznego szablonu Head/Tail i funkcji nie będącej szablonem, która będzie tzw. "funkcją stop/końca".
 
 ```cpp
 void variadic_foo() {}
@@ -197,30 +185,30 @@ void variadic_foo(Head const& head, Tail const&... tail) {
 
 ___
 
-## Rekurencja Head tail w klasach
+## Rekurencja w klasach
 
 Możliwe jest rozpakowanie wszystkich typów na raz (np. w przypadku bazowej klasy, będącej wariadyczną klasą szablonową) lub skorzystanie z częściowej, albo pełnej specjalizacji.
 
 ```cpp
 template<int... Number>
-struct Sum;
+struct Sum;  // generic template
 
 template<int Head, int... Tail>
-struct Sum<Head, Tail...> {
+struct Sum<Head, Tail...> {  // partial specialization
     const static int RESULT = Head + Sum<Tail...>::RESULT;
 };
 
 template<>
-struct Sum<> {
+struct Sum<> {  // full specialization
     const static int RESULT = 0;
-}
+};
 
 constexpr auto value = Sum<1, 2, 3, 4, 5>::RESULT; // = 15
 ```
 
 ___
 
-## Obsługa dziedziczenia z klas wariadycznych
+## Dziedziczenie po klasach wariadycznych
 
 ```cpp
 template<class... Types>
@@ -236,7 +224,7 @@ ___
 
 ## Operator `sizeof...`
 
-`sizeof...` zwraca liczbę parametrów w pakiecie parametrów.
+`sizeof...` zwraca liczbę parametrów w paczce parametrów.
 
 ```cpp
 template<class... Types>
@@ -264,7 +252,6 @@ std::array<double, 4> b = make_array(1.1, 2.2, 3.3, 4.4);
 * <!-- .element: class="fragment fade-in" --> funkcje wariadyczne
 * <!-- .element: class="fragment fade-in" --> <code>sizeof...</code> by wydedukować rozmiar
 * <!-- .element: class="fragment fade-in" --> <code>std::common_type</code> by wydedukować typ
-* <!-- .element: class="fragment fade-in" --> końcowy typ powrotu z <code>-></code>
 * <!-- .element: class="fragment fade-in" --> perfect forwarding
 * <!-- .element: class="fragment fade-in" --> <code>constexpr</code>
 
@@ -276,10 +263,17 @@ ___
 #include <array>
 #include <iostream>
 #include <type_traits>
-template<typename... Ts>
+
+template<typename... Ts>  // version #1
 constexpr auto make_array(Ts&&... ts) -> std::array<std::common_type_t<Ts...>, sizeof...(Ts)> {
     return { std::forward<Ts>(ts)... };
 }
+
+template<typename... Ts>  // version #2
+constexpr auto make_array(Ts&&... ts) {
+    return std::array<std::common_type_t<Ts...>, sizeof...(Ts)>{ std::forward<Ts>(ts)... };
+}
+
 int main() {
     auto b = make_array(1, 2, 3);
     std::cout << b.size() << '\n';
@@ -293,7 +287,7 @@ ___
 
 ## Perfect forwarding
 
-Rekomendowanym jest, by korzystać z  `&&` oraz `std::forward` z argumentami wariadycznymi, by obsługiwać r-values i l-values poprawnie. to tak zwany **perfect forwarding**.
+Rekomenduję, by korzystać z  `&&` oraz `std::forward` z argumentami wariadycznymi, by obsługiwać poprawnie r-values i l-values. To tak zwany **perfect forwarding**.
 
 ```cpp
 #include <utility>
