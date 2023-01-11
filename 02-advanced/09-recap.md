@@ -10,19 +10,19 @@ ___
 
 ## Co wydaje Ci się być najtrudniejsze?
 
-## Czego się nauczyłeś z tych materiałów?
+## Czego nauczyły Cię te lekcje?
 
 ___
 
 ### Rzeczy do zapamiętania
 
-* <!-- .element: class="fragment fade-in" --> Podpowiedzi dedukcyjne pomagają kompilatorowi wydedukować odpowiednie klasy szablonów
-* <!-- .element: class="fragment fade-in" --> SFINAE służy do wyłączania generowania kodu dla niektórych typów
-* <!-- .element: class="fragment fade-in" --> Aby przekazać klasę szablonu do szablonu, musisz użyć tak zwanych argumentów szablonu szablonu (template template arguments)
-* <!-- .element: class="fragment fade-in" --> Jeśli potrzebujesz funkcji, która może przyjmować dowolną liczbę argumentów, użyj szablonów wariancyjnych
+* <!-- .element: class="fragment fade-in" --> Podpowiedzi dedukcyjne pomagają kompilatorowi wydedukować odpowiednie szablony klas
+* <!-- .element: class="fragment fade-in" --> SFINAE służy do wyłączania generowania kodu z szablonów dla niektórych typów
+* <!-- .element: class="fragment fade-in" --> Aby przekazać klasę szablonową do szablonu, musisz użyć tak zwanych "template template arguments"
+* <!-- .element: class="fragment fade-in" --> Jeśli potrzebujesz funkcji, która może przyjmować dowolną liczbę argumentów, użyj szablonów wariadycznych
 * <!-- .element: class="fragment fade-in" --> Używaj fold expressions, aby uprościć operacje na argumentach wariadycznych
-* <!-- .element: class="fragment fade-in" --> Jeśli to możliwe, możesz zastąpić funkcje szablonu generycznymi wyrażeniami lambda (z C++ 14). Pamiętaj tylko, że lambdy są obiektami i mają ograniczony czas życia.
-* <!-- .element: class="fragment fade-in" -->Jeśli to możliwe, użyj <code>if constexpr</code>, <code>static_assert</code> lub koncepcji, aby emulować SFINAE.
+* <!-- .element: class="fragment fade-in" --> Jeśli to możliwe, spróbuj zastąpić funkcje szablonowe generycznymi wyrażeniami lambda (z C++ 14). Pamiętaj tylko, że lambdy są obiektami i mają ograniczony czas życia.
+* <!-- .element: class="fragment fade-in" --> Jeśli to możliwe, używaj <code>if constexpr</code>, <code>static_assert</code> lub konceptów (z C++20) zamiast typowego SFINAE.
 
 ___
 
