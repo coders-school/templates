@@ -2,6 +2,8 @@
 
 # Fold expressions
 
+## Wyrażenia składane
+
 <a href="https://coders.school">
     <img width="500" src="../img/coders_school_logo.png" alt="Coders School" class="plain">
 </a>
@@ -28,25 +30,28 @@ template<typename... Args> bool f(Args... args) {
 ```
 <!-- .element: class="fragment fade-in" -->
 
+Wyrażenia składane zawsze muszą by w nawiasach.
+<!-- .element: class="fragment fade-in" -->
+
 ___
 
 ## Fold-expressions
 
-Zmniejsza (składa) pakiet parametrów nad operatorem binarnym op.
+Składa paczkę parametrów stosując podany operatorem binarnym `op` (binarny, czyli przyjmujący 2 argumenty)
 
-### Operators
+### Operatory binarne
 <!-- .element: class="fragment fade-in" -->
 
 `+ - * / % ^ & | = < > << >> += -= *= /= %= ^= &= |= <<= >>= == != <= >= && || , .* ->*`
 <!-- .element: class="fragment fade-in" -->
 
-* <!-- .element: class="fragment fade-in" --> jednoargumentowe złożenie prawe
+* <!-- .element: class="fragment fade-in" --> jednoargumentowe złożenie prawe (unary right fold)
   * `(pack op ...)`
-* <!-- .element: class="fragment fade-in" --> binarne złożenie prawe
+* <!-- .element: class="fragment fade-in" --> dwuargumentowe złożenie prawe (binary right fold)
   * `(pack op ... op init)`
-* <!-- .element: class="fragment fade-in" --> jednoargumentowe złożenie lewe
+* <!-- .element: class="fragment fade-in" --> jednoargumentowe złożenie lewe (unary left fold)
   * `(... op pack)`
-* <!-- .element: class="fragment fade-in" --> binarne złożenie lewe
+* <!-- .element: class="fragment fade-in" --> dwuargumentowe złożenie lewe (binary left fold)
   * `(init op ... op pack)`
 
 ___
@@ -78,7 +83,7 @@ ___
 
 ## Zadanie
 
-1. Napisz funkcję `print()`, która może wydrukować wszystko na ekranie. Powinieneś być w stanie przekazać do niego dowolną liczbę parametrów. Użyj fold-expressions.
+1. Napisz funkcję `print()`, która może wydrukować wszystko na ekranie. Funkcja `print()` powinna przyjmowa dowolną liczbę argumentów. Użyj fold-expressions.
 
     ```cpp
     print(1, 40, "string", 2.0);
@@ -88,7 +93,7 @@ ___
 
 2. Napisz funkcję `areEven()`, która
 
-   * drukuje wszystkie parametry na ekranie za pomocą powyższej funkcji `print()`
+   * wypisze wszystkie parametry na ekranie za pomocą powyższej funkcji `print()`
    * sprawdzi, czy wszystkie liczby w pakiecie parametrów są parzyste i zwróci odpowiednią wartość logiczną
 
     ```cpp
@@ -119,10 +124,8 @@ auto areEven(Numbers... nums) {
 <!-- .element: class="fragment fade-in" -->
 
 ___
-
-## Fold expressions
-
-Wartości domyślne, gdy pakiet parametrów jest pusty
+<!-- .slide: style="font-size: 0.95em" -->
+## Wartości domyślne pustych wyrażeń składanych
 
 | Operator |  wartość   |
 | :------: | :------: |
