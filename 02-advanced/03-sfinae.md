@@ -18,7 +18,7 @@ void foo(T* arg) {}
 ```
 <!-- .element: class="fragment fade-in" -->
 
-Wywołanie `foo(42)` spowoduje, że kompilator spróbuje wygenerować 2 funkcje.
+Wywołanie `foo(42)` spowoduje, że kompilator poszukując funkcji o odpowiednich nazwach, spróbuje wygenerować 2 poniższe funkcje.
 <!-- .element: class="fragment fade-in" -->
 
 
@@ -28,20 +28,21 @@ void foo(int* arg) {}
 ```
 <!-- .element: class="fragment fade-in" -->
 
-<p>Gdyby kompilator podstawił <code>42</code> jako argument drugiej funkcji, spowodowałoby to błąd kompilacji. Wobec tego odrzuca on to przeciążenie.</p>
+Gdyby kompilator podstawił <code>42</code> jako argument drugiej funkcji, spowodowałoby to błąd kompilacji. Wobec tego odrzuca on to przeciążenie.
 <!-- .element: class="fragment fade-in" -->
 
-<p>Ostatecznie nie ma żadnego błędu kompilacji, bo udało się dopasować pierwszą funkcję. Tada! Oto właśnie SFINAE w praktyce.</p>
+Ostatecznie nie ma żadnego błędu kompilacji, bo udało się dopasować pierwszą funkcję. Tada! Oto właśnie SFINAE w praktyce.
 <!-- .element: class="fragment fade-in" -->
 
 Gdyby nie było pierwszej funkcji, dostalibyśmy błąd kompilacji.
 <!-- .element: class="fragment fade-in" -->
 
 ___
+<!-- .slide: style="font-size: 0.85em" -->
 
 ## SFINAE
 
-<p>Substitution Failure Is Not An Error - to technika meta-programowania.</p>
+Substitution Failure Is Not An Error - technika meta-programowania
 <!-- .element: class="fragment fade-in" -->
 
 > This rule applies during overload resolution of function templates: When substituting the explicitly specified or deduced type for the template parameter fails, the specialization is discarded from the overload set instead of causing a compile error.
@@ -52,7 +53,10 @@ ___
 ### Co nam to daje?
 <!-- .element: class="fragment fade-in" -->
 
-<p>Możemy mieć uniwersalny interfejs i to my jako twórcy kodu (biblioteki) decydujemy, która implementacja ma się wykonać. Kompilator może więc wybrać optymalną implementację w zależności od typu danych.</p>
+Możemy mieć uniwersalny interfejs i to my jako twórcy kodu (biblioteki) decydujemy, która implementacja ma się wykonać. Kompilator może więc wybrać optymalną implementację w zależności od typu danych.
+<!-- .element: class="fragment fade-in" -->
+
+W taki sposób może być zaimplementowana np. funkcja [`std::advance()`](https://en.cppreference.com/w/cpp/iterator/advance).
 <!-- .element: class="fragment fade-in" -->
 
 ___
@@ -63,14 +67,34 @@ ___
 
 ___
 
+## Przykład SFINAE
+
+### `std:enable_if`
+
+```cpp
+template<
+    class T,
+    typename = std::enable_if<std::has_virtual_destructor_v<T>>::type
+>
+T* construct(T* t) {
+    return new T{};
+}
+```
+<!-- .element: class="fragment fade-in" -->
+
+Funkcja `construct` będzie widziana tylko dla typów `T`, które mają wirtualny destruktor. Dla pozostałych typów kompilator w ogóle nie widzi tej funkcji.
+<!-- .element: class="fragment fade-in" -->
+
+___
 ## `std::enable_if`
 
-<p>W C++11 znajduje się pomocnicza struktura metaprogramowania - `std::enable_if`. Jest to przełącznik czasu kompilacji do włączania lub wyłączania niektórych szablonów.</p>
+W C++11 znajduje się pomocnicza struktura metaprogramowania - `std::enable_if`. Jest to przełącznik czasu kompilacji do włączania lub wyłączania niektórych szablonów.
 <!-- .element: class="fragment fade-in" -->
 
 ```cpp
 template <bool Condition, class T = void>;
 struct enable_if {};
+
 template <class T>
 struct enable_if<true, T> { using type = T; };
 ```
@@ -78,6 +102,27 @@ struct enable_if<true, T> { using type = T; };
 
 * <!-- .element: class="fragment fade-in" --> Jeśli <code>Condition</code> ma wartość <code>true</code>, dostęp do typu wewnętrznego przez <code>enable_if<Condition, T>::type</code> jest prawidłowy.
 * <!-- .element: class="fragment fade-in" --> Jeśli <code>Condition</code> ma wartość <code>false</code>, dostęp do typu wewnętrznego przez <code>enable_if<Condition, T>::type</code> jest nieprawidłowy i podstawienie nie jest poprawne - SFINAE działa.
+
+___
+
+## `std::enable_if`
+
+Wracając do przykładu
+
+```cpp
+template<
+    class T,
+    typename = std::enable_if<std::has_virtual_destructor_v<T>>::type
+>
+T* construct(T* t) {
+    return new T{};
+}
+```
+
+Odwołanie `std::enable_if<std::has_virtual_destructor_v<T>>::type`
+
+* <!-- .element: class="fragment fade-in" --> jest prawidłowe, jeśli <code>std::has_virtual_destructor_v&lt;T&gt;</code> ma wartość <code>true</code>
+* <!-- .element: class="fragment fade-in" --> jest nieprawidłowe, jeśli <code>std::has_virtual_destructor_v&lt;T&gt;</code> ma wartość <code>false</code>. Powoduje to wykluczenie funkcji <code>construct()</code> ze zbioru możliwych przeciążeń do wywołania. Jeśli była to jedyna pasująca funkcja to oczywiście dostaniemy błąd kompilacji.
 
 ___
 <!-- .element: style="font-size: 0.9em" -->
@@ -134,7 +179,7 @@ template <
 
 ___
 
-## warianty `enable_if`
+## Warianty `enable_if`
 
 ```cpp []
 template<class T>     // #1 return type
@@ -161,7 +206,7 @@ template<
 
 ___
 
-## warianty `enable_if`
+## Warianty `enable_if`
 
 Najbardziej elegancka opcja
 
@@ -180,7 +225,7 @@ template<
 
 ___
 
-## Koncepcje (C++20)
+## Koncepty (C++20)
 
 ```cpp
 template <class T>
@@ -191,33 +236,38 @@ T* construct(T* t)
 { return new T{}; }
 ```
 
-Od C++20 koncepcje powinny zastąpić użycie `std::enable_if`.
+Od C++20 koncepty powinny zastąpić użycie `std::enable_if`.
 
 ___
 
 ## Zadanie
 
-Zajrzyj do katalogu `module2/shapes`.
+Zajrzyj do katalogu `02-advanced/shapes`.
 
-Napisz funkcję `insert()` w pliku `main.cpp`. Powinna umożliwiać wstawianie do kolekcji tylko podklas Shape. Parametry inne niż `Circle`, `Square`  lub `Rectangle`  nie powinny się kompilować. Użyj SFINAE. Użyj odpowiednich type_traits.
+Napisz funkcję `insert()` w pliku `main.cpp`. Powinna umożliwiać wstawianie do kolekcji tylko klas dziedziczących po `Shape`. Parametry inne niż `Circle`, `Square`  lub `Rectangle`  nie powinny się kompilować. Użyj SFINAE. Użyj odpowiednich type_traits.
 
 Funkcja powinna utworzyć `shared_ptr` z obiektu przekazanego jako pierwszy parametr i umieścić go w kolekcji, która powinna zostać podana jako drugi parametr.
 
-Podpowiedzi:
+___
+
+### Podpowiedzi
 
 * `std::is_base_of`
 * `std::remove_reference`
 * `std::remove_cv`
+* `std::decay`
 
 ___
 
-## Rozwiązanie
+## Rozwiązanie #1
 
 ```cpp
 template <typename T>
 using removeCvRef = std::remove_cv_t<std::remove_reference_t<T>>;
+
 template <typename T>
 using isBaseOfShape = std::enable_if_t<std::is_base_of_v<Shape, removeCvRef<T>>>;
+
 template <
     class T,
     typename = isBaseOfShape<T>
@@ -230,15 +280,31 @@ void insert(T&& item, Collection& collection) {
 
 ___
 
-## `if constexpr`
+## Rozwiązanie #2 (krótsze, lepsze)
 
 ```cpp
 template <typename T>
-using removeCvRef = std::remove_cv_t<std::remove_reference_t<T>>;
+using isBaseOfShape = std::enable_if_t<std::is_base_of_v<Shape, std::decay_t<T>>>;
+
+template <
+    class T,
+    typename = isBaseOfShape<T>
+>
+void insert(T&& item, Collection& collection) {
+    collection.emplace_back(make_shared<std::decay_t<T>>(item));
+}
+```
+<!-- .element: class="fragment fade-in" style="font-size: 1.4rem" -->
+
+___
+
+## `if constexpr`
+
+```cpp
 template <class T>
 void insertC(T&& item, Collection& collection) {
-    if constexpr (std::is_base_of_v<Shape, removeCvRef<T>>) {
-        collection.emplace_back(make_shared<removeCvRef<T>>(item));
+    if constexpr (std::is_base_of_v<Shape, std::decay_t<T>>) {
+        collection.emplace_back(make_shared<std::decay_t<T>>(item));
     } else {
         std::cout << "Sorry\n";
     }
@@ -248,7 +314,7 @@ void insertC(T&& item, Collection& collection) {
 
 * <!-- .element: class="fragment fade-in" --> może zastąpić mechanizm SFINAE
 * <!-- .element: class="fragment fade-in" --> dostępne od C++17
-* <!-- .element: class="fragment fade-in" --> zazwyczaj wynikiem nie jest błąd podstawienia, ale pusty kod
+* <!-- .element: class="fragment fade-in" --> zazwyczaj wynikiem nie jest błąd podstawienia, ale pusty kod lub zawartość bloku <code>else</code>
 
 ___
 
@@ -257,7 +323,7 @@ ___
 * <!-- .element: class="fragment fade-in" --> SFINAE to bardzo potężna i trudna technika
 * <!-- .element: class="fragment fade-in" --> Właściwe użycie może nie być zbyt brzydkie 🥴
 * <!-- .element: class="fragment fade-in" --> W stosownych przypadkach użyj poniższych technik zamiast SFINAE:
-  * [tag dispatch](https://arne-mertz.de/2016/10/tag-dispatch/)
+  * [tag dispatch](https://arne-mertz.de/2016/10/tag-dispatch/), użyte np. w [`std::advance`](https://en.cppreference.com/w/cpp/iterator/advance)
   * `static_assert` (C++11)
   * `if constexpr` (C++17)
-  * koncepcje (C++20)
+  * koncepty (C++20)
