@@ -2,7 +2,7 @@
 
 # Overload resolution rules
 
-## Reguły rozwiązywanie przeciążeń
+## Reguły rozwiązywania przeciążeń
 
 <a href="https://coders.school">
     <img width="500" src="../img/coders_school_logo.png" alt="Coders School" class="plain">

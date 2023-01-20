@@ -172,6 +172,7 @@ ___
 ## Rozpakowanie z rekurencją
 
 Możliwe jest również użycie rekurencji do rozpakowania każdego argumentu. Wymaga to zdefiniowania wariadycznego szablonu Head/Tail i funkcji nie będącej szablonem, która będzie tzw. "funkcją stop/końca".
+<!-- .element: class="fragment fade-in" -->
 
 ```cpp
 void variadic_foo() {}
@@ -182,12 +183,14 @@ void variadic_foo(Head const& head, Tail const&... tail) {
     variadic_foo(tail...);
 }
 ```
+<!-- .element: class="fragment fade-in" -->
 
 ___
 
 ## Rekurencja w klasach
 
 Możliwe jest rozpakowanie wszystkich typów na raz (np. w przypadku bazowej klasy, będącej wariadyczną klasą szablonową) lub skorzystanie z częściowej, albo pełnej specjalizacji.
+<!-- .element: class="fragment fade-in" -->
 
 ```cpp
 template<int... Number>
@@ -205,6 +208,7 @@ struct Sum<> {  // full specialization
 
 constexpr auto value = Sum<1, 2, 3, 4, 5>::RESULT; // = 15
 ```
+<!-- .element: class="fragment fade-in" -->
 
 ___
 
@@ -219,12 +223,14 @@ template<class... Types>
 struct Derived : Base<Types...>
 {};
 ```
+<!-- .element: class="fragment fade-in" -->
 
 ___
 
 ## Operator `sizeof...`
 
 `sizeof...` zwraca liczbę parametrów w paczce parametrów.
+<!-- .element: class="fragment fade-in" -->
 
 ```cpp
 template<class... Types>
@@ -234,6 +240,7 @@ struct NumOfArguments {
 
 constexpr auto num = NumOfArguments<A, B, C>::value;  // 3
 ```
+<!-- .element: class="fragment fade-in" -->
 
 ___
 

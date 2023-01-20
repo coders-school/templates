@@ -40,7 +40,7 @@ ___
 
 ## Szablon szablonu
 
-Aby umożliwić użycie klasy szablonowej, musimy użyć tak zwanych argumentów <code>template template</code>.
+Aby umożliwić użycie klasy szablonowej, musimy użyć tak zwanych argumentów <code>template template</code> (szablonu szablonu).
 <!-- .element: class="fragment fade-in" -->
 
 ```cpp

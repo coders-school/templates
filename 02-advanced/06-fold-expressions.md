@@ -81,24 +81,15 @@ push_back_vec(v, 6, 2, 45, 12);
 
 ___
 
-## Zadanie
+## Zadanie 1
 
-1. Napisz funkcję `print()`, która może wydrukować wszystko na ekranie. Funkcja `print()` powinna przyjmowa dowolną liczbę argumentów. Użyj fold-expressions.
+Napisz funkcję `print()`, która może wydrukować wszystko na ekranie. Funkcja `print()` powinna przyjmowa dowolną liczbę argumentów. Użyj fold-expressions.
 
-    ```cpp
-    print(1, 40, "string", 2.0);
-    ```
+```cpp
+print(1, 40, "string", 2.0);
+```
 
-    Trudna wersja: spróbuj dodać odstępy między elementami.
-
-2. Napisz funkcję `areEven()`, która
-
-   * wypisze wszystkie parametry na ekranie za pomocą powyższej funkcji `print()`
-   * sprawdzi, czy wszystkie liczby w pakiecie parametrów są parzyste i zwróci odpowiednią wartość logiczną
-
-    ```cpp
-    bool allEven = areEven(2, 4, 6, 9);
-    ```
+Trudna wersja: spróbuj dodać odstępy między elementami.
 
 ___
 
@@ -114,7 +105,27 @@ template<typename ...Args>
 void printSpace(Args&&... args) {
     ((std::cout << " " << args), ...) << '\n';
 }
+```
+<!-- .element: class="fragment fade-in" -->
 
+___
+
+## Zadanie 2
+
+Napisz funkcję `areEven()`, która
+
+* wypisze wszystkie parametry na ekranie za pomocą funkcji `print()` z poprzedniego zadania
+* sprawdzi, czy wszystkie liczby w pakiecie parametrów są parzyste i zwróci odpowiednią wartość logiczną
+
+```cpp
+bool allEven = areEven(2, 4, 6, 9);
+```
+
+___
+
+## Rozwiązanie
+
+```cpp
 template<typename... Numbers>
 auto areEven(Numbers... nums) {
     print(nums...);

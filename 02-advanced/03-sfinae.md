@@ -187,6 +187,7 @@ auto construct(T* t) ->
 typename std::enable_if_t<std::has_virtual_destructor_v<T>, T>*
 { return new T{}; }
 ```
+<!-- .element: class="fragment fade-in" -->
 
 ```cpp []
 template<class T>     // #2 parameter
@@ -195,6 +196,7 @@ T* construct(
     typename std::enable_if_t<std::has_virtual_destructor_v<T>>* = nullptr
 ) { return new T{}; }
 ```
+<!-- .element: class="fragment fade-in" -->
 
 ```cpp []
 template<
@@ -203,6 +205,7 @@ template<
 > T* construct(T* t)
 { return new T{}; }
 ```
+<!-- .element: class="fragment fade-in" -->
 
 ___
 
@@ -252,10 +255,10 @@ ___
 
 ### Podpowiedzi
 
-* `std::is_base_of`
-* `std::remove_reference`
-* `std::remove_cv`
-* `std::decay`
+* <!-- .element: class="fragment fade-in" --> <code>std::remove_reference</code>
+* <!-- .element: class="fragment fade-in" --> <code>std::is_base_of</code>
+* <!-- .element: class="fragment fade-in" --> <code>std::remove_cv</code>
+* <!-- .element: class="fragment fade-in" --> <code>std::decay</code>
 
 ___
 
